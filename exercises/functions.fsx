@@ -1,11 +1,8 @@
 (* F# is a functional language - functions are important *)
+#load "./examples.fs"
 
 let add a b = failwith "todo"
 
-let test_Can_add_two_numbers () =
+Examples.test "Can add two numbers" (fun () ->
   add 1 2 = 3
-
-type Marker = class end
-#load "./testrunner.fsx"
-let runTests() = Testrunner.runTests (typeof<Marker>.DeclaringType)
-runTests()
+)
