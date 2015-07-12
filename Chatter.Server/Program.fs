@@ -1,11 +1,19 @@
 ﻿open Suave
 open Suave.Http.Successful
+open Suave.Http
+open Suave.Http.Applicatives
+open Suave.Http.Files
+open Suave.Http.RequestErrors
 open Suave.Web
 open Suave.Types
-// Learn more about F# at http://fsharp.net
-// See the 'F# Tutorial' project for more help.
+
 [<EntryPoint>]
 let main argv = 
-    printfn "%A" argv
-    startWebServer defaultConfig (OK "Hello World!")
+    choose [
+        GET >>= path "/" >>= file "./static/index.html"
+        GET >>= pathScan "/static/%s" (fun s -> (file <| sprintf "./static/%s" s))
+        NOT_FOUND "Not found"
+    ]
+    |> startWebServer defaultConfig
+
     0 // return an integer exit code
