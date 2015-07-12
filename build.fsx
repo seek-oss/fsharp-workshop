@@ -8,6 +8,13 @@ Target "Functions" (fun _ ->
     ()
 )
 
+Target "Async" (fun _ ->
+    let result, output = FSIHelper.executeFSI "./exercises" "async.fsx" [] //[("use", "functions.fsx")]
+    for msg in output do
+      printfn "%s" msg.Message
+    ()
+)
+
 Target "Examples" (fun _ ->
     trace "Testing stuff..."
 )
@@ -17,6 +24,8 @@ Target "Deploy" (fun _ ->
 )
 
 "Functions"            // define the dependencies
+   ==> "Examples"
+"Async"
    ==> "Examples"
 
 Run "Examples"
