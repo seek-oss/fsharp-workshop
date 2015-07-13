@@ -2,8 +2,11 @@ NUGET
   remote: https://nuget.org/api/v2
   specs:
     FAKE (3.35.5)
+    FSharp.Control.AsyncSeq (2.0.1)
     FSharp.Core (3.1.2.1)
-    FsPickler (1.2.10)
+    FSharpx.Async (1.12.0)
+      FSharp.Control.AsyncSeq
+    FsPickler (1.2.13)
     Suave (0.30.0)
       FSharp.Core (>= 3.1.2.1)
       FsPickler (>= 1.2.5)

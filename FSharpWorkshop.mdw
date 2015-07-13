@@ -1,5 +1,7 @@
 <WorkspaceItem ctype="Workspace">
   <Items>
     <Item>exercises/Exercises.sln</Item>
+    <Item>Chatter.sln</Item>
+    <Item>Common.sln</Item>
   </Items>
 </WorkspaceItem>

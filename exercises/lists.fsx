@@ -1,23 +1,46 @@
-// constructing lists
+(*
+    List are a big part of functional programming langages and F# is no exception. You may be familar with List<T> in C# however F#
+    lists are quite different, essentially being based on good old dependable singly-linked lists (but using tuples) whereas
+    C# lists use arrays.
 
-let a = [] // empty list
+    A naive implementation of an F# list could look like:
 
-let b = 1 :: 2 :: 3 :: 4 :: [] // constructs a list using the cons (::) operator
+    type List<'T> = 
+    | Empty of List<'T>
+    | Cons of Head: 'T * Tail: List<'T>
 
-let c = [ 1; 2; 3; 4 ] // explicit construction of a list
+    In F# an empty list is represented by [] and cons by the :: operator
 
-let d = [ // they can be multiline
+    Let's see some examples for constructing lists.
+*)
+#load "./examples.fs"
+
+// empty list
+let a = []
+
+// constructs a list using the cons (::) operator
+let b = 1 :: 2 :: 3 :: 4 :: []
+
+// explicit construction of a list
+let c = [ 1; 2; 3; 4 ]
+
+// they can be declared multiline
+let d = [
     1
     2
     3
     4
    ]
 
-// ranges
 
-let e = [ 1 .. 10 ] // using a range
+// using a range
+let e = [ 1 .. 10 ]
 
-let f = [ 1 .. 2 .. 10 ] // using a range with a skip interval
+// using a range with a skip interval
+let f = [ 1 .. 2 .. 10 ]
+
+
+
 
 // list comprehensions
 
@@ -60,4 +83,27 @@ let k = [
 
 
 // basic list functions
+//map
+//filter
+
 // advance functions
+//reduce
+//fold
+
+
+(*
+    References:
+        F# list declaration     - https://github.com/fsharp/fsharp/blob/master/src/fsharp/FSharp.Core/prim-types.fs#L3268
+        C# List<T> declaration  - https://github.com/dotnet/coreclr/blob/master/src/mscorlib/src/System/Collections/Generic/List.cs#L33
+        MSDN F# List module     - https://msdn.microsoft.com/en-us/library/ee353738.aspx
+        F# List module source   - https://github.com/fsharp/fsharp/blob/master/src/fsharp/FSharp.Core/list.fs
+
+    Note:
+        * The cons (::) operator in F# is actually a symbolic keyword, you can find this in section 3.6 of the spec (http://fsharp.org/specs/language-spec/3.1/FSharpSpec-3.1-working.docx)
+        * Cons comes from construct, originally a concept from lisp
+*)
+
+// arrays
+// sequences
+// sets
+// maps
