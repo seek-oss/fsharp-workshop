@@ -1,11 +1,11 @@
 (*
-    List are a big part of functional programming langages and F# is no exception. You may be familar with List<T> in C# however F#
+    Lists are a big part of functional programming langages and F# is no exception. You may be familar with List<T> in C# however F#
     lists are quite different, essentially being based on good old dependable singly-linked lists (but using tuples) whereas
     C# lists use arrays.
 
     A naive implementation of an F# list could look like:
 
-    type List<'T> = 
+    type List<'T> =
     | Empty of List<'T>
     | Cons of Head: 'T * Tail: List<'T>
 
@@ -14,18 +14,19 @@
     Let's see some examples for constructing lists.
 *)
 #load "./examples.fs"
+open Examples
 
 // empty list
-let a = []
+let empty = []
 
 // constructs a list using the cons (::) operator
-let b = 1 :: 2 :: 3 :: 4 :: []
+let madeWithCons = 1 :: 2 :: 3 :: 4 :: []
 
 // explicit construction of a list
-let c = [ 1; 2; 3; 4 ]
+let explicit = [ 1; 2; 3; 4 ]
 
 // they can be declared multiline
-let d = [
+let multiline = [
     1
     2
     3
@@ -34,10 +35,10 @@ let d = [
 
 
 // using a range
-let e = [ 1 .. 10 ]
+let range = [ 1 .. 10 ]
 
 // using a range with a skip interval
-let f = [ 1 .. 2 .. 10 ]
+let rangeWithInterval = [ 1 .. 2 .. 10 ]
 
 
 
@@ -59,7 +60,7 @@ let i = [ for i in 1 .. 10 -> i * 2 ] // using a for loop
 
 let j = [
         let rec loop i a b = [ // the 'rec' keyword tells the compiler the function is recursive
-            if i > 0 then 
+            if i > 0 then
                 yield b
                 yield! loop (i-1) b (a+b)
         ]
