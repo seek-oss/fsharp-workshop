@@ -1,3 +1,4 @@
+
 (*
     Lists are a big part of functional programming langages and F# is no exception. You may be familar with List<T> in C# however F#
     lists are quite different, essentially being based on good old dependable singly-linked lists (but using tuples) whereas
@@ -10,64 +11,58 @@
     | Cons of Head: 'T * Tail: List<'T>
 
     In F# an empty list is represented by [] and cons by the :: operator
-
-    Let's see some examples for constructing lists.
 *)
 #load "./examples.fs"
 open Examples
 
-// empty list
-let empty = []
 
-// constructs a list using the cons (::) operator
-let madeWithCons = 1 :: 2 :: 3 :: 4 :: []
+(* Let's see some examples for constructing lists. *)
 
-// explicit construction of a list
-let explicit = [ 1; 2; 3; 4 ]
+let empty         = []
 
-// they can be declared multiline
-let multiline = [
-    1
-    2
-    3
-    4
-   ]
+let madeWithCons  = 1 :: 2 :: 3 :: 4 :: []
 
+let explicit      = [ 1; 2; 3; 4 ]
 
-// using a range
-let range = [ 1 .. 10 ]
+let multiline     = [
+                      1
+                      2
+                      3
+                      4
+                    ]
 
-// using a range with a skip interval
-let rangeWithInterval = [ 1 .. 2 .. 10 ]
+let range         = [ 1 .. 10 ]
+
+let rangeWithSkip = [ 1 .. 2 .. 10 ]
 
 
+(* Another way to create lists is through list comprehensions. *) 
 
+let yields = [ yield 1; yield 2; yield 3 ];
 
-// list comprehensions
-
-let g = [ yield 1; yield 2; yield 3 ]; // using yields
-
-let h = [
+let yieldBang = [
         yield 1
         yield! [ 2; 3 ]  // yield! flattens inner lists
         yield 4
     ]
 
-let i = [ for i in 1 .. 10 -> i * 2 ] // using a for loop
+let forLoop = [ for i in 1 .. 10 -> i * 2 ]
 
-// they can also contain functions and be fairly complex
-// use F# Interactive to see the what the following functions do
+(*  They can also contain functions and be fairly complex.
+    Use F# Interactive to see the result of the list comprehensions below *)
 
-let j = [
-        let rec loop i a b = [ // the 'rec' keyword tells the compiler the function is recursive
+let fib10 = [
+        let rec loop i a b = [
             if i > 0 then
                 yield b
                 yield! loop (i-1) b (a+b)
         ]
+
+        yield 1
         yield! loop 10 1 1
     ]
 
-let k = [
+let prime20 = [
         let incr n i =
             if n % i = 0 then 1
             else 0
@@ -81,8 +76,18 @@ let k = [
                 yield n
     ]
 
+(*  Write a list comprehension that outputs the first 20 triangular numbers. 
+    A triangular number is a number *)
 
+let triangle20 () = failwith "todo"
 
+test "Create a list comprehension that calculates the first ten triangular numbers" (fun () ->
+  triangle20 () = [1; 3; 6; 10; 15; 21; 28; 36; 45; 55]
+ )
+
+// let triangles = Seq.unfold (fun (a, b) -> Some(a + b, (a+1, a + b))) (1, 0)
+
+// pattern matching
 // basic list functions
 //map
 //filter
