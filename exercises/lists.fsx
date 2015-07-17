@@ -79,7 +79,15 @@ let prime20 = [
 (*  Write a list comprehension that outputs the first 20 triangular numbers. 
     A triangular number is a number *)
 
-let triangle20 () = failwith "todo"
+let triangle20 () = [
+      let rec loop n i x = [
+          if i <= n then
+              yield x + i
+              yield! loop n (i+1) (i+x)
+      ]
+
+      yield! loop 10 1 0
+  ]
 
 test "Create a list comprehension that calculates the first ten triangular numbers" (fun () ->
   triangle20 () = [1; 3; 6; 10; 15; 21; 28; 36; 45; 55]
