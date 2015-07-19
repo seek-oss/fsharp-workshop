@@ -77,15 +77,21 @@ let prime20 = [
     ]
 
 (*  Write a list comprehension that outputs the first 20 triangular numbers. 
-    A triangular number is a number *)
+    A triangular number is the number of objects that are need to make up an equilateral triangle, with the length of
+    the sides being the iteration.
+
+    eg.
+                                                             *
+                                          *                 * *
+                          *              * *               * * *
+    1 (1):  *    2 (3):  * *    3 (6):  * * *    4 (10):  * * * *
+*)
 
 let triangle20 () = failwith "todo"
 
 test "Create a list comprehension that calculates the first ten triangular numbers" (fun () ->
   triangle20 () = [1; 3; 6; 10; 15; 21; 28; 36; 45; 55]
  )
-
-// let triangles = Seq.unfold (fun (a, b) -> Some(a + b, (a+1, a + b))) (1, 0)
 
 // pattern matching
 // basic list functions
@@ -95,6 +101,7 @@ test "Create a list comprehension that calculates the first ten triangular numbe
 // advance functions
 //reduce
 //fold
+//unfold - let triangles = Seq.unfold (fun (a, b) -> Some(a + b, (a+1, a + b))) (1, 0)
 
 
 (*
