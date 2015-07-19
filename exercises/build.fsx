@@ -2,14 +2,14 @@
 open Fake
 
 Target "Functions" (fun _ ->
-    let result, output = FSIHelper.executeFSI "./exercises" "functions.fsx" [] //[("use", "functions.fsx")]
+    let result, output = FSIHelper.executeFSI "." "functions.fsx" [] //[("use", "functions.fsx")]
     for msg in output do
       printfn "%s" msg.Message
     ()
 )
 
 Target "Async" (fun _ ->
-    let result, output = FSIHelper.executeFSI "./exercises" "async.fsx" [] //[("use", "functions.fsx")]
+    let result, output = FSIHelper.executeFSI "." "async.fsx" [] //[("use", "functions.fsx")]
     for msg in output do
       printfn "%s" msg.Message
     ()
@@ -28,4 +28,4 @@ Target "Deploy" (fun _ ->
 "Async"
    ==> "Examples"
 
-Run "Examples"
+RunTargetOrDefault "Examples"
