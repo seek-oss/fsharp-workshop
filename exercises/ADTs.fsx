@@ -21,7 +21,7 @@ let stopSign = Red
 let describeColour c =
   match c with
   | Blue   -> "It's blue"
-  | Red    -> failwith "TODO"
+  | Red    -> "It's red"
   | Yellow -> "It's yellow"
 
 test "Describing colours" (fun _ ->
@@ -35,7 +35,7 @@ test "Describing colours" (fun _ ->
 
 let describeColour' = function
   | Blue   -> "It's blue"
-  | Red    -> failwith "TODO"
+  | Red    -> "It's red"
   | Yellow -> "It's yellow"
 
 // The second version of describeColour is exactly the same
@@ -64,63 +64,16 @@ let tess = { Name = "Tess"; ContactDetails = Phone 0411222333 }
 
 let printContactDetails = function
   | Email e -> sprintf "email address - %s" e
-  | Phone p -> failwith "TODO" // sprintf "phone number - %d" p
+  | Phone p -> sprintf "phone number - %010d" p
 
 test "Printing contact details" (fun _ ->
-  printContactDetails tess.ContactDetails = "phone number - 0411222333"
+  printContactDetails jim.ContactDetails = "email address - jim@example.org"
 )
 
 // But what if we wanted to represent people who have no contact details?
-// Try executing the following in FSI
+// Try uncommenting and executing the following in FSI
 
-let bob = { Name = "Bob"; ContactDetails = null }
+// let bob = { Name = "Bob"; ContactDetails = null }
 
 // No nulls allowed here!
-// So what do we do? Well, let's just expand our definition of ContactDetails
-
-type ContactDetails' =
-  | Email' of string
-  | Phone' of int
-  | Nothing
-
-type Person' = { Name : string; ContactDetails : ContactDetails' }
-
-let bob = { Name = "Bob"; ContactDetails = Nothing }
-
-// That's better, but we could also model it like this
-
-type MaybeContactDetails =
-  | Nothing
-  | Details of ContactDetails
-
-type Person'' = { Name : string; ContactDetails : MaybeContactDetails }
-
-let sam = {
-  Name = "Sam"
-  ContactDetails = Details (Email "sam@example.org")
-  }
-
-// We can now write a function to print out the details of a person
-// using pattern matching
-
-let howToContact (person : Person'') =
-    match person.ContactDetails with
-    | Nothing   -> sprintf "%s does not wish to be contacted." person.Name
-    | Details d -> sprintf "%s can be contacted on %s." person.Name (printContactDetails d)
-
-test "How to contact Sam" (fun _ ->
-  howToContact sam = failwith "FILL ME IN"
-)
-
-// Now you may have already realised that this is such
-// a common concept that there is a type in the F# core library that we
-// use to represent a type that may have a value or may not.
-// It is the 'option' type and there are a bunch of handy functions in the
-// F# core that work with options. https://msdn.microsoft.com/en-us/library/ee370544.aspx
-
-type Person''' = { Name : string; ContactDetails : ContactDetails option }
-
-let howToContact' (person : Person''') =
-  match person.ContactDetails with
-  | None   -> sprintf "%s does not wish to be contacted." person.Name
-  | Some d -> sprintf "%s can be contacted on %s." person.Name (printContactDetails d)
+// So what do we do? Continue to ADTs02.fsx to find out
