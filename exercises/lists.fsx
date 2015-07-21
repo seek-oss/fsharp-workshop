@@ -51,7 +51,7 @@ let forLoop = [ for i in 1 .. 10 -> i * 2 ]
 (*  They can also contain functions and be fairly complex.
     Use F# Interactive to see the result of the list comprehensions below *)
 
-let fib10 = [
+let fib20 = [
     let rec loop i a b = [
       if i > 0 then
         yield b
@@ -59,16 +59,16 @@ let fib10 = [
     ]
 
     yield 1
-    yield! loop 10 1 1
+    yield! loop 20 1 1
   ]
 
-let prime20 = [
+let prime100 = [
     let isprime n =
       let rec check i =
         i > n/2 || (n % i <> 0 && check (i + 1))
       check 2
 
-    for n in 2 .. 200 do
+    for n in 2 .. 100 do
       if isprime n then
         yield n
   ]
@@ -84,12 +84,26 @@ let prime20 = [
     1 (1):  *    2 (3):  * *    3 (6):  * * *    4 (10):  * * * *
 *)
 
-let triangle20 () = failwith "todo"
+let triangle10 () = failwith "todo"
 
 test "Create a list comprehension that calculates the first ten triangular numbers" (fun () ->
-  triangle20 () = [1; 3; 6; 10; 15; 21; 28; 36; 45; 55]
+  triangle10 () = [1; 3; 6; 10; 15; 21; 28; 36; 45; 55]
 )
 
+
+(* Write a list comprehension that takes the first twenty numbers from the Fibonacci sequence and pairs them
+
+  eg. (0, 1), (1, 1), (1, 2), (2, 3), ...
+*)
+
+let fibPairs () = failwith "todo"
+
+test "Create a list comprehension that returns pairs of the first 20 Fibonacci numbers" (fun () ->
+  fibPairs () = [(0, 1); (1, 1); (1, 2); (2, 3); (3, 5); (5, 8); (8, 13); (13, 21); (21, 34);
+   (34, 55); (55, 89); (89, 144); (144, 233); (233, 377); (377, 610);
+   (610, 987); (987, 1597); (1597, 2584); (2584, 4181); (4181, 6765);
+   (6765, 10946)]
+)
 
 
 // pattern matching
