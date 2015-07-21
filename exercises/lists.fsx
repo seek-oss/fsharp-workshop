@@ -73,6 +73,22 @@ let prime100 = [
         yield n
   ]
 
+
+(* Write a list comprehension that takes the first twenty numbers from the Fibonacci sequence and pairs them
+
+  eg. (0, 1), (1, 1), (1, 2), (2, 3), ...
+*)
+
+let fibPairs () = failwith "todo"
+
+test "Create a list comprehension that returns pairs of the first 20 Fibonacci numbers" (fun () ->
+  fibPairs () = [(0, 1); (1, 1); (1, 2); (2, 3); (3, 5); (5, 8); (8, 13); (13, 21); (21, 34);
+   (34, 55); (55, 89); (89, 144); (144, 233); (233, 377); (377, 610);
+   (610, 987); (987, 1597); (1597, 2584); (2584, 4181); (4181, 6765);
+   (6765, 10946)]
+)
+
+
 (*  Write a list comprehension that outputs the first 20 triangular numbers. 
     A triangular number is the number of objects that are need to make up an equilateral triangle, with the length of
     the sides being the iteration.
@@ -90,20 +106,6 @@ test "Create a list comprehension that calculates the first ten triangular numbe
   triangle10 () = [1; 3; 6; 10; 15; 21; 28; 36; 45; 55]
 )
 
-
-(* Write a list comprehension that takes the first twenty numbers from the Fibonacci sequence and pairs them
-
-  eg. (0, 1), (1, 1), (1, 2), (2, 3), ...
-*)
-
-let fibPairs () = failwith "todo"
-
-test "Create a list comprehension that returns pairs of the first 20 Fibonacci numbers" (fun () ->
-  fibPairs () = [(0, 1); (1, 1); (1, 2); (2, 3); (3, 5); (5, 8); (8, 13); (13, 21); (21, 34);
-   (34, 55); (55, 89); (89, 144); (144, 233); (233, 377); (377, 610);
-   (610, 987); (987, 1597); (1597, 2584); (2584, 4181); (4181, 6765);
-   (6765, 10946)]
-)
 
 
 // pattern matching
