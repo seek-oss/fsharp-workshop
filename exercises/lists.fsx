@@ -85,17 +85,17 @@ let prime100 = [
 *)
 
 let triangle20 () = [
-      let rec loop n i x = [
-          if i <= n then
-              yield x + i
-              yield! loop n (i+1) (i+x)
-      ]
+    let rec loop n i x = [
+      if i <= n then
+        yield x + i
+        yield! loop n (i+1) (i+x)
+    ]
 
-      yield! loop 10 1 0
+    yield! loop 10 1 0
   ]
 
 test "Create a list comprehension that calculates the first ten triangular numbers" (fun () ->
-  triangle10 () = [1; 3; 6; 10; 15; 21; 28; 36; 45; 55]
+  triangle20 () = [1; 3; 6; 10; 15; 21; 28; 36; 45; 55]
 )
 
 
@@ -104,7 +104,16 @@ test "Create a list comprehension that calculates the first ten triangular numbe
   eg. (0, 1), (1, 1), (1, 2), (2, 3), ...
 *)
 
-let fibPairs () = failwith "todo"
+let fibPairs () = [
+    let rec loop i a b = [
+      if i > 0 then
+        yield (a, b)
+        yield! loop (i-1) b (a+b)
+    ]
+
+    yield! [ (0, 1); ]
+    yield! loop 20 1 1
+  ]
 
 test "Create a list comprehension that returns pairs of the first 20 Fibonacci numbers" (fun () ->
   fibPairs () = [(0, 1); (1, 1); (1, 2); (2, 3); (3, 5); (5, 8); (8, 13); (13, 21); (21, 34);
@@ -113,8 +122,20 @@ test "Create a list comprehension that returns pairs of the first 20 Fibonacci n
    (6765, 10946)]
 )
 
-
 // pattern matching
+
+let fibPairs2 = [
+  let rec loop x = [
+    match x with
+    | x :: y :: tail ->
+      yield (x, y)
+      yield! loop (y :: tail)
+    | _ -> ()
+  ]
+  yield! loop fib20
+]
+
+
 // basic list functions
 //map
 //filter
