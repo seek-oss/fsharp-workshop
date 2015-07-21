@@ -52,29 +52,26 @@ let forLoop = [ for i in 1 .. 10 -> i * 2 ]
     Use F# Interactive to see the result of the list comprehensions below *)
 
 let fib10 = [
-        let rec loop i a b = [
-            if i > 0 then
-                yield b
-                yield! loop (i-1) b (a+b)
-        ]
-
-        yield 1
-        yield! loop 10 1 1
+    let rec loop i a b = [
+      if i > 0 then
+        yield b
+        yield! loop (i-1) b (a+b)
     ]
+
+    yield 1
+    yield! loop 10 1 1
+  ]
 
 let prime20 = [
-        let incr n i =
-            if n % i = 0 then 1
-            else 0
+    let isprime n =
+      let rec check i =
+        i > n/2 || (n % i <> 0 && check (i + 1))
+      check 2
 
-        for n in 1 .. 20 do
-            let rec countFactors i =
-                if i = 0 then 0
-                else (incr n i) + (countFactors (i-1))
-
-            if (countFactors n) = 2 then
-                yield n
-    ]
+    for n in 2 .. 200 do
+      if isprime n then
+        yield n
+  ]
 
 (*  Write a list comprehension that outputs the first 20 triangular numbers. 
     A triangular number is the number of objects that are need to make up an equilateral triangle, with the length of
@@ -91,7 +88,9 @@ let triangle20 () = failwith "todo"
 
 test "Create a list comprehension that calculates the first ten triangular numbers" (fun () ->
   triangle20 () = [1; 3; 6; 10; 15; 21; 28; 36; 45; 55]
- )
+)
+
+
 
 // pattern matching
 // basic list functions
@@ -104,19 +103,23 @@ test "Create a list comprehension that calculates the first ten triangular numbe
 //unfold - let triangles = Seq.unfold (fun (a, b) -> Some(a + b, (a+1, a + b))) (1, 0)
 
 
+
+// arrays
+// sequences
+// sets
+// maps
+
+
+
 (*
     References:
         F# list declaration     - https://github.com/fsharp/fsharp/blob/master/src/fsharp/FSharp.Core/prim-types.fs#L3268
         C# List<T> declaration  - https://github.com/dotnet/coreclr/blob/master/src/mscorlib/src/System/Collections/Generic/List.cs#L33
         MSDN F# List module     - https://msdn.microsoft.com/en-us/library/ee353738.aspx
         F# List module source   - https://github.com/fsharp/fsharp/blob/master/src/fsharp/FSharp.Core/list.fs
+        Triangular number       - https://en.wikipedia.org/wiki/Triangular_number
 
     Note:
         * The cons (::) operator in F# is actually a symbolic keyword, you can find this in section 3.6 of the spec (http://fsharp.org/specs/language-spec/3.1/FSharpSpec-3.1-working.docx)
         * Cons comes from construct, originally a concept from lisp
 *)
-
-// arrays
-// sequences
-// sets
-// maps
