@@ -58,7 +58,7 @@ let fib20 = [
         yield! loop (i-1) b (a+b)
     ]
 
-    yield 1
+    yield! [ 0; 1 ]
     yield! loop 20 1 1
   ]
 
@@ -106,9 +106,59 @@ test "Create a list comprehension that calculates the first ten triangular numbe
   triangle10 () = [1; 3; 6; 10; 15; 21; 28; 36; 45; 55]
 )
 
-
-
 // pattern matching
+
+(*  A useful feature of lists is the ability to pattern match them. Using the cons and empty list symbols
+    you can match pretty much anywhere in a list.
+
+    The following two example show some simple matching on a list by splitting between the head and the tail. 
+*)
+
+let firstFib = match fib20 with
+                | head :: tail  -> Some head
+                | _             -> None
+
+let fibTail = match fib20 with
+              | _ :: tail -> tail
+              | _         -> []
+
+
+(* Using a match expression, return the fourth item from the Fibonacci (use fib20) *)
+
+let thirdItem () = failwith "todo"
+
+test "Return the fourth item in the Fibonacci sequence" (fun () ->
+  match thirdItem () with
+  | Some x  -> x = 2
+  | _       -> false
+)
+
+(*  The following example shows walking through the list to perform an action on each item *)
+
+let walkFib () =
+  let rec loop action lst =
+    match lst with
+    | []      ->
+      action None
+    | x :: xs ->
+      action (Some x)
+      loop action xs
+  loop (function | Some x -> printfn "%d" x | _ -> printfn "End of list") fib20
+
+(*  Write a function that uses match expressions to returns pairs of Fibonacci numbers from the existin fib20 list *)
+
+let fibPairs2 () = failwith "todo"
+
+test "Create a function that uses match expression to return pairs of the first 20 Fibonacci numbers" (fun () ->
+  fibPairs2 () = [(0, 1); (1, 1); (1, 2); (2, 3); (3, 5); (5, 8); (8, 13); (13, 21); (21, 34);
+   (34, 55); (55, 89); (89, 144); (144, 233); (233, 377); (377, 610);
+   (610, 987); (987, 1597); (1597, 2584); (2584, 4181); (4181, 6765);
+   (6765, 10946)]
+)
+
+
+(*  Mapping items within lists from one form to another is a common task. Using the know *)
+
 // basic list functions
 //map
 //filter
