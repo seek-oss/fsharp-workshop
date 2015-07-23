@@ -145,12 +145,12 @@ let walkFib () =
       loop action xs
   loop (function | Some x -> printfn "%d" x | _ -> printfn "End of list") fib20
 
-(*  Write a function that uses match expressions to returns pairs of Fibonacci numbers from the existin fib20 list *)
+(*  Write a function that uses match expressions to returns pairs of items *)
 
-let fibPairs2 () = failwith "todo"
+let pairwise list = failwith "todo"
 
-test "Create a function that uses match expression to return pairs of the first 20 Fibonacci numbers" (fun () ->
-  fibPairs2 () = [(0, 1); (1, 1); (1, 2); (2, 3); (3, 5); (5, 8); (8, 13); (13, 21); (21, 34);
+test "Create a function that uses match expression to return pairs of items from list" (fun () ->
+  pairwise fib20 = [(0, 1); (1, 1); (1, 2); (2, 3); (3, 5); (5, 8); (8, 13); (13, 21); (21, 34);
    (34, 55); (55, 89); (89, 144); (144, 233); (233, 377); (377, 610);
    (610, 987); (987, 1597); (1597, 2584); (2584, 4181); (4181, 6765);
    (6765, 10946)]
