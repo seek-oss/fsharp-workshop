@@ -143,7 +143,10 @@ let fibTail = match fib20 with
 
 (* Using a match expression, return the fourth item from the Fibonacci (use fib20) *)
 
-let thirdItem () = failwith "todo"
+let thirdItem () =
+  match fib20 with
+  | _ :: _ :: _ :: x :: _   -> Some x
+  | _                       -> None
 
 test "Return the fourth item in the Fibonacci sequence" (fun () ->
   match thirdItem () with
@@ -166,7 +169,16 @@ let walkFib () =
 (*  Mapping items within lists from one form to another is a common task. Write a generic list map function that
     takes as input a function to be applied to each item in the list and yields the result *)
 
-let map func list = failwith "todo"
+let map func list = [
+  let rec loop action lst = [
+    match lst with
+    | []      -> ()
+    | x :: xs ->
+      yield action x
+      yield! loop action xs
+  ]
+  yield! loop func list
+]
 
 test "Create a list map function" (fun () ->
   map (fun x -> x * 2) fib20 = [0; 2; 2; 4; 6; 10; 16; 26; 42; 68; 110; 178; 288; 466; 754; 1220; 1974;
