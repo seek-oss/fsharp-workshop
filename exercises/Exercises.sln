@@ -6,7 +6,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		functions.fsx = functions.fsx
 		lists.fsx = lists.fsx
 		examples.fs = examples.fs
-		ADTs.fsx = ADTs.fsx
+		ADTs02.fsx = ADTs02.fsx
+		ADTs03.fsx = ADTs03.fsx
+		ADTs04.fsx = ADTs04.fsx
+		ADTs01.fsx = ADTs01.fsx
 	EndProjectSection
 EndProject
 Global

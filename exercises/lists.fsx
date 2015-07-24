@@ -123,6 +123,7 @@ test "Create a list comprehension that calculates the first ten triangular numbe
   triangle10 () = [1; 3; 6; 10; 15; 21; 28; 36; 45; 55]
 )
 
+
 // pattern matching
 
 (*  A useful feature of lists is the ability to pattern match them. Using the cons and empty list symbols
@@ -162,6 +163,16 @@ let walkFib () =
       loop action xs
   loop (function | Some x -> printfn "%d" x | _ -> printfn "End of list") fib20
 
+(*  Mapping items within lists from one form to another is a common task. Write a generic list map function that
+    takes as input a function to be applied to each item in the list and yields the result *)
+
+let map func list = failwith "todo"
+
+test "Create a list map function" (fun () ->
+  map (fun x -> x * 2) fib20 = [0; 2; 2; 4; 6; 10; 16; 26; 42; 68; 110; 178; 288; 466; 754; 1220; 1974;
+   3194; 5168; 8362; 13530; 21892]
+)
+
 (*  Write a function that uses match expressions to returns pairs of items *)
 
 let pairwise list = [
@@ -183,7 +194,6 @@ test "Create a function that uses match expression to return pairs of items from
 )
 
 
-(*  Mapping items within lists from one form to another is a common task. Using the know *)
 
 // basic list functions
 //map
