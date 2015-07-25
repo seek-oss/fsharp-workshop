@@ -4,7 +4,7 @@ open Examples
 
 // The need to model the absence of a value comes up quite often
 // so let's separate out this concept of an absence of contact details
-// from the actual values that are valid for ContactDetails
+// from the actual values that are valid ContactDetails
 
 type ContactDetails =
   | Email of string
