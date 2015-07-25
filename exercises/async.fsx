@@ -4,8 +4,8 @@
    C# but more flexible about when and how they
    are run *)
 #load "./examples.fs"
-#r "../packages/FSharp.Control.AsyncSeq/lib/net45/FSharp.Control.AsyncSeq.dll"
-#r "../packages/FSharpx.Async/lib/net40/FSharpx.Async.dll"
+#r "./packages/FSharp.Control.AsyncSeq/lib/net45/FSharp.Control.AsyncSeq.dll"
+#r "./packages/FSharpx.Async/lib/net40/FSharpx.Async.dll"
 open System.IO
 open System.Net
 
