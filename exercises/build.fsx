@@ -19,23 +19,6 @@ Target "Examples" (fun _ ->
     trace "Testing stuff..."
 )
 
-Target "BuildChatter" (fun _ ->
-    !! "Chatter.sln"
-    |> MSBuildRelease "" "Rebuild"
-    |> ignore
-)
-
-Target "ChatterWatch" (fun _ ->
-    use watcher = !! "Chatter.Server/**/*.*" |> WatchChanges (fun changes ->
-        tracefn "%A" changes
-        Run "BuildChatter"
-    )
-
-    System.Console.ReadLine() |> ignore
-
-    watcher.Dispose()
-)
-
 "Functions"            // define the dependencies
    ==> "Examples"
 "Async"
