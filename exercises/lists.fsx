@@ -161,7 +161,10 @@ let firstTwoFib =
     Using only a match expression, return the fourth item from the Fibonacci (use fib20)
 *)
 
-let fourthItem () = failwith "todo"
+let fourthItem () =
+    match fib20 with
+    | _ :: _ :: _ :: x :: _   -> Some x
+    | _                       -> None
 
 test "Return the fourth item in the Fibonacci sequence" (fun () ->
   match fourthItem () with
