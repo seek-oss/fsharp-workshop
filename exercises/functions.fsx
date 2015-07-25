@@ -5,7 +5,7 @@
 let multiply a b = a * b
 
 // first function example - just a function to add two numbers together
-let add a b = a + b
+let add a b = failwith "todo"
 
 Examples.test "Can add two numbers" (fun () ->
   add 1 2 = 3
@@ -14,7 +14,7 @@ Examples.test "Can add two numbers" (fun () ->
 // passing functions as arguments to other functions
 // is a really powerful technique. This is a silly example.
 let applyFunctionThenAdd2 f n =
-    (f n) + 2
+    failwith "todo"
 
 Examples.test "Multiply by two then add two" (fun () ->
     applyFunctionThenAdd2 (fun x -> x * 2) 10 = 22
@@ -37,9 +37,7 @@ let examplePipe n =
 // (n * 10 + 2) * 2 + 2
 
 let examplePipe2 n =
-    n
-    |> applyFunctionThenAdd2 (multiply 10)
-    |> applyFunctionThenAdd2 (multiply 2)
+    failwith "todo"
 
 Examples.test "(n * 10 + 2) * 2 + 2 using |>" (fun () ->
     examplePipe2 10 = 206
@@ -50,11 +48,7 @@ Examples.test "(n * 10 + 2) * 2 + 2 using |>" (fun () ->
 // ie: 1, 1, 2, 3, 5
 // hint: 'rec' keyword allows you to call a function recursively
 // you'll probably need that for this exercise.
-let rec fib n =
-    match n with
-    | 0 -> 0
-    | 1 -> 1
-    | n -> (fib (n - 1)) + (fib (n - 2))
+let rec fib n = failwith "todo"
 
 Examples.test "Calculate the 10th fibonacci number" (fun () ->
     fib 10 = 55
@@ -63,11 +57,11 @@ Examples.test "Calculate the 10th fibonacci number" (fun () ->
 // the pipe operator has a very simple implementation
 // try implementing ||> to do the same things as pipe
 
-let (||>) x f = f x
+let (||>) f x = failwith "todo"
 
 Examples.test "Custom pipe" (fun () -> 
     10
-    ||> (add 2)
-    ||> (multiply 2)
+    ||> add 2
+    ||> multiply 2
     ||> (fun x -> x = 24)
 )
