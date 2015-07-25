@@ -87,16 +87,7 @@ let prime100 = [
     eg. (0, 1), (1, 1), (1, 2), (2, 3), ...
 *)
 
-let fibPairs () = [
-    let rec loop i a b = [
-      if i > 0 then
-        yield (a, b)
-        yield! loop (i-1) b (a+b)
-    ]
-
-    yield! [ (0, 1); ]
-    yield! loop 20 1 1
-  ]
+let fibPairs () = failwith "todo"
 
 test "Create a list comprehension that returns pairs of the first 20 Fibonacci numbers" (fun () ->
   fibPairs () = [(0, 1); (1, 1); (1, 2); (2, 3); (3, 5); (5, 8); (8, 13); (13, 21); (21, 34);
@@ -118,15 +109,7 @@ test "Create a list comprehension that returns pairs of the first 20 Fibonacci n
     1 (1):  *    2 (3):  * *    3 (6):  * * *    4 (10):  * * * *
 *)
 
-let triangle10 () = [
-    let rec loop n i x = [
-      if i <= n then
-        yield x + i
-        yield! loop n (i+1) (i+x)
-    ]
-
-    yield! loop 10 1 0
-  ]
+let triangle10 () = failwith "todo"
 
 test "Create a list comprehension that calculates the first ten triangular numbers" (fun () ->
   triangle10 () = [1; 3; 6; 10; 15; 21; 28; 36; 45; 55]
@@ -161,10 +144,7 @@ let firstTwoFib =
     Using only a match expression, return the fourth item from the Fibonacci (use fib20)
 *)
 
-let fourthItem () =
-    match fib20 with
-    | _ :: _ :: _ :: x :: _   -> Some x
-    | _                       -> None
+let fourthItem () = failwith "todo"
 
 test "Return the fourth item in the Fibonacci sequence" (fun () ->
   match fourthItem () with
@@ -191,16 +171,7 @@ let walkFib () =
     takes as input a function to be applied to each item in the list and yields the result
 *)
 
-let map func list = [
-  let rec loop action lst = [
-    match lst with
-    | []      -> ()
-    | x :: xs ->
-      yield action x
-      yield! loop action xs
-  ]
-  yield! loop func list
-]
+let map func list = failwith "todo"
 
 test "Create a list map function" (fun () ->
   map (fun x -> x * 2) fib20 = [0; 2; 2; 4; 6; 10; 16; 26; 42; 68; 110; 178; 288; 466; 754; 1220; 1974;
@@ -216,16 +187,7 @@ test "Create a list map function" (fun () ->
     Write a function that uses match expressions to returns pairs of items
 *)
 
-let pairwise list = [
-    let rec loop x = [
-      match x with
-      | x :: y :: tail ->
-        yield (x, y)
-        yield! loop (y :: tail)
-      | _ -> ()
-    ]
-    yield! loop list
-  ]
+let pairwise list = failwith "todo"
 
 test "Create a function that uses a match expression to return pairs of items from a list" (fun () ->
   pairwise fib20 = [(0, 1); (1, 1); (1, 2); (2, 3); (3, 5); (5, 8); (8, 13); (13, 21); (21, 34);
