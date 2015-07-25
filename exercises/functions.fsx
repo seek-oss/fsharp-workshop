@@ -4,7 +4,24 @@
 // first sample function
 let multiply a b = a * b
 
-// first function example - just a function to add two numbers together
+// first a note on types for functions
+// here the type of a is explicitely int
+let a : int = 1
+
+// the type of a function with one parameter is like ParameterType -> ResultType
+// ie:
+let add1 : int -> int = fun a -> a + 1
+
+// here is the type for a function that takes two parameters
+// Parameter1Type -> Parameter2Type -> ResultType
+let multiplyWithType : int -> int -> int = multiply
+
+// We can apply the first parameter to leave us with a function
+// that takes one parameter and returns the result type
+// Parameter2Type -> ResultType
+let mulitplyBy2 : int -> int = multiplyWithType 1
+
+// a function to add two numbers together
 let add a b = failwith "todo"
 
 Examples.test "Can add two numbers" (fun () ->
