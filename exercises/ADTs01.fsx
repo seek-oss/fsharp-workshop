@@ -48,6 +48,17 @@ test "Describing colours again" (fun _ ->
   describeColour' stopSign = "It's red"
 )
 
+// A powerful feature of match expressions is that the F# compiler
+// can tell you if you have forgotten to cover some cases! Delete
+// one of the cases from our definition of describeColour above
+// and execute it again in FSI. Do you see a warning that starts
+// like this:
+// warning FS0025: Incomplete pattern matches on this expression.
+// How handy! F# is able to see that we've not covered all cases.
+
+
+//////////// Discriminated Unions with data //////////////////////
+
 // One way in which DUs differ from enums is in the fact that
 // each case (or tag) in the DU can take data of any type
 
