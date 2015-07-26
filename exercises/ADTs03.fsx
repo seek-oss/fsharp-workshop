@@ -4,7 +4,7 @@ open Examples
 
 // The need to model the absence of a value comes up quite often
 // so let's separate out this concept of an absence of contact details
-// from the actual values that are valid for ContactDetails
+// from the actual values that are valid ContactDetails
 
 type ContactDetails =
   | Email of string
@@ -18,10 +18,9 @@ type Person = { Name : string; ContactDetails : MaybeContactDetails }
 
 let bob = { Name = "Bob"; ContactDetails = Nothing }
 
-// Now when we create Jim, we have to create the inner value first,
-// then pass it to the outer constructor.
-
-let jim  = { Name = "Jim"; ContactDetails = Email "jim@example.org" |> Details }
+// Replace the 'Nothing' below with jim's contact details.
+// His email address is "jim@example.org"
+let jim  = { Name = "Jim"; ContactDetails = Nothing }
 
 // Now we can re-use our original defition of printContactDetails
 // from section 1
@@ -39,11 +38,10 @@ let printContactDetails = function
 let howToContact (person : Person) =
     match person.ContactDetails with
     | Nothing   -> sprintf "%s does not wish to be contacted" person.Name
-    | Details d -> let contactDetails = printContactDetails d
-                   sprintf "%s can be contacted on %s" person.Name contactDetails
+    | Details d -> failwith "todo"
 
 test "How to contact Jim" (fun _ ->
-  howToContact jim = "Jim can be contacted on email address - jim@example.org"// failwith "FILL ME IN"
+  howToContact jim = "Jim can be contacted on email address - jim@example.org"
 )
 
 // Onwards to ADTs04 for more refinement

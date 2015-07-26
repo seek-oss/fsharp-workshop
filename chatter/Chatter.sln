@@ -1,7 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
-Project("{f2a71f9b-5d33-465a-a702-920d77279786}") = "Chatter.Server", "Chatter.Server\Chatter.Server.fsproj", "{A360702B-D992-4DED-9094-7B51D971D98E}"
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Chatter.Server", "Chatter.Server\Chatter.Server.fsproj", "{A360702B-D992-4DED-9094-7B51D971D98E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{634B5A91-C8C8-4903-B63B-B047A704CFB7}"
+	ProjectSection(SolutionItems) = preProject
+		build.cmd = build.cmd
+		build.fsx = build.fsx
+		build.sh = build.sh
+		paket.dependencies = paket.dependencies
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,5 +23,8 @@ Global
 		{A360702B-D992-4DED-9094-7B51D971D98E}.Debug|x86.Build.0 = Debug|x86
 		{A360702B-D992-4DED-9094-7B51D971D98E}.Release|x86.ActiveCfg = Release|x86
 		{A360702B-D992-4DED-9094-7B51D971D98E}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal

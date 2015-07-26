@@ -19,10 +19,6 @@ Target "Examples" (fun _ ->
     trace "Testing stuff..."
 )
 
-Target "Deploy" (fun _ ->
-    trace "Heavy deploy action"
-)
-
 "Functions"            // define the dependencies
    ==> "Examples"
 "Async"
