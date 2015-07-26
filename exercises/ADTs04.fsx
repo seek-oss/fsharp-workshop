@@ -33,7 +33,6 @@ let jim  = { Name = "Jim"; ContactDetails = Email "jim@example.org" |> Some }
 // two like we previously did.
 
 let howToContact (person : Person) =
-    //failwith "TODO"
     let printContactDetails = function
       | Email e -> sprintf "email address - %s" e
       | Phone p -> sprintf "phone number - %010d" p
