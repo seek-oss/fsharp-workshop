@@ -8,15 +8,13 @@ open Examples
 //////////////// Guard clauses /////////////////////
 
 // Let's write a function that tells us if an integer is positive, zero
-// or negative.
+// or negative, using if expressions.
 
 let partition n =
   if n < 0
   then "negative"
-  elif n > 0
-  then "positive"
+  // TODO
   else "zero"
-
 
 test "partitioning numbers 1" (fun _ ->
   partition 1 = "positive"
@@ -30,22 +28,22 @@ test "partitioning numbers 1" (fun _ ->
 let partition' n =
   match n with
   | x when x < 0 -> "negative"
-  | x when x > 0 -> "positive"
-  | _            -> "zero"
+  // TODO
+  | _            -> failwith "todo"
 
 // I hope you agree that's a whole lot more readable. The last line with
 // the underscore is a wildcard match, it will match anything and discard
 // the result. You may sometimes hear this referred to as a "catch all".
 
-test "partitioning numbers 1" (fun _ ->
+test "partitioning numbers 2" (fun _ ->
   partition' 3 = "positive"
 )
 
-test "partitioning numbers 2" (fun _ ->
+test "partitioning numbers 3" (fun _ ->
   partition' 0 = "zero"
 )
 
-test "partitioning numbers 3" (fun _ ->
+test "partitioning numbers 4" (fun _ ->
   partition' -5 = "negative"
 )
 
@@ -83,28 +81,42 @@ test "pattern matching into tuples 2" (fun _ ->
 
 type PostageSatchel = { DimensionsInMetres : decimal * decimal * decimal; MassInGrams : decimal }
 
+type PostagePrice =
+  | Dollars of decimal
+  | TooBig
+  | TooHeavy
+
+// Feel free to remove any of the partial implementation below when completing your
+// calculatePostage function, but you may find these pieces useful.
+
 let calculatePostage satchel =
   let costPerGram = 0.01M
   let maximumSizeInMetres = 0.3M
-  let anyExceedSize = not << List.forall (fun n -> n < maximumSizeInMetres)
   let maximumMassInGrams = 2000M
+
+  let anyExceedSize (dimensions : decimal list) =
+    // TODO
+    false
+
   match satchel with
   | { DimensionsInMetres = x,y,z; MassInGrams = _ } when [x;y;z] |> anyExceedSize
-      -> failwith "TOO BIG!"
+      -> TooBig 
   | { DimensionsInMetres = _;     MassInGrams = m } when m > maximumMassInGrams
-      -> failwith "TOO HEAVY!"
-  | { DimensionsInMetres = _;     MassInGrams = m } -> m * costPerGram
+      -> TooHeavy
+  // TODO
+  | _ -> Dollars 0M
 
 test "Calculating postage 1" (fun _ ->
-  calculatePostage { DimensionsInMetres = 0.12M, 0.1M, 0.1M; MassInGrams = 700M } = 7M
+  calculatePostage { DimensionsInMetres = 0.12M, 0.1M, 0.1M; MassInGrams = 700M } = Dollars 7M
 )
 
 test "Calculating postage 2" (fun _ ->
-  calculatePostage { DimensionsInMetres = 0.2M, 0.2M, 0.02M; MassInGrams = 1200M } = 12M
+  calculatePostage { DimensionsInMetres = 0.2M, 0.2M, 0.02M; MassInGrams = 1200M } = Dollars 12M
 )
 
-// We wouldn't usually use exceptions to represent the "too big" and "too heavy" cases
-// here, but that kind of type modelling is not the focus of this section.
+test "Calculating postage 3" (fun _ ->
+  calculatePostage { DimensionsInMetres = 1M, 0.2M, 0.02M; MassInGrams = 200M } = TooBig
+)
 
 
 //////////////////// Fizz Buzz! ////////////////////
@@ -138,10 +150,7 @@ let first15 = [
 
 let fizzbuzz n =
   match n with
-  | x when x % 3 = 0 && x % 5 = 0 -> "FizzBuzz"
-  | x when x % 3 = 0              -> "Fizz"
-  | x when x % 5 = 0              -> "Buzz"
-  | x                             -> string x
+  | _ -> failwith "todo"
 
 test "We can fizz buzz 1" (fun _ ->
   let result = [1 .. 15] |> List.map fizzbuzz
@@ -162,16 +171,14 @@ let (|DivisibleBy|_|) m n = if n % m = 0 then Some DivisibleBy else None
 let fizzbuzz' n =
   match n with
   | DivisibleBy 3 & DivisibleBy 5 -> "FizzBuzz"
-  | DivisibleBy 3                 -> "Fizz"
-  | DivisibleBy 5                 -> "Buzz"
-  | x                             -> string x
+  | _ -> failwith "todo"
 
 // So as you can see, active patterns can take parameters and they can be combined with & and |
 // They can be a very handy technique to use when you don't control the definition of a data type
 // but you still want to build up a declarative set of terms to express your rules in.
 
 test "We can fizz buzz 2" (fun _ ->
-  let result = [1 .. 15] |> List.map fizzbuzz
+  let result = [1 .. 15] |> List.map fizzbuzz'
   result = first15
 )
 
@@ -194,11 +201,8 @@ let (|Informational|Success|Redirection|ClientError|ServerError|Invalid|) = func
 // We can use the above Total Active Pattern to build up other functions, e.g.
 
 let logHttpStatusCode = function
-  | ServerError        -> "Server error"
-  | ClientError        -> "Client error"
-  | Success            -> "Success"
-  | Redirection        -> "Redirection"
-  | _                  -> "Invalid"
+  | ServerError -> "Server error"
+  | _           -> failwith "todo"
 
 test "404 is client error" (fun _ ->
   logHttpStatusCode 404 = "Client error"
@@ -226,13 +230,7 @@ test "302 is redirection" (fun _ ->
 type HttpTotals = { Success : int; Error : int }
 
 let categorise codes =
-  let folder acc = function
-    | ClientError
-    | ServerError -> { acc with Error = acc.Error + 1 }
-    | Success     -> { acc with Success = acc.Success + 1 }
-    | _           -> acc
-  codes
-  |> Seq.fold folder { Success = 0; Error = 0 }
+  failwith "todo"
 
 test "Categorising HTTP responses by status code 1" (fun _ ->
   [200; 200; 404; 200; 401; 404; 500; 500; 200; 200; 200]
