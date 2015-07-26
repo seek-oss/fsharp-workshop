@@ -83,28 +83,40 @@ test "pattern matching into tuples 2" (fun _ ->
 
 type PostageSatchel = { DimensionsInMetres : decimal * decimal * decimal; MassInGrams : decimal }
 
+type PostagePrice =
+  | Dollars of decimal
+  | TooBig
+  | TooHeavy
+
+// Feel free to remove any of the partial implementation below when completing your
+// calculatePostage function, but you may find these pieces useful.
+
 let calculatePostage satchel =
   let costPerGram = 0.01M
   let maximumSizeInMetres = 0.3M
-  let anyExceedSize = not << List.forall (fun n -> n < maximumSizeInMetres)
   let maximumMassInGrams = 2000M
+
+  let anyExceedSize (dimensions : decimal list) =
+    not <| List.forall (fun n -> n < maximumSizeInMetres) dimensions
+
   match satchel with
   | { DimensionsInMetres = x,y,z; MassInGrams = _ } when [x;y;z] |> anyExceedSize
-      -> failwith "TOO BIG!"
+      -> TooBig 
   | { DimensionsInMetres = _;     MassInGrams = m } when m > maximumMassInGrams
-      -> failwith "TOO HEAVY!"
-  | { DimensionsInMetres = _;     MassInGrams = m } -> m * costPerGram
+      -> TooHeavy
+  | { DimensionsInMetres = _;     MassInGrams = m } -> m * costPerGram |> Dollars
 
 test "Calculating postage 1" (fun _ ->
-  calculatePostage { DimensionsInMetres = 0.12M, 0.1M, 0.1M; MassInGrams = 700M } = 7M
+  calculatePostage { DimensionsInMetres = 0.12M, 0.1M, 0.1M; MassInGrams = 700M } = Dollars 7M
 )
 
 test "Calculating postage 2" (fun _ ->
-  calculatePostage { DimensionsInMetres = 0.2M, 0.2M, 0.02M; MassInGrams = 1200M } = 12M
+  calculatePostage { DimensionsInMetres = 0.2M, 0.2M, 0.02M; MassInGrams = 1200M } = Dollars 12M
 )
 
-// We wouldn't usually use exceptions to represent the "too big" and "too heavy" cases
-// here, but that kind of type modelling is not the focus of this section.
+test "Calculating postage 3" (fun _ ->
+  calculatePostage { DimensionsInMetres = 1M, 0.2M, 0.02M; MassInGrams = 200M } = TooBig
+)
 
 
 //////////////////// Fizz Buzz! ////////////////////
@@ -171,7 +183,7 @@ let fizzbuzz' n =
 // but you still want to build up a declarative set of terms to express your rules in.
 
 test "We can fizz buzz 2" (fun _ ->
-  let result = [1 .. 15] |> List.map fizzbuzz
+  let result = [1 .. 15] |> List.map fizzbuzz'
   result = first15
 )
 
@@ -247,3 +259,4 @@ test "Categorising HTTP responses by status code 3" (fun _ ->
   let input = [100; 200; 401; 404; 302; 500; 500; 200; 200; 200]
   categorise input = { Success = 4; Error = 4 } 
 )
+
