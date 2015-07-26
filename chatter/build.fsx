@@ -2,11 +2,14 @@
 open Fake
 
 let solutionFile = "./Chatter.sln"
-Target "Build" (fun _ ->
-    printfn "Building.."
+let buildChatter () =
     !! solutionFile
     |> MSBuildRelease "" "Build"
     |> ignore
+
+Target "Build" (fun _ ->
+    printfn "Building.."
+    buildChatter()
 )
 
 Target "Clean" (fun _ ->
@@ -22,13 +25,13 @@ let runChatter () =
     )
     
 Target "Watch" (fun _ ->
+    buildChatter()
+
     use watcher = !! "Chatter.Server/**/*.*" |> WatchChanges (fun changes ->
         tracefn "%A" changes
         killAllCreatedProcesses ()
 
-        !! solutionFile
-        |> MSBuildRelease "" "Build"
-        |> ignore
+        buildChatter()
 
         runChatter ()
     )
