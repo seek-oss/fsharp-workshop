@@ -1,20 +1,64 @@
-(* F# is a functional language - functions are important *)
+(* 
+F# is a functional language - functions are important
+In this first set of exercises we are going to write some 
+simple functions and see how to combine them
+ *)
 #load "./examples.fs"
 
-// first sample function
-let multiply a b = a * b
+// this is NOT a function this is just an
+// integer
+let a = 1
 
-// first function example - just a function to add two numbers together
-let add a b = failwith "todo"
+// functions are first class values in F# so
+// the syntax is idential to the above except that
+// it has a parameter
+let addOne a = a + 1
+
+// types are mostly optional in F#, the compiler
+// does a very good job in infering types when
+// we leave them off. Here is the addOne function
+// above with the type shown explicitely
+// NOTE: there is nothing special about the ' it's just 
+// a common convention for defining something that is related
+// or similar to a pervious definition 
+let addOne' (a : int) = a + 1
+
+// F# also allows functions to be defined inline
+// using the fun keyword. This is similar to the lambda
+// syntax in C# (a => a + 1)
+let addOne'' = fun a -> a + 1
+
+// a function to add two numbers together
+let add a b = a + b
 
 Examples.test "Can add two numbers" (fun () ->
   add 1 2 = 3
 )
 
+// F# uses -> to indicate function types
+// the type of int -> int says that the function
+// takes a single integer and returns an integer
+let addOne''' : int -> int = fun a -> a + 1
+
+// the multiply function has two 
+// parameters
+let multiply a b = a * b
+
+// the type syntax might not be what you expected
+let multiply' : int -> int -> int = multiply
+
+// functional only really take one argument at a time
+// so you can think of (int -> int -> int) as really
+// a type of (int -> (int -> int))
+// ie a function of two parameters is really a function
+// that takes one parameter and returns a function that 
+// takes on parameter
+let multiplyBy1 : int -> int = multiply 1
+
 // passing functions as arguments to other functions
 // is a really powerful technique. This is a silly example.
 let applyFunctionThenAdd2 f n =
-    failwith "todo"
+    (f n) + 2
 
 Examples.test "Multiply by two then add two" (fun () ->
     applyFunctionThenAdd2 (fun x -> x * 2) 10 = 22
@@ -37,7 +81,9 @@ let examplePipe n =
 // (n * 10 + 2) * 2 + 2
 
 let examplePipe2 n =
-    failwith "todo"
+    n
+    |> applyFunctionThenAdd2 (multiply 10)
+    |> applyFunctionThenAdd2 (multiply 2)
 
 Examples.test "(n * 10 + 2) * 2 + 2 using |>" (fun () ->
     examplePipe2 10 = 206
@@ -48,7 +94,11 @@ Examples.test "(n * 10 + 2) * 2 + 2 using |>" (fun () ->
 // ie: 1, 1, 2, 3, 5
 // hint: 'rec' keyword allows you to call a function recursively
 // you'll probably need that for this exercise.
-let rec fib n = failwith "todo"
+let rec fib n =
+    match n with
+    | 0 -> 0
+    | 1 -> 1
+    | n -> (fib (n - 1)) + (fib (n - 2))
 
 Examples.test "Calculate the 10th fibonacci number" (fun () ->
     fib 10 = 55
@@ -57,11 +107,11 @@ Examples.test "Calculate the 10th fibonacci number" (fun () ->
 // the pipe operator has a very simple implementation
 // try implementing ||> to do the same things as pipe
 
-let (||>) f x = failwith "todo"
+let (||>) x f = f x
 
 Examples.test "Custom pipe" (fun () -> 
     10
-    ||> add 2
-    ||> multiply 2
+    ||> (add 2)
+    ||> (multiply 2)
     ||> (fun x -> x = 24)
 )

@@ -17,11 +17,16 @@ type Colour =
 // case labels as if it were a function
 let stopSign = Red
 
-// Look carefully at the type of this function.
+// Let's suppose we want to write a function of type
+// Colour -> string, i.e., it takes a Colour and returns
+// a string describing that colour. The most natural way
+// of working with union types is by using a 'match'
+// expression.
+
 let describeColour c =
   match c with
   | Blue   -> "It's blue"
-  | Red    -> "It's red"
+  | Red    -> failwith "todo"
   | Yellow -> "It's yellow"
 
 test "Describing colours" (fun _ ->
@@ -35,13 +40,24 @@ test "Describing colours" (fun _ ->
 
 let describeColour' = function
   | Blue   -> "It's blue"
-  | Red    -> "It's red"
+  | Red    -> failwith "todo"
   | Yellow -> "It's yellow"
 
 // The second version of describeColour is exactly the same
 test "Describing colours again" (fun _ ->
   describeColour' stopSign = "It's red"
 )
+
+// A powerful feature of match expressions is that the F# compiler
+// can tell you if you have forgotten to cover some cases! Delete
+// one of the cases from our definition of describeColour above
+// and execute it again in FSI. Do you see a warning that starts
+// like this:
+// warning FS0025: Incomplete pattern matches on this expression.
+// How handy! F# is able to see that we've not covered all cases.
+
+
+//////////// Discriminated Unions with data //////////////////////
 
 // One way in which DUs differ from enums is in the fact that
 // each case (or tag) in the DU can take data of any type
@@ -67,11 +83,40 @@ let printContactDetails = function
   | Phone p -> sprintf "phone number - %010d" p
 
 test "Printing contact details" (fun _ ->
-  printContactDetails jim.ContactDetails = "email address - jim@example.org"
+  printContactDetails jim.ContactDetails = failwith "todo"
 )
 
-// But what if we wanted to represent people who have no contact details?
-// Try uncommenting and executing the following in FSI
+// A nice feature of DUs and Records in F# is that we get equality for free
+
+test "Are Jim and Tess the same?" (fun _ ->
+  let areEqual = jim = tess
+  areEqual = failwith "todo"
+)
+
+test "Can we compare Jim to himself?" (fun _ ->
+  let areEqual = jim = jim
+  areEqual = failwith "todo"
+)
+
+let phone1 = Phone 91234567
+let phone2 = Phone 99999999
+let phone3 = Phone 91234567
+
+test "Compare phone1 and phone2" (fun _ ->
+  let areEqual = phone1 = phone2
+  areEqual = failwith "todo"
+)
+
+test "Compare phone1 and phone3" (fun _ ->
+  let areEqual = phone1 = phone3
+  areEqual = failwith "todo"
+)
+
+// So we can see that the values are equal if they are of the same case
+// AND the values for that case are equal too.
+
+// Now what if we wanted to represent people who have no contact details?
+// Try executing the following in FSI
 
 // let bob = { Name = "Bob"; ContactDetails = null }
 
