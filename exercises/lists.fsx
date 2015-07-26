@@ -338,12 +338,14 @@ test "Write a function that can sum the integers in a list" (fun () ->
       loop (LanguagePrimitives.GenericZero<'a>) list
 *)
 
+// sum: 'a list -> 'a
 let inline sum2 list =
   let rec loop acc lst =
     match lst with
     | [] -> acc
     | x :: xs -> (loop (x + acc) xs)
   loop (LanguagePrimitives.GenericZero<'a>) list
+
 
 test "Write a function that can sum numeric values in a list" (fun () ->
   let floats = [0.02; 0.03; 0.05; 0.07; 0.11; 0.13; 0.17; 0.19; 0.23; 0.29; 0.31; 0.37;
@@ -362,22 +364,84 @@ test "Write a function that can sum numeric values in a list" (fun () ->
 )
 
 (**********************************************************************************************************************
-    Now extend this function to reduce a list down to a single value using the supplied reducer function.
-    HINT: what's the initial value?
+    Lets extend the previous function into something more generic. This time it needs to take a function (the folder)
+    that performs the action on the item and accumulated value (replacing the '+' in in sum function. Next argument
+    is state, effecitively the initializing value (like the zero in sum), and finally the list of values.
+*)
+
+// fold: ('state -> 'a -> 'state) -> 'state -> 'a list -> 'state
+let fold folder state list =
+  let rec loop acc lst =
+    match lst with
+    | [] -> acc
+    | x :: xs -> loop (folder acc x) xs
+  loop state list
+
+
+test "Write a function to fold a list into a single value" (fun () ->
+  fold (+) 0 fib25 = 121392
+
+  &&
+
+  fold (-) 0 prime100 = -1060
+
+  &&
+ 
+  fold (fun acc x -> acc + (sprintf "%d " x)) "Fib: " fib25 =
+    "Fib: 0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 6765 10946 17711 28657 46368 "
+)
+
+(**********************************************************************************************************************
+    BONUS: Try rewriting both the integer version and generic version of sum using fold.
+*)
+
+// sum: int list -> int
+let sum3 = fold (+) 0
+
+// sum: 'a list -> 'a
+let inline sum4 list = fold (+) (LanguagePrimitives.GenericZero<'a>) list
+
+test "Write a function that can sum the integers in a list using fold" (fun () ->
+  sum3 fib25 = 121392
+
+  &&
+
+  sum3 prime100 = 1060
+)
+
+
+test "Write a function that can sum numeric values in a list using fold" (fun () ->
+  let floats = [0.02; 0.03; 0.05; 0.07; 0.11; 0.13; 0.17; 0.19; 0.23; 0.29; 0.31; 0.37;
+    0.41; 0.43; 0.47; 0.53; 0.59; 0.61; 0.67; 0.71; 0.73; 0.79; 0.83; 0.89;
+    0.97]
+
+  let decimals = [0.02M; 0.03M; 0.05M; 0.07M; 0.11M; 0.13M; 0.17M; 0.19M; 0.23M; 0.29M; 0.31M;
+    0.37M; 0.41M; 0.43M; 0.47M; 0.53M; 0.59M; 0.61M; 0.67M; 0.71M; 0.73M; 0.79M;
+    0.83M; 0.89M; 0.97M]
+
+  decimal (sum4 floats) = 10.6M
+
+  &&
+
+  sum4 decimals = 10.6M
+)
+
+
+(**********************************************************************************************************************
+    Now lets rethink fold in a different way, this time to reduce a list down to a single value using the
+    supplied reducer function, but unlike fold, there's no initial state passed in. Use the fold function in your
+    solution.
 *)
 
 // reduce: ('a -> 'a -> 'a) -> 'a list -> 'a
 let reduce reducer list =
-  let rec loop acc lst =
-    match lst with
-    | [] -> acc
-    | x :: xs -> (loop (reducer acc x) xs)
   match list with
   | [] -> failwith "cannot reduce an empty list"
-  | x :: xs ->  loop x xs
+  | x :: xs -> fold reducer x xs
 
+ 
 test "Reduce a list down to a single value using the supplied function" (fun () ->
-  reduce (+) fib25 = 121392
+  reduce (*) prime100 = 833294374
 
   &&
 
@@ -391,9 +455,6 @@ test "Reduce a list down to a single value using the supplied function" (fun () 
 
   reduce (+) ["a";"b";"c"] = "abc"
 )
-
-// advance functions
-//fold
 
 
 
