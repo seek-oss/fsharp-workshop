@@ -494,6 +494,21 @@ test "Reduce a list down to a single value using the supplied function" (fun () 
 )
 
 (**********************************************************************************************************************
+    BONUS: Can you rewrite 'last' using reduce?
+*)
+
+let last2 list = reduce (fun x y -> y) list
+
+test "Write a function to return the last item of list using reduce" (fun () ->
+  last2 fib25 = 46368
+
+  &&
+
+  last2 prime100 = 97
+)
+
+
+(**********************************************************************************************************************
     Now you should have a reasonable understand of some common list functions, including the much hyped map reduce.
 
 
