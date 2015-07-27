@@ -251,7 +251,7 @@ var life = (function () {
         }
 
         var currentState = {
-            "grid": [[true]] // life.prev
+            "grid": life.prev
         };
 
         $.ajax({

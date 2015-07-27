@@ -57,7 +57,8 @@ module Main =
             POST 
                 >>= path "/getNext" 
                 >>=Types.request(fun r ->
-                      Game.getNextBoard (deserialise r.rawForm) 
+                      let (board : BoardState) = deserialise r.rawForm
+                      Game.getNextBoard board 
                       |> Successful.OK )
             GET 
                 >>= pathScan "/pattern/%s" 

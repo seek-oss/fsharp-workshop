@@ -11,5 +11,5 @@ type ServerState = {
 
 [<CLIMutable>]
 type BoardState = {
-    grid : bool[][]
+    grid : list<list<bool>>
 }
