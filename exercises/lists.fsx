@@ -139,22 +139,22 @@ test "Create a list comprehension that calculates the first ten triangular numbe
 
 let firstFib =
   match fib25 with
-  | head :: tail  -> Some head
-  | _             -> None
+  | x :: xs   -> Some x
+  | _         -> None
 
 let fibTail =
   match fib25 with
-  | _ :: tail -> tail
+  | _ :: xs   -> xs
   | _         -> []
 
 
 let firstTwoFib =
   match fib25 with
-  | a :: b :: _ -> Some (a, b)
+  | x :: y :: _ -> Some (x, y)
   | _           -> None
 
-let isLast list =
-  match list with
+let isLast =
+  function
   | x :: [] -> true
   | _       -> false
 
@@ -178,8 +178,8 @@ test "Return the fourth item in the Fibonacci sequence" (fun () ->
 
 // walkFib: () -> ()
 let walkFib () =
-  let rec loop action lst =
-    match lst with
+  let rec loop action =
+    function
     | []      ->
       action None
     | x :: xs ->
@@ -411,6 +411,21 @@ test "Reduce a list down to a single value using the supplied function" (fun () 
 
   reduce (+) ["a";"b";"c"] = "abc"
 )
+
+(**********************************************************************************************************************
+    BONUS: Can you rewrite 'last' using reduce?
+*)
+
+let last2 list = reduce (fun x y -> y) list
+
+test "Write a function to return the last item of list using reduce" (fun () ->
+  last2 fib25 = 46368
+
+  &&
+
+  last2 prime100 = 97
+)
+
 
 (**********************************************************************************************************************
     Now you should have a reasonable understand of some common list functions, including the much hyped map reduce.
