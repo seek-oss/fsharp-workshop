@@ -156,22 +156,22 @@ test "Create a list comprehension that calculates the first ten triangular numbe
 
 let firstFib =
   match fib25 with
-  | head :: tail  -> Some head
-  | _             -> None
+  | x :: xs   -> Some x
+  | _         -> None
 
 let fibTail =
   match fib25 with
-  | _ :: tail -> tail
+  | _ :: xs   -> xs
   | _         -> []
 
 
 let firstTwoFib =
   match fib25 with
-  | a :: b :: _ -> Some (a, b)
+  | x :: y :: _ -> Some (x, y)
   | _           -> None
 
-let isLast list =
-  match list with
+let isLast =
+  function
   | x :: [] -> true
   | _       -> false
 
@@ -198,8 +198,8 @@ test "Return the fourth item in the Fibonacci sequence" (fun () ->
 
 // walkFib: () -> ()
 let walkFib () =
-  let rec loop action lst =
-    match lst with
+  let rec loop action =
+    function
     | []      ->
       action None
     | x :: xs ->
@@ -214,8 +214,8 @@ let walkFib () =
 
 // last: 'a list -> a
 let last list =
-  let rec loop lst =
-    match lst with
+  let rec loop =
+    function
     | []      -> failwith "empty list!"
     | x :: [] -> x
     | x :: xs -> loop xs
@@ -239,8 +239,8 @@ test "Write a function to return the last item in a list" (fun () ->
 
 // map: ('a -> 'b) -> 'a list -> 'b list
 let map action list = [
-  let rec loop lst = [
-    match lst with
+  let rec loop list' = [
+    match list' with
     | []      -> ()
     | x :: xs ->
       yield action x
@@ -267,8 +267,8 @@ test "Create a list map function" (fun () ->
 
 // filter: ('a -> bool) -> 'a list -> 'a list
 let filter predicate list = [
-  let rec loop lst = [
-    match lst with
+  let rec loop list' = [
+    match list' with
     | []      -> ()
     | x :: xs ->
       if predicate x then
@@ -293,8 +293,8 @@ test "Write a function that filters a list using the given predicate" (fun () ->
 
 // pairwise: ('a list) -> ('a * 'a) list
 let pairwise list = [
-  let rec loop lst = [
-    match lst with
+  let rec loop list' = [
+    match list' with
     | x :: y :: tail  ->
       yield (x, y)
       yield! loop (y :: tail)
@@ -326,8 +326,8 @@ test "Create a function that uses a match expression to return pairs of items fr
 
 // zip: a' list -> 'b list -> (a' list
 let zip list1 list2 = [
-  let rec loop lst1 lst2 = [
-    match lst1, lst2 with
+  let rec loop list1' list2' = [
+    match list1', list2' with
     | x :: xs, y :: ys  ->
       yield (x, y)
       yield! loop xs ys
@@ -350,9 +350,9 @@ test "Write a function can zip two lists of the same length together" (fun () ->
 
 // sum: int list -> int
 let sum list =
-  let rec loop acc lst =
-    match lst with
-    | [] -> acc
+  let rec loop acc =
+    function
+    | []      -> acc
     | x :: xs -> (loop (x + acc) xs)
   loop 0 list
 
@@ -375,9 +375,9 @@ test "Write a function that can sum the integers in a list" (fun () ->
 
 // sum: 'a list -> 'a
 let inline sum2 list =
-  let rec loop acc lst =
-    match lst with
-    | [] -> acc
+  let rec loop acc =
+    function
+    | []      -> acc
     | x :: xs -> (loop (x + acc) xs)
   loop (LanguagePrimitives.GenericZero<'a>) list
 
@@ -406,9 +406,9 @@ test "Write a function that can sum numeric values in a list" (fun () ->
 
 // fold: ('state -> 'a -> 'state) -> 'state -> 'a list -> 'state
 let fold folder state list =
-  let rec loop acc lst =
-    match lst with
-    | [] -> acc
+  let rec loop acc =
+    function
+    | []      -> acc
     | x :: xs -> loop (folder acc x) xs
   loop state list
 
@@ -471,9 +471,9 @@ test "Write a function that can sum numeric values in a list using fold" (fun ()
 *)
 
 // reduce: ('a -> 'a -> 'a) -> 'a list -> 'a
-let reduce reducer list =
-  match list with
-  | [] -> failwith "cannot reduce an empty list"
+let reduce reducer =
+  function
+  | []      -> failwith "cannot reduce an empty list"
   | x :: xs -> fold reducer x xs
 
  
