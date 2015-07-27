@@ -5,8 +5,8 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProjectGuid>{A360702B-D992-4DED-9094-7B51D971D98E}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Chatter.Server</RootNamespace>
-    <AssemblyName>Chatter.Server</AssemblyName>
+    <RootNamespace>Life.Server</RootNamespace>
+    <AssemblyName>Life.Server</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>

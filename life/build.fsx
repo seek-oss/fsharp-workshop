@@ -1,15 +1,15 @@
 #r "packages/FAKE/tools/FakeLib.dll" // include Fake lib
 open Fake
 
-let solutionFile = "./Chatter.sln"
-let buildChatter () =
+let solutionFile = "./Life.sln"
+let buildLife () =
     !! solutionFile
     |> MSBuildRelease "" "Build"
     |> ignore
 
 Target "Build" (fun _ ->
     printfn "Building.."
-    buildChatter()
+    buildLife()
 )
 
 Target "Clean" (fun _ ->
@@ -20,18 +20,18 @@ Target "Clean" (fun _ ->
 
 let runChatter () =
     fireAndForget (fun startInfo ->
-        startInfo.FileName <- "./Chatter.Server/bin/Release/Chatter.Server.exe"
-        startInfo.WorkingDirectory <- "./Chatter.Server"
+        startInfo.FileName <- "./Life.Server/bin/Release/Life.Server.exe"
+        startInfo.WorkingDirectory <- "./Life.Server"
     )
     
 Target "Watch" (fun _ ->
-    buildChatter()
+    buildLife()
 
-    use watcher = !! "Chatter.Server/**/*.*" |> WatchChanges (fun changes ->
+    use watcher = !! "Life.Server/**/*.*" |> WatchChanges (fun changes ->
         tracefn "%A" changes
         killAllCreatedProcesses ()
 
-        buildChatter()
+        buildLife()
 
         runChatter ()
     )
