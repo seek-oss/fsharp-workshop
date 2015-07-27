@@ -193,13 +193,7 @@ let walkFib () =
 *)
 
 // last: 'a list -> a
-let last list =
-  let rec loop lst =
-    match lst with
-    | []      -> failwith "empty list!"
-    | x :: [] -> x
-    | x :: xs -> loop xs
-  loop list
+let last list = failwith "todo"
 
 
 test "Write a function to return the last item in a list" (fun () ->
