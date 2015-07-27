@@ -44,6 +44,14 @@ let floatRange    = [ 0.1 .. 0.1 .. 1.0 ]
 
 
 (**********************************************************************************************************************
+    You can append to a list using the '@' symbol, however this iterates through the items in the first list before
+    it can return the newly combined list.
+*) 
+
+
+let appendedList  = [ 1; 2; 3 ] @ [ 4; 5; 6 ]
+
+(**********************************************************************************************************************
     Another way to create lists is through list comprehensions.
 *) 
 
@@ -147,20 +155,25 @@ test "Create a list comprehension that calculates the first ten triangular numbe
 *)
 
 let firstFib =
-      match fib25 with
-      | head :: tail  -> Some head
-      | _             -> None
+  match fib25 with
+  | head :: tail  -> Some head
+  | _             -> None
 
 let fibTail =
-      match fib25 with
-      | _ :: tail -> tail
-      | _         -> []
+  match fib25 with
+  | _ :: tail -> tail
+  | _         -> []
 
 
 let firstTwoFib =
-      match fib25 with
-      | a :: b :: _ -> Some (a, b)
-      | _           -> None
+  match fib25 with
+  | a :: b :: _ -> Some (a, b)
+  | _           -> None
+
+let isLast list =
+  match list with
+  | x :: [] -> true
+  | _       -> false
 
 
 (**********************************************************************************************************************
@@ -193,7 +206,29 @@ let walkFib () =
       action (Some x)
       loop action xs
   loop (function | Some x -> printfn "%d" x | _ -> printfn "End of list") fib25
-   
+
+
+(**********************************************************************************************************************
+    Using the above few functions as inspiration see if you can write a function to return the last item in a list.
+*)
+
+// last: 'a list -> a
+let last list =
+  let rec loop lst =
+    match lst with
+    | []      -> failwith "empty list!"
+    | x :: [] -> x
+    | x :: xs -> loop xs
+  loop list
+
+
+test "Write a function to return the last item in a list" (fun () ->
+  last fib25 = 46368
+
+  &&
+
+  last prime100 = 97
+)
 
 (**********************************************************************************************************************
     Mapping items within lists from one form to another is a common task. Write a generic list map function that
@@ -428,9 +463,11 @@ test "Write a function that can sum numeric values in a list using fold" (fun ()
 
 
 (**********************************************************************************************************************
-    Now lets rethink fold in a different way, this time to reduce a list down to a single value using the
-    supplied reducer function, but unlike fold, there's no initial state passed in. Use the fold function in your
-    solution.
+    Now lets rethink fold in a different way, this time to reduce a list down to a single value using the supplied
+    reducer function, but unlike fold, there's no initial state passed in as it starts with the first two items
+    in the list first.
+
+    Use the fold function in your solution.
 *)
 
 // reduce: ('a -> 'a -> 'a) -> 'a list -> 'a
@@ -456,7 +493,11 @@ test "Reduce a list down to a single value using the supplied function" (fun () 
   reduce (+) ["a";"b";"c"] = "abc"
 )
 
+(**********************************************************************************************************************
+    Now you should have a reasonable understand of some common list functions, including the much hyped map reduce.
 
+
+*)
 
 // arrays
 // sequences
