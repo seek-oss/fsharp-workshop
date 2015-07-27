@@ -13,10 +13,8 @@ open Examples
 let partition n =
   if n < 0
   then "negative"
-  elif n > 0
-  then "positive"
+  // TODO
   else "zero"
-
 
 test "partitioning numbers 1" (fun _ ->
   partition 1 = "positive"
@@ -30,8 +28,8 @@ test "partitioning numbers 1" (fun _ ->
 let partition' n =
   match n with
   | x when x < 0 -> "negative"
-  | x when x > 0 -> "positive"
-  | _            -> "zero"
+  // TODO
+  | _            -> failwith "todo"
 
 // I hope you agree that's a whole lot more readable. The last line with
 // the underscore is a wildcard match, it will match anything and discard
@@ -97,14 +95,16 @@ let calculatePostage satchel =
   let maximumMassInGrams = 2000M
 
   let anyExceedSize (dimensions : decimal list) =
-    not <| List.forall (fun n -> n < maximumSizeInMetres) dimensions
+    // TODO
+    false
 
   match satchel with
   | { DimensionsInMetres = x,y,z; MassInGrams = _ } when [x;y;z] |> anyExceedSize
       -> TooBig 
   | { DimensionsInMetres = _;     MassInGrams = m } when m > maximumMassInGrams
       -> TooHeavy
-  | { DimensionsInMetres = _;     MassInGrams = m } -> m * costPerGram |> Dollars
+  // TODO
+  | _ -> Dollars 0M
 
 test "Calculating postage 1" (fun _ ->
   calculatePostage { DimensionsInMetres = 0.12M, 0.1M, 0.1M; MassInGrams = 700M } = Dollars 7M
@@ -149,11 +149,7 @@ let first15 = [
 // to pass the following test, using guard clauses.
 
 let fizzbuzz n =
-  match n with
-  | x when x % 3 = 0 && x % 5 = 0 -> "FizzBuzz"
-  | x when x % 3 = 0              -> "Fizz"
-  | x when x % 5 = 0              -> "Buzz"
-  | x                             -> string x
+  string n
 
 test "We can fizz buzz 1" (fun _ ->
   let result = [1 .. 15] |> List.map fizzbuzz
@@ -174,8 +170,7 @@ let (|DivisibleBy|_|) m n = if n % m = 0 then Some DivisibleBy else None
 let fizzbuzz' n =
   match n with
   | DivisibleBy 3 & DivisibleBy 5 -> "FizzBuzz"
-  | DivisibleBy 3                 -> "Fizz"
-  | DivisibleBy 5                 -> "Buzz"
+  // TODO
   | x                             -> string x
 
 // So as you can see, active patterns can take parameters and they can be combined with & and |
@@ -207,9 +202,7 @@ let (|Informational|Success|Redirection|ClientError|ServerError|Invalid|) = func
 
 let logHttpStatusCode = function
   | ServerError        -> "Server error"
-  | ClientError        -> "Client error"
-  | Success            -> "Success"
-  | Redirection        -> "Redirection"
+  // TODO
   | _                  -> "Invalid"
 
 test "404 is client error" (fun _ ->
@@ -238,13 +231,8 @@ test "302 is redirection" (fun _ ->
 type HttpTotals = { Success : int; Error : int }
 
 let categorise codes =
-  let folder acc = function
-    | ClientError
-    | ServerError -> { acc with Error = acc.Error + 1 }
-    | Success     -> { acc with Success = acc.Success + 1 }
-    | _           -> acc
-  codes
-  |> Seq.fold folder { Success = 0; Error = 0 }
+  // TODO
+  { Success = 0; Error = 0 }
 
 test "Categorising HTTP responses by status code 1" (fun _ ->
   [200; 200; 404; 200; 401; 404; 500; 500; 200; 200; 200]
