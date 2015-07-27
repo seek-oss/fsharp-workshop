@@ -1,4 +1,4 @@
-﻿namespace Chatter.Server
+﻿namespace Life.Server
 
 open System.Text
 
