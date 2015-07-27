@@ -1,6 +1,10 @@
 /*
+ * Modified 2015 by Andrew Browne to demonstrate F#
+ * Server side game of life rendering
+ * Original Source: https://github.com/jpulgarin/canvaslife/blob/master/canvaslife.js
+ * 
  * Copyright 2011-2012 Julian Pulgarin
- *
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -174,39 +178,90 @@ var life = (function () {
         return count;
     }
 
-    function nextGen() {
-        var l = life,
-            g = graphics,
-            count;
+    function loadRle(data) {
+        var g = graphics,
+            l = life,
+            padding = 30;
+        var match = data.match(/x\s=\s(\d*).*?y\s=\s(\d*).*\r([^]*)!/),
+                     x = parseInt(match[1], 10),
+                     pattern = match[3].replace(/\s+/g, ""), // remove whitespace
+                     lines = pattern.split('$'),
+                     offset = 0,
+                     i,
+                     line,
+                     length,
+                     j,
+                     y = padding - 1;
 
+        $(graphics.canvasSelector).attr('height', graphics.cellSize * (y + 1 + (padding * 2)));
+        $(graphics.canvasSelector).attr('width', graphics.cellSize * (x + 1 + (padding * 2)));
+        $(graphics.canvasSelector).unbind('mousedown');
+        life.initUniverse(graphics.canvasSelector);
+
+
+        for (i = 0; i < lines.length; i++) {
+            y++;
+            x = padding;
+            line = lines[i];
+            while (line) {
+                if (line.charAt(0) === 'o' || line.charAt(0) === 'b') {
+                    if (line.charAt(0) === 'o') {
+                        life.prev[x][y] = true;
+                        graphics.drawCell(x, y, true);
+                    }
+                    x++;
+                    line = line.substring(1);
+                } else {
+                    length = line.match(/(\d*)/)[1];
+                    line = line.substring(length.length);
+                    length = parseInt(length, 10);
+                    if (!line) {
+                        y += length - 1;
+                        break;
+                    }
+                    if (line.charAt(0) === 'o') {
+                        for (j = 0; j < length; j++) {
+                            life.prev[x + j][y] = true;
+                            graphics.drawCell(x + j, y, true);
+                        }
+                    }
+                    x += length;
+                    line = line.substring(1);
+                }
+            }
+        }
+    }
+
+    // Parses files in Run Length Encoded Format
+    // http://www.conwaylife.com/wiki/RLE
+    function loadPattern(url) {
+        $.ajax({
+            url: url,
+            success: function (data) {
+                loadRle(data);
+            }
+        });
+    }
+
+    function nextGen() {
         for (x = 0; x < life.xCells; x++) {
             for (y = 0; y < life.yCells; y++) {
                 life.next[x][y] = life.prev[x][y];
             }
         }
 
-        for (x = 0; x < life.xCells; x++) {
-            for (y = 0; y < life.yCells; y++) {
-                count = neighbourCount(x, y);
+        var currentState = {
+            "grid": [[true]] // life.prev
+        };
 
-                // Game of Life rules
-                if (prev[x][y]) {
-                    if (count < 2 || count > 3) {
-                        next[x][y] = false;
-                    }
-                } else if (count === 3) {
-                    next[x][y] = true;
-                }
-            }
-        }
-
-        graphics.smartPaint();
-
-        for (x = 0; x < life.xCells; x++) {
-            for (y = 0; y < life.yCells; y++) {
-                life.prev[x][y] = life.next[x][y];
-            }
-        }
+        $.ajax({
+            url: "/getNext",
+            success: loadRle,
+            //dataType: "json",
+            contentType: "application/json",
+            type: "POST",
+            data: JSON.stringify(currentState)
+        });
     }
 
     function toggleLife() {
@@ -217,68 +272,6 @@ var life = (function () {
             alive = false;
             clearInterval(timeout);
         }
-    }
-
-    // Parses files in Run Length Encoded Format
-    // http://www.conwaylife.com/wiki/RLE
-    function loadPattern(url) {
-        var g = graphics,
-            l = life,
-            padding = 30;
-
-        $.ajax({
-            url: url,
-            success: function (data) {
-                var match = data.match(/x\s=\s(\d*).*?y\s=\s(\d*).*\r([^]*)!/),
-                    x = parseInt(match[1], 10),
-                    pattern = match[3].replace(/\s+/g, ""), // remove whitespace
-                    lines = pattern.split('$'),
-                    offset = 0,
-                    i,
-                    line,
-                    length,
-                    j,
-                    y = padding - 1;
-
-                $(graphics.canvasSelector).attr('height', graphics.cellSize * (y + 1 + (padding * 2)));
-                $(graphics.canvasSelector).attr('width', graphics.cellSize * (x + 1 + (padding * 2)));
-                $(graphics.canvasSelector).unbind('mousedown');
-                life.initUniverse(graphics.canvasSelector);
-
-
-                for (i = 0; i < lines.length; i++) {
-                    y++;
-                    x = padding;
-                    line = lines[i];
-                    while (line) {
-                        if (line.charAt(0) === 'o' || line.charAt(0) === 'b') {
-                            if (line.charAt(0) === 'o') {
-                                life.prev[x][y] = true;
-                                graphics.drawCell(x, y, true);
-                            }
-                            x++;
-                            line = line.substring(1);
-                        } else {
-                            length = line.match(/(\d*)/)[1];
-                            line = line.substring(length.length);
-                            length = parseInt(length, 10);
-                            if (!line) {
-                                y += length - 1;
-                                break;
-                            }
-                            if (line.charAt(0) === 'o') {
-                                for (j = 0; j < length; j++) {
-                                    life.prev[x + j][y] = true;
-                                    graphics.drawCell(x + j, y, true);
-                                }
-                            }
-                            x += length;
-                            line = line.substring(1);
-                        }
-                    }
-                }
-            }
-        });
     }
 
     function isAlive() {

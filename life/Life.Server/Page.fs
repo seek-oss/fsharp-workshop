@@ -1,9 +1,9 @@
-﻿namespace Chatter.Server
+﻿namespace Life.Server
 
 open FSharpx.Collections
 
-module ChatPage =
-    let page = """
+module Page =
+    let pageStart = """
 <html>
     <head><title>Chatter</title></head>
     <script src="./static/jquery.js"></script>
@@ -18,7 +18,9 @@ module ChatPage =
         <input type="button" id="start" value="Start Life" onclick="life.toggleLife();">
         Patterns:
         <select id="patterns">
-        <option value="">---</option>
+        <option value="">---</option>"""
+
+    let pageEnd = """
         </select>
         <input type="button" value="-" onclick="life.changeSpeed(false); $('#speed').text(100 - (life.speed / 10));">
         Speed: <span id="speed"></span>/100
@@ -55,16 +57,18 @@ module ChatPage =
    </body>
 </html>""" 
 
-    let renderShell = seq {
-        yield page }
+    let renderShell patterns = seq {
+        yield pageStart
+        yield! patterns 
+        yield pageEnd }
 
-    let renderCurrentRoom room = seq {
-        match room with
-        | Some room ->
-            yield sprintf "<div>Current Room: %s</div>" room
-        | None ->
-            yield sprintf "<div>No room selected</div>" 
+    let renderPattern (pattern : Pattern) = seq {
+        yield sprintf """<option value="/pattern/%s">%s</option>""" pattern.Name pattern.Name
+    }
 
+    let renderPatternList (patterns : list<Pattern>) = seq {
+        for pattern in patterns do
+            yield! renderPattern pattern
     }
 
     let render (pageState : PageState) =
@@ -73,5 +77,5 @@ module ChatPage =
         yield! renderRoomList pageState.Rooms
       })
         
-    let render (pageState : PageState) = 
-       renderShell //(renderRoomList pageState.Rooms)
+    let render (pageState : ServerState) = 
+       renderShell (renderPatternList pageState.Patterns)

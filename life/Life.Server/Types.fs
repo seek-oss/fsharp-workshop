@@ -1,12 +1,15 @@
-﻿namespace Chatter.Server
+﻿namespace Life.Server
 
-type Room = string
-
-type ServerState = {
-    Rooms: list<Room>
+type Pattern = {
+    Name: string
+    RLE: string
 }
 
-type PageState = {
-    Rooms: list<Room>
-    CurrentRoom : option<Room>
+type ServerState = {
+    Patterns: list<Pattern>
+}
+
+[<CLIMutable>]
+type BoardState = {
+    grid : bool[][]
 }
