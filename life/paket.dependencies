@@ -7,3 +7,4 @@ nuget suave
 nuget FSharpx.Async
 nuget xUnit
 nuget FsCheck.xunit
+nuget FSharp.Core >= 4.0.0.1
