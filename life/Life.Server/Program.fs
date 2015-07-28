@@ -30,7 +30,8 @@ module Main =
                 >>= path "/getNext"
                 >>= Types.request(fun r ->
                       let (board : BoardState) = JSON.deserialise r.rawForm
-                      let result = Game.getNextBoard board
+                      let grid = List.toArray2D false board.grid
+                      let result = Game.computeNext grid
                       JSON.serialize result |> Successful.OK )
             PUT
                 >>= pathScan "/pattern/%s"
@@ -39,7 +40,7 @@ module Main =
                         let (rle : string) = 
                             ctx.request.rawForm
                             |> JSON.deserialise
-                            |> (fun (x : BoardState) -> Game.getGrid x.grid)
+                            |> (fun (x : BoardState) -> List.toArray2D false x.grid)
                             |> RLE.encodeWithHeader
 
                         let pattern : Pattern = {

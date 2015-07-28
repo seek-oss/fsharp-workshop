@@ -21,32 +21,10 @@ module Game =
                 yield true
         } |> Seq.length
 
-    let lifecycle (board: bool[,]) = 
+    let computeNext (board: bool[,]) = 
         Array2D.init (Array2D.length1 board) (Array2D.length2 board) (fun i j ->
             let neighbours = amount_neighbours board (i, j)
             match neighbours with
                 | 2 -> board.[i, j]
                 | 3 -> true
                 | _ -> false)
-
-    let getGrid (cells : List<List<bool>>) = 
-        let xLen = cells.Length
-        let yLen = cells |> List.maxBy (fun x -> x.Length) |> List.length
-        let getCellValue x y =
-            let row =
-                cells
-                |> Seq.skip x 
-                |> Seq.head
-                |> List.ofSeq
-
-            if (row.Length > y) then
-                List.nth row y
-            else 
-                false
-
-        Array2D.init xLen yLen getCellValue
-
-    let getNextBoard (board : BoardState) =
-        let grid = getGrid board.grid
-        let result = lifecycle grid
-        result
