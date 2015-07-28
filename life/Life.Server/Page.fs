@@ -71,11 +71,5 @@ module Page =
             yield! renderPattern pattern
     }
 
-    let render (pageState : PageState) =
-      renderShell (seq {
-        yield! renderCurrentRoom pageState.CurrentRoom
-        yield! renderRoomList pageState.Rooms
-      })
-        
     let render (pageState : ServerState) = 
        renderShell (renderPatternList pageState.Patterns)

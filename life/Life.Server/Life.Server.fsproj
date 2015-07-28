@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -15,11 +15,18 @@
     <OutputPath>bin\Debug</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <Externalconsole>true</Externalconsole>
+    <Optimize>true</Optimize>
+    <DefineConstants>
+    </DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <Externalconsole>true</Externalconsole>
+    <Optimize>true</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DefineConstants>
+    </DefineConstants>
   </PropertyGroup>
   <PropertyGroup>
     <FSharpSdksLocation Condition="Exists('\Library\Frameworks\Mono.framework\Versions\Current\lib\mono\Microsoft SDKs\F#')">/Library/Frameworks/Mono.framework/Versions/Current/lib/mono/Microsoft SDKs/F#</FSharpSdksLocation>
@@ -35,6 +42,7 @@
     <Compile Include="WebHelpers.fs" />
     <Compile Include="DataStore.fs" />
     <Compile Include="Page.fs" />
+    <Compile Include="RLE.fs" />
     <Compile Include="Game.fs" />
     <Compile Include="Program.fs" />
     <Content Include="App.config">
