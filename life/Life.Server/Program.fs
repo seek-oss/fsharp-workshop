@@ -28,10 +28,29 @@ module Main =
             GET >>= pathScan "/static/%s" (fun s -> (file <| sprintf "./static/%s" s))
             POST
                 >>= path "/getNext"
-                >>=Types.request(fun r ->
+                >>= Types.request(fun r ->
                       let (board : BoardState) = JSON.deserialise r.rawForm
                       let result = Game.getNextBoard board
                       JSON.serialize result |> Successful.OK )
+            PUT
+                >>= pathScan "/pattern/%s"
+                    (fun s ctx -> async {
+                        let name = System.Web.HttpUtility.UrlDecode s
+                        let (rle : string) = 
+                            ctx.request.rawForm
+                            |> JSON.deserialise
+                            |> (fun (x : BoardState) -> Game.getGrid x.grid)
+                            |> RLE.encodeWithHeader
+
+                        let pattern : Pattern = {
+                            Name = name
+                            RLE = rle
+                        }
+
+                        do! dataStore |> DataStore.addPattern pattern |> Async.Ignore
+                      
+                        return! OK "ok" ctx
+                    })
             GET
                 >>= pathScan "/pattern/%s"
                     (fun s ctx -> async {

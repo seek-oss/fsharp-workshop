@@ -255,7 +255,7 @@ var life = (function () {
         }
     }
 
-    function nextGen() {
+    function getGridState() {
         var gridState = [];
         for (y = 0; y < life.yCells; y++) {
             gridState[y] = [];
@@ -265,17 +265,27 @@ var life = (function () {
             }
         }
 
-        var currentState = {
+        return {
             "grid": gridState
         };
-
+    }
+    function nextGen() {
         $.ajax({
             url: "/getNext",
             success: loadGrid,
             dataType: "json",
             contentType: "application/json",
             type: "POST",
-            data: JSON.stringify(currentState)
+            data: JSON.stringify(getGridState())
+        });
+    }
+
+    function save() {
+        $.ajax({
+            url: "/pattern/" + document.getElementById("patternName").value,
+            contentType: "application/json",
+            type: "PUT",
+            data: JSON.stringify(getGridState())
         });
     }
 
@@ -345,6 +355,7 @@ var life = (function () {
         isAlive: isAlive,
         clear: clear,
         changeSpeed: changeSpeed,
-        loadPattern: loadPattern
+        loadPattern: loadPattern,
+        save: save
     };
 }());
