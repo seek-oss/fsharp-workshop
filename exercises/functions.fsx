@@ -47,7 +47,7 @@ let multiply a b = a * b
 // the type syntax might not be what you expected
 let multiply' : int -> int -> int = multiply
 
-// functional only really take one argument at a time
+// functions only really take one argument at a time
 // so you can think of (int -> int -> int) as really
 // a type of (int -> (int -> int))
 // ie a function of two parameters is really a function
