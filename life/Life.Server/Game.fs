@@ -33,7 +33,7 @@ module Game =
         let xLen = cells.Length
         let yLen = cells |> List.maxBy (fun x -> x.Length) |> List.length
         let getCellValue x y =
-            let row = 
+            let row =
                 cells
                 |> Seq.skip x 
                 |> Seq.head
@@ -49,4 +49,4 @@ module Game =
     let getNextBoard (board : BoardState) =
         let grid = getGrid board.grid
         let result = lifecycle grid
-        RLE.encodeWithHeader result
+        result
