@@ -1,6 +1,4 @@
 ﻿namespace Life.Server
-open Newtonsoft.Json.FSharp
-open Newtonsoft.Json
 open Suave
 open Suave.Http.Successful
 open Suave.Http
@@ -13,17 +11,6 @@ open Suave.Types
 open System.IO
 
 module Main = 
-    let jsonSerializer = JsonSerializer.Create (JsonSerializerSettings() |> Newtonsoft.Json.FSharp.Serialisation.extend)
-    let deserialise<'t> (data:byte array) : 't =
-        use ms = new MemoryStream(data)
-        use jsonReader = new JsonTextReader(new StreamReader(ms))
-        jsonSerializer.Deserialize<'t>(jsonReader)
-
-    let serialize (data:'t) : string =
-        use sw = new StringWriter()
-        use jsonWriter = new JsonTextWriter(sw)
-        jsonSerializer.Serialize(jsonWriter, data)
-        sw.ToString()
 
     [<EntryPoint>]
     let main argv =
@@ -42,9 +29,9 @@ module Main =
             POST
                 >>= path "/getNext"
                 >>=Types.request(fun r ->
-                      let (board : BoardState) = deserialise r.rawForm
+                      let (board : BoardState) = JSON.deserialise r.rawForm
                       let result = Game.getNextBoard board
-                      serialize result |> Successful.OK )
+                      JSON.serialize result |> Successful.OK )
             GET
                 >>= pathScan "/pattern/%s"
                     (fun s ctx -> async {
