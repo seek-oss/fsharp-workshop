@@ -28,6 +28,10 @@ module Page =
         <input type="button" value="Next Generation" onclick="life.nextGen();">
         <input type="button" value="Clear" onclick="life.clear();">
     </p>
+    <p>
+        <input type="text" value="pattern name" id="patternName"></input>
+        <input type="button" value="Save" onclick="life.save();">
+    </p>
     <canvas id="universe" width="900" height="500">
        <strong>Your browser does not support canvas. You should probably upgrade and come back.</strong>
     </canvas><br>
