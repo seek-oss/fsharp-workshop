@@ -243,9 +243,6 @@ var life = (function () {
     }
 
     function loadGrid(gridState) {
-        console.log('loadGrid');
-        console.log(life.xCells);
-        console.log(gridState);
         for (y = 0; y < gridState.length; y++) {
             var row = gridState[y];
             for (x = 0; x < row.length; x++) {
