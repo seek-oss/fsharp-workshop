@@ -20,14 +20,18 @@ Target "Clean" (fun _ ->
 
 let runChatter () =
     fireAndForget (fun startInfo ->
-        startInfo.FileName <- "./Life.Server/bin/Release/Life.Server.exe"
         startInfo.WorkingDirectory <- "./Life.Server"
+        if (EnvironmentHelper.isMono) then
+            startInfo.FileName <- "mono"
+            startInfo.Arguments <- "./bin/Release/Life.Server.exe"
+        else
+            startInfo.FileName <- "./Life.Server/bin/Release/Life.Server.exe"
     )
-    
+
 Target "Watch" (fun _ ->
     buildLife()
 
-    use watcher = !! "Life.Server/**/*.*" |> WatchChanges (fun changes ->
+    use watcher = !! "Life.Server/*.fs" |> WatchChanges (fun changes ->
         tracefn "%A" changes
         killAllCreatedProcesses ()
 
