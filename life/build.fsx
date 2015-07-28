@@ -1,7 +1,11 @@
 #r "packages/FAKE/tools/FakeLib.dll" // include Fake lib
 open Fake
+open Fake.Testing
+open System
 
 let solutionFile = "./Life.sln"
+let testAssemblies = "./Life.Tests/bin/Release/*Tests*.dll"
+
 let buildLife () =
     !! solutionFile
     |> MSBuildRelease "" "Build"
@@ -28,6 +32,11 @@ let runChatter () =
             startInfo.FileName <- "./Life.Server/bin/Release/Life.Server.exe"
     )
 
+Target "RunTests" (fun _ ->
+    !! (testAssemblies)
+    |> xUnit2 (fun p -> { p with ToolPath = findToolInSubPath "xunit.console.x86.exe" (currentDirectory @@ "tools" @@ "xUnit")})
+)
+
 Target "Watch" (fun _ ->
     buildLife()
 
@@ -53,5 +62,8 @@ Target "Run" (fun _ ->
 
 "Build"
     ==> "Run"
+
+"Build"
+    ==> "RunTests"
 
 RunTargetOrDefault "Build"

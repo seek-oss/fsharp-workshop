@@ -19,6 +19,12 @@ module Main =
         use jsonReader = new JsonTextReader(new StreamReader(ms))
         jsonSerializer.Deserialize<'t>(jsonReader)
 
+    let serialize (data:'t) : string =
+        use sw = new StringWriter()
+        use jsonWriter = new JsonTextWriter(sw)
+        jsonSerializer.Serialize(jsonWriter, data)
+        sw.ToString()
+
     [<EntryPoint>]
     let main argv =
         printfn "Current directory: %s"  <| System.IO.Directory.GetCurrentDirectory()
@@ -58,8 +64,8 @@ module Main =
                 >>= path "/getNext"
                 >>=Types.request(fun r ->
                       let (board : BoardState) = deserialise r.rawForm
-                      Game.getNextBoard board
-                      |> Successful.OK )
+                      let result = Game.getNextBoard board
+                      serialize result |> Successful.OK )
             GET
                 >>= pathScan "/pattern/%s"
                     (fun s ctx -> async {

@@ -178,11 +178,10 @@ var life = (function () {
         return count;
     }
 
-    function loadRle(data) {
+    function loadRle(data, padding) {
         var g = graphics,
-            l = life,
-            padding = 30;
-        var match = data.match(/x\s=\s(\d*).*?y\s=\s(\d*).*\r([^]*)!/),
+            l = life;
+        var match = data.match(/x\s=\s(\d*).*?y\s=\s(\d*).*\s*([^]*)!/),
                      x = parseInt(match[1], 10),
                      pattern = match[3].replace(/\s+/g, ""), // remove whitespace
                      lines = pattern.split('$'),
@@ -238,26 +237,42 @@ var life = (function () {
         $.ajax({
             url: url,
             success: function (data) {
-                loadRle(data);
+                loadRle(data, 30);
             }
         });
     }
 
+    function loadGrid(gridState) {
+        console.log('loadGrid');
+        console.log(life.xCells);
+        console.log(gridState);
+        for (y = 0; y < gridState.length; y++) {
+            var row = gridState[y];
+            for (x = 0; x < row.length; x++) {
+                life.prev[x][y] = gridState[y][x];
+                graphics.drawCell(x, y, gridState[y][x]);
+            }
+        }
+    }
+
     function nextGen() {
-        for (x = 0; x < life.xCells; x++) {
-            for (y = 0; y < life.yCells; y++) {
-                life.next[x][y] = life.prev[x][y];
+        var gridState = [];
+        for (y = 0; y < life.yCells; y++) {
+            gridState[y] = [];
+            for (x = 0; x < life.xCells; x++) {
+                // we send rows to the server hence y x
+                gridState[y][x] = life.prev[x][y];
             }
         }
 
         var currentState = {
-            "grid": life.prev
+            "grid": gridState
         };
 
         $.ajax({
             url: "/getNext",
-            success: loadRle,
-            //dataType: "json",
+            success: loadGrid,
+            dataType: "json",
             contentType: "application/json",
             type: "POST",
             data: JSON.stringify(currentState)

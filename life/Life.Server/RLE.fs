@@ -33,7 +33,7 @@ module RLE =
             match n >= rows with
             | true -> s
             | false ->
-                let row = array2d.[0, *]
+                let row = array2d.[n, *]
                 loop (n + 1) (f s row)
 
         loop 0 init
@@ -61,4 +61,4 @@ module RLE =
         #O Seek Ltd
         #C Don't know what it is
         x = %d, y = %d, rule = B3/S23
-        %s!""" x y rle
+        %s""" x y rle
