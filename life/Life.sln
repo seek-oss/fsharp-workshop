@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Chatter.Server", "Chatter.Server\Chatter.Server.fsproj", "{A360702B-D992-4DED-9094-7B51D971D98E}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Life.Server", "Life.Server\Life.Server.fsproj", "{A360702B-D992-4DED-9094-7B51D971D98E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{634B5A91-C8C8-4903-B63B-B047A704CFB7}"
 	ProjectSection(SolutionItems) = preProject
@@ -11,7 +11,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{634B
 		build.fsx = build.fsx
 		build.sh = build.sh
 		paket.dependencies = paket.dependencies
+		paket.lock = paket.lock
 	EndProjectSection
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Life.Tests", "Life.Tests\Life.Tests.fsproj", "{26CAFF3F-E0C7-4C82-B866-6D5417A5B705}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +26,10 @@ Global
 		{A360702B-D992-4DED-9094-7B51D971D98E}.Debug|x86.Build.0 = Debug|x86
 		{A360702B-D992-4DED-9094-7B51D971D98E}.Release|x86.ActiveCfg = Release|x86
 		{A360702B-D992-4DED-9094-7B51D971D98E}.Release|x86.Build.0 = Release|x86
+		{26CAFF3F-E0C7-4C82-B866-6D5417A5B705}.Debug|x86.ActiveCfg = Debug|x86
+		{26CAFF3F-E0C7-4C82-B866-6D5417A5B705}.Debug|x86.Build.0 = Debug|x86
+		{26CAFF3F-E0C7-4C82-B866-6D5417A5B705}.Release|x86.ActiveCfg = Release|x86
+		{26CAFF3F-E0C7-4C82-B866-6D5417A5B705}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

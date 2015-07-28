@@ -1,6 +1,0 @@
-source https://nuget.org/api/v2
-
-nuget FAKE
-nuget FSharpx.Collections
-nuget suave
-nuget FSharpx.Async
