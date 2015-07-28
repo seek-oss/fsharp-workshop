@@ -42,6 +42,7 @@
     <Compile Include="Types.fs" />
     <Compile Include="WebHelpers.fs" />
     <Compile Include="JSON.fs" />
+    <Compile Include="List.fs" />
     <Compile Include="PatternSamples.fs" />
     <Compile Include="DataStore.fs" />
     <Compile Include="Page.fs" />

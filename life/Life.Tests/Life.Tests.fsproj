@@ -160,6 +160,7 @@
   </Choose>
   <ItemGroup>
     <None Include="paket.references" />
+    <Compile Include="GameTests.fs" />
     <Compile Include="RLETests.fs" />
   </ItemGroup>
   <ItemGroup>
