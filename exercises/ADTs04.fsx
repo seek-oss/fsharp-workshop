@@ -29,18 +29,11 @@ let bob = { Name = "Bob"; ContactDetails = None }
 let jim  = { Name = "Jim"; ContactDetails = Email "jim@example.org" |> Some }
 
 // See if you can write the updated howToContact without referring back to the previous
-// worksheet. You can write it all inside one function if you'd like, or split it out into
-// two like we previously did.
+// worksheet. You can write it all inside one function if you'd like, or split it out in
+// to two like we previously did.
 
 let howToContact (person : Person) =
-    let printContactDetails = function
-      | Email e -> sprintf "email address - %s" e
-      | Phone p -> sprintf "phone number - %010d" p
-    match person.ContactDetails with
-    | None   -> sprintf "%s does not wish to be contacted" person.Name
-    | Some d -> let contactDetails = printContactDetails d
-                sprintf "%s can be contacted on %s" person.Name contactDetails
-
+  failwith "todo"
 
 test "How to contact Jim" (fun _ ->
   howToContact jim = "Jim can be contacted on email address - jim@example.org"

@@ -26,7 +26,7 @@ let stopSign = Red
 let describeColour c =
   match c with
   | Blue   -> "It's blue"
-  | Red    -> "It's red"
+  | Red    -> failwith "todo"
   | Yellow -> "It's yellow"
 
 test "Describing colours" (fun _ ->
@@ -40,7 +40,7 @@ test "Describing colours" (fun _ ->
 
 let describeColour' = function
   | Blue   -> "It's blue"
-  | Red    -> "It's red"
+  | Red    -> failwith "todo"
   | Yellow -> "It's yellow"
 
 // The second version of describeColour is exactly the same
@@ -83,19 +83,19 @@ let printContactDetails = function
   | Phone p -> sprintf "phone number - %010d" p
 
 test "Printing contact details" (fun _ ->
-  printContactDetails jim.ContactDetails = "email address - jim@example.org"
+  printContactDetails jim.ContactDetails = "TODO"
 )
 
 // A nice feature of DUs and Records in F# is that we get equality for free
 
 test "Are Jim and Tess the same?" (fun _ ->
   let areEqual = jim = tess
-  areEqual = false
+  areEqual = failwith "todo"
 )
 
 test "Can we compare Jim to himself?" (fun _ ->
   let areEqual = jim = jim
-  areEqual = true
+  areEqual = failwith "todo"
 )
 
 let phone1 = Phone 91234567
@@ -104,12 +104,12 @@ let phone3 = Phone 91234567
 
 test "Compare phone1 and phone2" (fun _ ->
   let areEqual = phone1 = phone2
-  areEqual = false
+  areEqual = failwith "todo"
 )
 
 test "Compare phone1 and phone3" (fun _ ->
   let areEqual = phone1 = phone3
-  areEqual = true
+  areEqual = failwith "todo"
 )
 
 // So we can see that the values are equal if they are of the same case

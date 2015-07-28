@@ -27,8 +27,7 @@ let jim  = { Name = "Jim"; ContactDetails = Email "jim@example.org" |> Details }
 // from section 1
 
 let printContactDetails = function
-  | Email e -> sprintf "email address - %s" e
-  | Phone p -> sprintf "phone number - %010d" p
+  | _ -> failwith "todo"
 
 // And we can write an outer function to handle the overall task of
 // printing out a person's contact details. We have to provide a type
@@ -38,12 +37,14 @@ let printContactDetails = function
 
 let howToContact (person : Person) =
     match person.ContactDetails with
-    | Nothing   -> sprintf "%s does not wish to be contacted" person.Name
-    | Details d -> let contactDetails = printContactDetails d
-                   sprintf "%s can be contacted on %s" person.Name contactDetails
+    | Nothing   -> failwith "todo"
+    | Details d -> failwith "todo"
 
 test "How to contact Jim" (fun _ ->
-  howToContact jim = "Jim can be contacted on email address - jim@example.org"// failwith "FILL ME IN"
+  howToContact jim = "Jim can be contacted on email address - jim@example.org"
 )
 
+test "How to contact Bob" (fun _ ->
+  howToContact bob = "Bob does not wish to be contacted"
+)
 // Onwards to ADTs04 for more refinement

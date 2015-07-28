@@ -21,12 +21,14 @@ let jim  = { Name = "Jim"; ContactDetails = Email "jim@example.org" }
 // And let's make a function to print their contact details
 
 let printContactDetails = function
-  | Email e -> sprintf "email address - %s" e
-  | Phone p -> sprintf "phone number - %010d" p
-  | Nothing -> sprintf "no contact details found"
+  | _ -> failwith "todo"
+
+test "Printing contact details #1" (fun _ ->
+  printContactDetails jim.ContactDetails = "email address - jim@example.org"
+)
 
 test "Printing contact details #2" (fun _ ->
-  printContactDetails jim.ContactDetails = "email address - jim@example.org"//failwith "FILL ME IN"
+  printContactDetails bob.ContactDetails = "Bob does not wish to be contacted"
 )
 
 // This is better, now we can properly model people like bob in our
