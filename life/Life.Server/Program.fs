@@ -34,35 +34,11 @@ module Main =
                       let result = Game.computeNext grid
                       JSON.serialize result |> Successful.OK )
             PUT
-                >>= pathScan "/pattern/%s"
-                    (fun s ctx -> async {
-                        let name = System.Web.HttpUtility.UrlDecode s
-                        let (rle : string) = 
-                            ctx.request.rawForm
-                            |> JSON.deserialise
-                            |> (fun (x : BoardState) -> List.toArray2D false x.grid)
-                            |> RLE.encodeWithHeader
-
-                        let pattern : Pattern = {
-                            Name = name
-                            RLE = rle
-                        }
-
-                        do! dataStore |> DataStore.addPattern pattern |> Async.Ignore
-                      
-                        return! OK "ok" ctx
-                    })
+                // todo save the pattern
+                >>= pathScan "/pattern/%s" (fun s -> OK "ok") 
             GET
-                >>= pathScan "/pattern/%s"
-                    (fun s ctx -> async {
-                        printfn "Finding pattern %s" s
-                        let s' = System.Web.HttpUtility.UrlDecode s
-                        let! state = dataStore |> DataStore.getState
-                        match state.Patterns |> List.tryFind (fun x -> x.Name = s') with
-                        | None -> return None
-                        | Some pattern ->
-                            return! OK pattern.RLE ctx
-                    })
+                // todo load the pattern
+                >>= pathScan "/pattern/%s" (fun s -> OK "ok")
             NOT_FOUND "Not found"
         ]
         |> startWebServer {
