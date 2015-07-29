@@ -13,10 +13,9 @@ type ContactDetails =
 
 type Person = { Name : string; ContactDetails : ContactDetails }
 
-// Let's create bob and sam again
-
-let bob  = { Name = "Bob"; ContactDetails = Nothing }
-let jim  = { Name = "Jim"; ContactDetails = Email "jim@example.org" }
+let bob  = { Name = "Bob";  ContactDetails = Nothing }
+let jim  = { Name = "Jim";  ContactDetails = Email "jim@example.org" }
+let tess = { Name = "Tess"; ContactDetails = Phone 0411222333 }
 
 // And let's make a function to print their contact details
 
@@ -25,8 +24,16 @@ let printContactDetails = function
   | Phone p -> sprintf "phone number - %010d" p
   | Nothing -> sprintf "no contact details found"
 
+test "Printing contact details #1" (fun _ ->
+  printContactDetails jim.ContactDetails = "email address - jim@example.org"
+)
+
 test "Printing contact details #2" (fun _ ->
-  printContactDetails jim.ContactDetails = "email address - jim@example.org"//failwith "FILL ME IN"
+  printContactDetails bob.ContactDetails = "no contact details found"
+)
+
+test "Printing contact details #3" (fun _ ->
+  printContactDetails tess.ContactDetails = "phone number - 0411222333"
 )
 
 // This is better, now we can properly model people like bob in our
