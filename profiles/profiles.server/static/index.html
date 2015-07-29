@@ -8,11 +8,11 @@
       <form>
         <div class="form-group">
           <label for="inputFirstname">Firstname</label>
-          <input type="text" class="form-control" id="inputFirstname" placeholder="FirstName" value="{{profile.firstName}}">
+          <input type="text" class="form-control" id="inputFirstname" placeholder="FirstName" ng-model="profile.firstName">
         </div>
         <div class="form-group">
           <label for="inputLastname">Lastname</label>
-          <input type="text" class="form-control" id="inputLastname" placeholder="Lastname" value="{{profile.lastName}}">
+          <input type="text" class="form-control" id="inputLastname" placeholder="Lastname" ng-model="profile.lastName">
         </div>
         <div ng-if="result">
           {{result}}
