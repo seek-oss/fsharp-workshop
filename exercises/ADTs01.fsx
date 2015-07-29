@@ -1,6 +1,5 @@
 (* Types are very terse and powerful in F# *)
 #load "./examples.fs"
-
 open Examples
 
 // Discriminated Unions (DU) are used to represent data
@@ -26,6 +25,7 @@ let stopSign = Red
 let describeColour c =
   match c with
   | Blue   -> "It's blue"
+  // | Red -> failwith "todo"
   | Red    -> "It's red"
   | Yellow -> "It's yellow"
 
@@ -40,6 +40,7 @@ test "Describing colours" (fun _ ->
 
 let describeColour' = function
   | Blue   -> "It's blue"
+  // | Red -> failwith "todo"
   | Red    -> "It's red"
   | Yellow -> "It's yellow"
 
@@ -59,12 +60,22 @@ test "Describing colours again" (fun _ ->
 
 //////////// Discriminated Unions with data //////////////////////
 
-// One way in which DUs differ from enums is in the fact that
-// each case (or tag) in the DU can take data of any type
+// One way in which DUs differ from enums is in the fact that each case (or tag)
+// in the DU can take data of any type. For the rest of the ADT exercises we're
+// going to work with a domain model for people and their contact details.
+
+// Suppose we wish every person to have one contact detail, either an email
+// address or a phone number. We're not going to get into email address and
+// phone number validation, it's not necessary for this exercise, so let's
+// ignore that and just assume that a string is sufficient for storing email
+// addresses, and likewise an int for a phone number.
 
 type ContactDetails =
   | Email of string
   | Phone of int
+
+// A person has a Name which we will represent as a string AND they have contact
+// details wich uses our DU defined above.
 
 type Person = { Name : string; ContactDetails : ContactDetails }
 
@@ -82,19 +93,28 @@ let printContactDetails = function
   | Email e -> sprintf "email address - %s" e
   | Phone p -> sprintf "phone number - %010d" p
 
-test "Printing contact details" (fun _ ->
+test "Printing contact details #1" (fun _ ->
+  // printContactDetails jim.ContactDetails = failwith "todo"
   printContactDetails jim.ContactDetails = "email address - jim@example.org"
 )
 
-// A nice feature of DUs and Records in F# is that we get equality for free
+test "Printing contact details #2" (fun _ ->
+  // printContactDetails tess.ContactDetails = failwith "todo"
+  printContactDetails tess.ContactDetails = "phone number - 0411222333"
+)
+
+// A nice feature of DUs and Records in F# is that we get structural equality
+// for free.
 
 test "Are Jim and Tess the same?" (fun _ ->
   let areEqual = jim = tess
+  // areEqual = failwith "todo"
   areEqual = false
 )
 
 test "Can we compare Jim to himself?" (fun _ ->
-  let areEqual = jim = jim
+  let areEqual = jim = { Name = "Jim"; ContactDetails = Email "jim@example.org"}
+  // areEqual = failwith "todo"
   areEqual = true
 )
 
@@ -104,11 +124,13 @@ let phone3 = Phone 91234567
 
 test "Compare phone1 and phone2" (fun _ ->
   let areEqual = phone1 = phone2
+  // areEqual = failwith "todo"
   areEqual = false
 )
 
 test "Compare phone1 and phone3" (fun _ ->
   let areEqual = phone1 = phone3
+  // areEqual = failwith "todo"
   areEqual = true
 )
 
@@ -116,9 +138,13 @@ test "Compare phone1 and phone3" (fun _ ->
 // AND the values for that case are equal too.
 
 // Now what if we wanted to represent people who have no contact details?
-// Try executing the following in FSI
+// We've got a user, Bob, who wants to sign up in our system but he doesn't want
+// to give his contact details. What can we do?
+
+// Try uncommenting the following line or executing it in FSI
 
 // let bob = { Name = "Bob"; ContactDetails = null }
 
 // No nulls allowed here!
 // So what do we do? Continue to ADTs02.fsx to find out
+
