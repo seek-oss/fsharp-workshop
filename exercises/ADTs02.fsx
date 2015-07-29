@@ -2,9 +2,8 @@
 
 open Examples
 
-// We'd like to expand our types to be able to represent people
-// who don't have any contact details. So let's just expand our
-// definition of ContactDetails
+// We'd like to expand our types to be able to represent people who don't have any
+// contact details. So let's just expand our definition of ContactDetails.
 
 type ContactDetails =
   | Email of string
@@ -13,14 +12,17 @@ type ContactDetails =
 
 type Person = { Name : string; ContactDetails : ContactDetails }
 
-// Let's create bob and sam again
+let jim  = { Name = "Jim";  ContactDetails = Email "jim@example.org" }
+let tess = { Name = "Tess"; ContactDetails = Phone 0411222333 }
 
-let bob  = { Name = "Bob"; ContactDetails = Nothing }
-let jim  = { Name = "Jim"; ContactDetails = Email "jim@example.org" }
+// Now we can add Bob to our system!
 
-// And let's make a function to print their contact details
+let bob  = { Name = "Bob";  ContactDetails = Nothing }
+
+// And let's make a new function to print their contact details
 
 let printContactDetails = function
+  // Remove the following line and complete the function
   | _ -> failwith "todo"
 
 test "Printing contact details #1" (fun _ ->
@@ -28,8 +30,13 @@ test "Printing contact details #1" (fun _ ->
 )
 
 test "Printing contact details #2" (fun _ ->
-  printContactDetails bob.ContactDetails = "Bob does not wish to be contacted"
+  printContactDetails bob.ContactDetails = "no contact details found"
 )
 
-// This is better, now we can properly model people like bob in our
+test "Printing contact details #3" (fun _ ->
+  printContactDetails tess.ContactDetails = "phone number - 0411222333"
+)
+
+// This is better, now we can properly model people like Bob in our
 // system. Let's see if we can refine this a bit further in ADTs03.fsx
+

@@ -1,0 +1,37 @@
+<html ng-app="profileApp">
+  <head>
+    <title>Profiles</title>
+    <link rel="stylesheet" href="/static/bootstrap.css">
+  </head>
+  <body ng-controller="ProfileCtrl">
+    <div class="container">
+      <form>
+        <div class="form-group">
+          <label for="inputFirstname">Firstname</label>
+          <input type="text" class="form-control" id="inputFirstname" placeholder="FirstName" ng-model="profile.firstName">
+        </div>
+        <div class="form-group">
+          <label for="inputLastname">Lastname</label>
+          <input type="text" class="form-control" id="inputLastname" placeholder="Lastname" ng-model="profile.lastName">
+        </div>
+        <div ng-if="result">
+          {{result}}
+        </div>
+        <div ng-if="errors">
+          <ul>
+            <li ng-repeat="error in errors">
+               {{error}}
+            </li>
+          </ul>
+        </div>
+        <button ng-click="saveProfile(profile)" class="btn btn-default">Save</button>
+        </form>
+    </div><!-- /.container -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="/static/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/static/bootstrap.js"></script>
+    <script src="/static/angular.js"></script>
+    <script src="/static/app.js"></script>
+  </body>
+</html>
