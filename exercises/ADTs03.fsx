@@ -23,7 +23,7 @@ let bob = { Name = "Bob"; ContactDetails = Nothing }
 
 let jim  = { Name = "Jim"; ContactDetails = Email "jim@example.org" |> Details }
 
-// Now we can re-use our original defition of printContactDetails
+// Now we can re-use our original definition of printContactDetails
 // from section 1
 
 let printContactDetails = function
