@@ -22,9 +22,5 @@ Vagrant.configure(2) do |config|
     apt-get install mono-devel -y
     apt-get install monodevelop -y
     apt-get install terminator -y
-    apt-get install gvfs-bin -y
-    wget -q https://github.com/atom/atom/releases/download/v1.0.2/atom-amd64.deb -O /tmp/atom-amd64.deb
-    dpkg -i /tmp/atom-amd64.deb
-    apm install atom-fsharp -y
     SHELL
   end
