@@ -26,16 +26,14 @@ type Person = { Name : string; ContactDetails : ContactDetails option }
 
 let bob = { Name = "Bob"; ContactDetails = None }
 
-// Replace the 'None' below with jim's contact details.
-// His email address is "jim@example.org"
-let jim  = { Name = "Jim"; ContactDetails = None }
+let jim  = { Name = "Jim"; ContactDetails = Email "jim@example.org" |> Some }
 
 // See if you can write the updated howToContact without referring back to the previous
-// worksheet. You can write it all inside one function if you'd like, or split it out into
-// two like we previously did.
+// worksheet. You can write it all inside one function if you'd like, or split it out in
+// to two like we previously did.
 
 let howToContact (person : Person) =
-    failwith "todo"
+  failwith "todo"
 
 test "How to contact Jim" (fun _ ->
   howToContact jim = "Jim can be contacted on email address - jim@example.org"

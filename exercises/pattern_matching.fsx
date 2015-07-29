@@ -13,18 +13,27 @@ open Examples
 let partition n =
   if n < 0
   then "negative"
-  elif n > 0
-  then "positive"
+  // TODO
   else "zero"
 
-// Nasty! Let's clean that up with some matching. We're going to need
+test "partitioning numbers 1" (fun _ ->
+  partition 1 = "positive"
+)
+
+// So it works, but it's pretty nasty! If expressions like that are
+// difficult to read, and easy to overlook missing cases.
+// Let's clean that up with some matching. We're going to need
 // some guard clauses here.
 
 let partition' n =
   match n with
   | x when x < 0 -> "negative"
-  | x when x > 0 -> "positive"
-  | _            -> "zero"
+  // TODO
+  | _            -> failwith "todo"
+
+// I hope you agree that's a whole lot more readable. The last line with
+// the underscore is a wildcard match, it will match anything and discard
+// the result. You may sometimes hear this referred to as a "catch all".
 
 test "partitioning numbers 1" (fun _ ->
   partition' 3 = "positive"
@@ -38,13 +47,79 @@ test "partitioning numbers 3" (fun _ ->
   partition' -5 = "negative"
 )
 
+// For a full description of the syntax for match expressions you can read
+// the MSDN docs here https://msdn.microsoft.com/en-us/library/dd547125.aspx
 
-// I hope you agree that's a whole lot more readable. The last line with
-// the underscore is a wildcard match, it will match anything and discard
-// the result. You may sometimes hear this referred to as a "catch all".
+// We can match deep inside data types and look for just the parts we
+// care about. Here are a few examples:
+
+//////////////////// Matching tuples ////////////////////
+
+let thirdElementIsEven n =
+  match n with
+  | _,_,x when x % 2 = 0 -> true
+  | _                    -> false
+
+test "pattern matching into tuples 1" (fun _ ->
+  thirdElementIsEven ("a", 14.3, 2)
+)
+
+// We can actually use pattern matching when declaring the arguments to
+// a function, and in this case it actually removes quite a lot of clutter
+
+let thirdElementIsEven' (_,_,n) = n % 2 = 0
+
+test "pattern matching into tuples 2" (fun _ ->
+  thirdElementIsEven' ("a", 14.3, 2)
+)
+
+//////////////////// Matching records ////////////////////
+
+// Let's imagine a simple postal system, where all items must not exceed 30cm
+// in any dimension nor 2kg in mass. Postage for items within these limits is
+// calculated at $0.01/g
+
+type PostageSatchel = { DimensionsInMetres : decimal * decimal * decimal; MassInGrams : decimal }
+
+type PostagePrice =
+  | Dollars of decimal
+  | TooBig
+  | TooHeavy
+
+// Feel free to remove any of the partial implementation below when completing your
+// calculatePostage function, but you may find these pieces useful.
+
+let calculatePostage satchel =
+  let costPerGram = 0.01M
+  let maximumSizeInMetres = 0.3M
+  let maximumMassInGrams = 2000M
+
+  let anyExceedSize (dimensions : decimal list) =
+    // TODO
+    false
+
+  match satchel with
+  | { DimensionsInMetres = x,y,z; MassInGrams = _ } when [x;y;z] |> anyExceedSize
+      -> TooBig 
+  | { DimensionsInMetres = _;     MassInGrams = m } when m > maximumMassInGrams
+      -> TooHeavy
+  // TODO
+  | _ -> Dollars 0M
+
+test "Calculating postage 1" (fun _ ->
+  calculatePostage { DimensionsInMetres = 0.12M, 0.1M, 0.1M; MassInGrams = 700M } = Dollars 7M
+)
+
+test "Calculating postage 2" (fun _ ->
+  calculatePostage { DimensionsInMetres = 0.2M, 0.2M, 0.02M; MassInGrams = 1200M } = Dollars 12M
+)
+
+test "Calculating postage 3" (fun _ ->
+  calculatePostage { DimensionsInMetres = 1M, 0.2M, 0.02M; MassInGrams = 200M } = TooBig
+)
 
 
-/////////////////// Fizz Buzz! ///////////////////////////
+//////////////////// Fizz Buzz! ////////////////////
 
 // In case you're not familiar with FizzBuzz, see
 // http://blog.codinghorror.com/why-cant-programmers-program/
@@ -74,20 +149,18 @@ let first15 = [
 // to pass the following test, using guard clauses.
 
 let fizzbuzz n =
-  match n with
-  | x when x % 3 = 0 && x % 5 = 0 -> "FizzBuzz"
-  | x when x % 3 = 0              -> "Fizz"
-  | x when x % 5 = 0              -> "Buzz"
-  | x                             -> string x
+  string n
 
-test "We can fizz buzz" (fun _ ->
+test "We can fizz buzz 1" (fun _ ->
   let result = [1 .. 15] |> List.map fizzbuzz
   result = first15
 )
 
 // There's another technique we can use to express the FizzBuzz logic
 // in a more robust way. It involves a language feature called Active Patterns.
-// See the bottom of this file for further reading.
+// See the following for further information on Active Patterns
+// The MSDN page for Active Patterns https://msdn.microsoft.com/en-us/library/dd233248.aspx 
+// An interesting blog series on Active Patterns http://www.devjoy.com/series/active-patterns/
 
 let (|DivisibleBy|_|) m n = if n % m = 0 then Some DivisibleBy else None
 
@@ -97,21 +170,24 @@ let (|DivisibleBy|_|) m n = if n % m = 0 then Some DivisibleBy else None
 let fizzbuzz' n =
   match n with
   | DivisibleBy 3 & DivisibleBy 5 -> "FizzBuzz"
-  | DivisibleBy 3                 -> "Fizz"
-  | DivisibleBy 5                 -> "Buzz"
+  // TODO
   | x                             -> string x
 
+// So as you can see, active patterns can take parameters and they can be combined with & and |
+// They can be a very handy technique to use when you don't control the definition of a data type
+// but you still want to build up a declarative set of terms to express your rules in.
 
-test "We can fizz buzz" (fun _ ->
-  let result = [1 .. 15] |> List.map fizzbuzz
+test "We can fizz buzz 2" (fun _ ->
+  let result = [1 .. 15] |> List.map fizzbuzz'
   result = first15
 )
 
 
-// Matching HTTP Status Codes with Active Patterns
+/////////// Matching HTTP Status Codes with Active Patterns ///////////
 
+// Now we're going to move from FizzBuzz towards a more practical example of pattern
+// matching; workign with HTTP response data.
 // See http://httpstatus.es/ if you're rusty on your HTTP
-
 
 let (|Informational|Success|Redirection|ClientError|ServerError|Invalid|) = function
   | x when x < 100 -> Invalid
@@ -122,11 +198,11 @@ let (|Informational|Success|Redirection|ClientError|ServerError|Invalid|) = func
   | x when x < 600 -> ServerError
   | _              -> Invalid
 
+// We can use the above Total Active Pattern to build up other functions, e.g.
+
 let logHttpStatusCode = function
   | ServerError        -> "Server error"
-  | ClientError        -> "Client error"
-  | Success            -> "Success"
-  | Redirection        -> "Redirection"
+  // TODO
   | _                  -> "Invalid"
 
 test "404 is client error" (fun _ ->
@@ -145,32 +221,30 @@ test "302 is redirection" (fun _ ->
   logHttpStatusCode 302 = "Redirection"
 )
 
-// Stretch goal - Categorising our HTTP logs
+// That was very basic, now let's try a more difficult one; categorising our HTTP logs
+
+// Let's suppose that we've been asked to give some very basic statistics on our HTTP
+// logs. We'd like to provide a function that can take a list of HTTP response status
+// codes and return the total number of successful responses (in the 200 range) and
+// the total number of error responses (in the 400 or 500 range)
+
+type HttpTotals = { Success : int; Error : int }
 
 let categorise codes =
-  let inner = function
-    | Success     -> Some "info"
-    | ClientError
-    | ServerError -> Some "error"
-    | _           -> None
-  codes
-  |> Seq.choose inner
-  |> Seq.groupBy id
-  |> Map.ofSeq
-  |> Map.map (fun _ codes -> Seq.length codes)
+  // TODO
+  { Success = 0; Error = 0 }
 
-test "Categorising responses by code" (fun _ ->
-  let input = [200; 200; 404; 200; 401; 404; 500; 500; 200; 200; 200]
-  let expected = ["info", 6; "error", 5] |> Map.ofList
-  categorise input = expected 
+test "Categorising HTTP responses by status code 1" (fun _ ->
+  [200; 200; 404; 200; 401; 404; 500; 500; 200; 200; 200]
+  |> categorise = { Success = 6; Error = 5 }
 )
 
+test "Categorising HTTP responses by status code 2" (fun _ ->
+  categorise [] = { Success = 0; Error = 0 } 
+)
 
+test "Categorising HTTP responses by status code 3" (fun _ ->
+  let input = [100; 200; 401; 404; 302; 500; 500; 200; 200; 200]
+  categorise input = { Success = 4; Error = 4 } 
+)
 
-
-
-
-
-
-// The MSDN page for Active Patterns https://msdn.microsoft.com/en-us/library/dd233248.aspx 
-// An interesting blog series on Active Patterns http://www.devjoy.com/series/active-patterns/

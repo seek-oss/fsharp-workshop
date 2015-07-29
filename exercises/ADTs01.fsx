@@ -83,7 +83,7 @@ let printContactDetails = function
   | Phone p -> sprintf "phone number - %010d" p
 
 test "Printing contact details" (fun _ ->
-  printContactDetails jim.ContactDetails = failwith "todo"
+  printContactDetails jim.ContactDetails = "TODO"
 )
 
 // A nice feature of DUs and Records in F# is that we get equality for free

@@ -1,9 +1,9 @@
-﻿module Chatter.Server.AssemblyInfo
+﻿module Life.Server.AssemblyInfo
 
 open System.Reflection
 open System.Runtime.CompilerServices
 
-[<assembly:AssemblyTitle("Chatter.Server")>]
+[<assembly:AssemblyTitle("Life.Server")>]
 [<assembly:AssemblyDescription("")>]
 [<assembly:AssemblyConfiguration("")>]
 [<assembly:AssemblyCompany("")>]
