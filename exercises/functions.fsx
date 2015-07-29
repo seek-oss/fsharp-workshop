@@ -20,7 +20,7 @@ let addOne a = a + 1
 // above with the type shown explicitely
 // NOTE: there is nothing special about the ' it's just 
 // a common convention for defining something that is related
-// or similar to a pervious definition 
+// or similar to a previous definition 
 let addOne' (a : int) = a + 1
 
 // F# also allows functions to be defined inline
