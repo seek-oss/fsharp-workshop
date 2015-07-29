@@ -4,7 +4,7 @@ open Fake.Testing
 open System
 
 let solutionFile = "./profiles.sln"
-let testAssemblies = "./profiles.tests/bin/Release/*Tests*.dll"
+let testAssemblies = "./profiles.tests/bin/Release/*tests*.dll"
 
 let buildProfiles () =
     !! solutionFile
@@ -34,7 +34,7 @@ let runWeb () =
 
 Target "RunTests" (fun _ ->
     !! (testAssemblies)
-    |> xUnit id
+    |> xUnit2 id
 )
 
 Target "Watch" (fun _ ->

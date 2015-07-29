@@ -8,25 +8,32 @@ open Suave.Http.Successful
 open Suave.Http.Files
 open Suave.Web
 
+open Profile1
+
 module Main =
-  [<CLIMutable>]
-  type ProfileForm = {
-    Name : string
-  }
+  let asJson (f : ('a -> Choice<'r, string list>)) (request : HttpRequest) : WebPart =
+    request.rawForm
+    |> JsonSerializer.deserialize
+    |> f
+    |> function
+    | Choice1Of2 result ->
+        result
+        |> JsonSerializer.serialize
+        |> Suave.Http.Response.response HTTP_200
+    | Choice2Of2 errors ->
+        errors
+        |> JsonSerializer.serialize
+        |> Suave.Http.Response.response HTTP_400
 
-  let asJson (f : ('a -> Choice<'r, string list>)) : WebPart =
-    failwith "todo"
-
-  let persistProfile (form : ProfileForm) =
-    Choice2Of2 ["Didn't like it"]
 
   let suaveApp =
     choose
       [ GET >>= choose
          [ path "/" >>= file "./static/index.html"
            pathScan "/static/%s" (sprintf "./static/%s" >> file) ]
-        PUT >>=
-           path "/profile" >>= asJson persistProfile ]
+        PUT >>= path "/profile"
+                >>= request (asJson persistProfile)
+                >>= Writers.setMimeType "application/json" ]
 
   [<EntryPoint>]
   let main argv =
