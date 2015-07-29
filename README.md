@@ -1,5 +1,13 @@
 # F# exercises designed for a 1 day workshop
-Currently a work in progress.
+Order for the exercises (in the exercises folder):
+
+1. functions.fsx
+2. list.fsx
+3. ADTs01.fsx
+4. ADTs02.fsx
+5. ADTs03.fsx
+6. ADTs04.fsx
+7. async.fsx
 
 ## Game of Life project
 The project in the life folder is a suave based game of life web application with some critical elements removed.
