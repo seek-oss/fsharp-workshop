@@ -5,7 +5,6 @@ nuget FSharpx.Collections
 nuget Newtonsoft.Json.FSharp
 nuget suave
 nuget FSharpx.Async
-nuget unquote
 nuget xUnit < 2.0
 nuget xunit.runner.console
 nuget FsCheck.xunit
