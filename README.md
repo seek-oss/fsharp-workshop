@@ -14,12 +14,14 @@ One of the following should be enough for you to run the exercises:
 From the exercises folder:
 
 1. functions.fsx
-2. list.fsx
-3. ADTs01.fsx
-4. ADTs02.fsx
-5. ADTs03.fsx
-6. ADTs04.fsx
-7. async.fsx
+1. tuples.fsx
+1. records.fsx
+1. ADTs01.fsx
+1. ADTs02.fsx
+1. ADTs03.fsx
+1. ADTs04.fsx
+1. list.fsx
+1. pattern_matching.fsx
 
 ## Game of Life project
 The project in the life folder is a suave based game of life web application with some critical elements removed.
