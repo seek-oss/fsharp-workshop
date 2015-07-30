@@ -407,26 +407,10 @@ test "Write a function to return the last item of list using reduce" (fun () ->
 )
 
 
-// arrays
-// sequences
-//unfold - let triangles = Seq.unfold (fun (a, b) -> Some(a + b, (a+1, a + b))) (1, 0)
-
-// sets
-// maps
-
-
 
 (*
     References:
-        F# list declaration     - https://github.com/fsharp/fsharp/blob/master/src/fsharp/FSharp.Core/prim-types.fs#L3268
-        C# List<T> declaration  - https://github.com/dotnet/coreclr/blob/master/src/mscorlib/src/System/Collections/Generic/List.cs#L33
-        MSDN F# List module     - https://msdn.microsoft.com/en-us/library/ee353738.aspx
-        F# List module source   - https://github.com/fsharp/fsharp/blob/master/src/fsharp/FSharp.Core/list.fs
         Triangular number       - https://en.wikipedia.org/wiki/Triangular_number
         Inline functions        - https://msdn.microsoft.com/en-us/library/Dd548047.aspx
         GenericZero declaration - https://github.com/fsharp/fsharp/blob/master/src/fsharp/FSharp.Core/prim-types.fs#L2398
-
-    Note:
-        * The cons (::) operator in F# is actually a symbolic keyword, you can find this in section 3.6 of the spec (http://fsharp.org/specs/language-spec/3.1/FSharpSpec-3.1-working.docx)
-        * Cons comes from construct, originally a concept from lisp
 *)
