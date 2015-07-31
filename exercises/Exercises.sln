@@ -12,7 +12,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		ADTs01.fsx = ADTs01.fsx
 		pattern_matching.fsx = pattern_matching.fsx
 		async.fsx = async.fsx
-		list.fsx = list.fsx
+		lists1.fsx = lists1.fsx
+		lists2.fsx = lists2.fsx
+		sequences1.fsx = sequences1.fsx
+		lists3.fsx = lists3.fsx
+		lists4.fsx = lists4.fsx
+		tuples.fsx = tuples.fsx
 	EndProjectSection
 EndProject
 Global

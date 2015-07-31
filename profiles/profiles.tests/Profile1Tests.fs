@@ -1,17 +1,18 @@
 ﻿namespace profiles.tests
 open System
 open Xunit
+open profiles.server
 open profiles.server.Profile1
 
-module Profile1Tests = 
+module Profile1Tests =
     [<Fact>]
     let ``A valid user is saved`` () =
-        Assert.Equal(
-            persistProfile {
-                FirstName = "Foo"
-                LastName = "Bar"
-            },
-            Choice1Of2 "Saved")
+      let inputProfile : ProfileForm =
+        { FirstName = "Foo"
+          LastName = "Bar"}
+      Assert.Equal(
+            persistProfile inputProfile,
+            Success inputProfile)
 
     [<Fact>]
     let ``An empty FirstName returns error`` () =
@@ -20,7 +21,7 @@ module Profile1Tests =
                 FirstName = ""
                 LastName = "Bar"
             },
-            Choice2Of2 ["Firstname is required"])
+            Errors ["Firstname is required"])
 
     [<Fact>]
     let ``An empty LastName returns error`` () =
@@ -29,7 +30,7 @@ module Profile1Tests =
                 FirstName = "Foo"
                 LastName = ""
             },
-            Choice2Of2 ["Lastname is required"])
+            Errors ["Lastname is required"])
 
     [<Fact>]
     let ``All errors are returned`` () =
@@ -38,4 +39,4 @@ module Profile1Tests =
                 FirstName = ""
                 LastName = ""
             },
-            Choice2Of2 ["Firstname is required"; "Lastname is required"])
+            Errors ["Firstname is required"; "Lastname is required"])

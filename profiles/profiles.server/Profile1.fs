@@ -11,19 +11,19 @@ module Profile1 =
 
   let requiredString name value =
     match value with
-    | "" -> Choice2Of2 [sprintf "%s is required" name]
-    | _ -> Choice1Of2 value
+    | "" -> Errors [sprintf "%s is required" name]
+    | _ -> Success value
 
-  let persistProfile (form : ProfileForm) =
+  let persistProfile (form : ProfileForm) : SaveResult<ProfileForm> =
     let validatedFirstName = requiredString "Firstname" form.FirstName
     let validatedLastName = requiredString "Lastname" form.LastName
 
     match validatedFirstName, validatedLastName with
-    | Choice1Of2 firstName, Choice1Of2 lastName ->
-        Choice1Of2 "Saved"
-    | Choice2Of2 errs, Choice1Of2 _ ->
-        Choice2Of2 errs
-    | Choice1Of2 _, Choice2Of2 errs ->
-        Choice2Of2 errs
-    | Choice2Of2 errs1, Choice2Of2 errs2 ->
-        Choice2Of2 (errs1 @ errs2)
+    | Success firstName, Success lastName ->
+        Success { FirstName = firstName; LastName = lastName }
+    | Errors errs, Success _ ->
+        Errors errs
+    | Success _, Errors errs ->
+        Errors errs
+    | Errors errs1, Errors errs2 ->
+        Errors (errs1 @ errs2)

@@ -11,20 +11,19 @@ open Suave.Web
 open Profile1
 
 module Main =
-  let asJson (f : ('a -> Choice<'r, string list>)) (request : HttpRequest) : WebPart =
+  let withJson (f : ('a -> SaveResult<'r>)) (request : HttpRequest) : WebPart =
     request.rawForm
     |> JsonSerializer.deserialize
     |> f
     |> function
-    | Choice1Of2 result ->
+    | Success result ->
         result
         |> JsonSerializer.serialize
         |> Suave.Http.Response.response HTTP_200
-    | Choice2Of2 errors ->
+    | Errors errors ->
         errors
         |> JsonSerializer.serialize
         |> Suave.Http.Response.response HTTP_400
-
 
   let suaveApp =
     choose
@@ -32,7 +31,7 @@ module Main =
          [ path "/" >>= file "./static/index.html"
            pathScan "/static/%s" (sprintf "./static/%s" >> file) ]
         PUT >>= path "/profile"
-                >>= request (asJson persistProfile)
+                >>= request (withJson persistProfile)
                 >>= Writers.setMimeType "application/json" ]
 
   [<EntryPoint>]

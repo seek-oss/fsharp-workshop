@@ -1,69 +1,11 @@
 (**********************************************************************************************************************
-    Lists are a big part of functional programming langages and F# is no exception. You may be familar with List<T>
-    in C# however F# lists are quite different, essentially being based on good old dependable singly-linked lists (but
-    using tuples) whereas C# lists use arrays.
-
-    A naive implementation of an F# list could look like:
-
-    type List<'T> =
-    | ([]) of List<'T>
-    | (::) of Head: 'T * Tail: List<'T>
-
-    Head and tail.
-
-    Explain tuples
-
-    In F# an empty list is represented by [] and cons by the :: operator
+    In this section we'll go through implementing some of the common list functions that you would have come across
+    in the previous exercises.
 *)
 
 #load "./examples.fs"
 open Examples
 
-
-(**********************************************************************************************************************
-    Let's see some examples for constructing lists - copy the following into the REPL to see the result.
-*)
-
-let empty         = []
-
-let madeWithCons  = 1 :: 2 :: 3 :: 4 :: []
-
-let explicit      = [ 1; 2; 3; 4 ]
-
-let multiline     = [
-                      1
-                      2
-                      3
-                      4
-                    ]
-
-let range         = [ 1 .. 10 ]
-
-let rangeWithSkip = [ 1 .. 2 .. 10 ]
-
-let alphaRange    = [ 'a' .. 'z' ]
-
-let floatRange    = [ 0.1 .. 0.1 .. 1.0 ]
-
-
-(**********************************************************************************************************************
-    You can append to a list using the '@' symbol, however this iterates through the items in the first list before
-    it can return the newly combined list.
-*) 
-
-
-let appendedList  = [ 1; 2; 3 ] @ [ 4; 5; 6 ]
-
-(**********************************************************************************************************************
-    Another way to create lists is through list comprehensions.
-*) 
-
-
-let forLoop = [ for i in 1 .. 10 -> i * 2 ]
-
-// another example of for using do and yield.
-
-// some basic examples using List module functions with LINQ comparisons
 
 (**********************************************************************************************************************
     They can also contain functions and be fairly complex. Use F# Interactive to see the result of the list
@@ -147,50 +89,7 @@ test "Create a list comprehension that calculates the first ten triangular numbe
 )
 
 
-(**********************************************************************************************************************
-    A useful feature of lists is the ability to pattern match them. Using the cons and empty list symbols
-    you can match pretty much anywhere in a list.
 
-    The following two example shows some simple matching on a list by splitting between the head and the tail. 
-*)
-
-let firstFib =
-  match fib25 with
-  | x :: xs   -> Some x
-  | _         -> None
-
-let fibTail =
-  match fib25 with
-  | _ :: xs   -> xs
-  | _         -> []
-
-
-let firstTwoFib =
-  match fib25 with
-  | x :: y :: _ -> Some (x, y)
-  | _           -> None
-
-let isLast =
-  function
-  | x :: [] -> true
-  | _       -> false
-
-
-(**********************************************************************************************************************
-    Using only a match expression, return the fourth item from the Fibonacci sequence (use fib25)
-*)
-
-// fourthFib: () -> int option
-let fourthFib () =
-    match fib25 with
-    | _ :: _ :: _ :: x :: _   -> Some x
-    | _                       -> None
-
-test "Return the fourth item in the Fibonacci sequence" (fun () ->
-  match fourthFib () with
-  | Some x  -> x = 2
-  | _       -> false
-)
 
 (**********************************************************************************************************************
     The following example shows walking through the list to perform an action on each item
@@ -508,32 +407,10 @@ test "Write a function to return the last item of list using reduce" (fun () ->
 )
 
 
-(**********************************************************************************************************************
-    Now you should have a reasonable understand of some common list functions, including the much hyped map reduce.
-
-
-*)
-
-// arrays
-// sequences
-//unfold - let triangles = Seq.unfold (fun (a, b) -> Some(a + b, (a+1, a + b))) (1, 0)
-
-// sets
-// maps
-
-
 
 (*
     References:
-        F# list declaration     - https://github.com/fsharp/fsharp/blob/master/src/fsharp/FSharp.Core/prim-types.fs#L3268
-        C# List<T> declaration  - https://github.com/dotnet/coreclr/blob/master/src/mscorlib/src/System/Collections/Generic/List.cs#L33
-        MSDN F# List module     - https://msdn.microsoft.com/en-us/library/ee353738.aspx
-        F# List module source   - https://github.com/fsharp/fsharp/blob/master/src/fsharp/FSharp.Core/list.fs
         Triangular number       - https://en.wikipedia.org/wiki/Triangular_number
         Inline functions        - https://msdn.microsoft.com/en-us/library/Dd548047.aspx
         GenericZero declaration - https://github.com/fsharp/fsharp/blob/master/src/fsharp/FSharp.Core/prim-types.fs#L2398
-
-    Note:
-        * The cons (::) operator in F# is actually a symbolic keyword, you can find this in section 3.6 of the spec (http://fsharp.org/specs/language-spec/3.1/FSharpSpec-3.1-working.docx)
-        * Cons comes from construct, originally a concept from lisp
 *)
