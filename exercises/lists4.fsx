@@ -42,16 +42,7 @@ let prime100 = [
 *)
 
 // fibPairs: () -> (int * int) list
-let fibPairs () = [
-    let rec loop i a b = [
-      if i > 0 then
-        yield (a, b)
-        yield! loop (i-1) b (a+b)
-    ]
-
-    yield! [ (0, 1); ]
-    yield! loop 23 1 1
-  ]
+let fibPairs () = failwith "todo"
 
 test "Create a list comprehension that returns pairs of the first 25 Fibonacci numbers" (fun () ->
   fibPairs () = [(0, 1); (1, 1); (1, 2); (2, 3); (3, 5); (5, 8); (8, 13); (13, 21); (21, 34);
@@ -74,15 +65,7 @@ test "Create a list comprehension that returns pairs of the first 25 Fibonacci n
 *)
 
 // triangle10: () -> int list
-let triangle10 () = [
-    let rec loop n i x = [
-      if i <= n then
-        yield x + i
-        yield! loop n (i+1) (i+x)
-    ]
-
-    yield! loop 10 1 0
-  ]
+let triangle10 () = failwith "todo"
 
 test "Create a list comprehension that calculates the first ten triangular numbers" (fun () ->
   triangle10 () = [1; 3; 6; 10; 15; 21; 28; 36; 45; 55]
@@ -112,13 +95,7 @@ let walkFib () =
 *)
 
 // last: 'a list -> a
-let last list =
-  let rec loop =
-    function
-    | []      -> failwith "empty list!"
-    | x :: [] -> x
-    | x :: xs -> loop xs
-  loop list
+let last list = failwith "todo"
 
 
 test "Write a function to return the last item in a list" (fun () ->
@@ -137,16 +114,7 @@ test "Write a function to return the last item in a list" (fun () ->
 *)
 
 // map: ('a -> 'b) -> 'a list -> 'b list
-let map action list = [
-  let rec loop list' = [
-    match list' with
-    | []      -> ()
-    | x :: xs ->
-      yield action x
-      yield! loop xs
-  ]
-  yield! loop list
-]
+let map action list = failwith "todo"
 
 test "Create a list map function" (fun () ->
   map (fun x -> x * 2) fib25 = [0; 2; 2; 4; 6; 10; 16; 26; 42; 68; 110; 178; 288; 466; 754; 1220; 1974;
@@ -165,17 +133,7 @@ test "Create a list map function" (fun () ->
 *)
 
 // filter: ('a -> bool) -> 'a list -> 'a list
-let filter predicate list = [
-  let rec loop list' = [
-    match list' with
-    | []      -> ()
-    | x :: xs ->
-      if predicate x then
-        yield x
-      yield! loop xs
-  ]
-  yield! loop list
-]
+let filter predicate list = failwith "todo"
 
 test "Write a function that filters a list using the given predicate" (fun () ->
   filter (fun x -> x % 2 = 0) fib25 = [0; 2; 8; 34; 144; 610; 2584; 10946; 46368]
@@ -191,16 +149,7 @@ test "Write a function that filters a list using the given predicate" (fun () ->
 *)
 
 // pairwise: ('a list) -> ('a * 'a) list
-let pairwise list = [
-  let rec loop list' = [
-    match list' with
-    | x :: y :: tail  ->
-      yield (x, y)
-      yield! loop (y :: tail)
-    | _               -> ()
-  ]
-  yield! loop list
-]
+let pairwise list = failwith "todo"
 
 
 test "Create a function that uses a match expression to return pairs of items from a list" (fun () ->
@@ -224,16 +173,7 @@ test "Create a function that uses a match expression to return pairs of items fr
 *)
 
 // zip: a' list -> 'b list -> (a' list
-let zip list1 list2 = [
-  let rec loop list1' list2' = [
-    match list1', list2' with
-    | x :: xs, y :: ys  ->
-      yield (x, y)
-      yield! loop xs ys
-    | _                 -> ()
-  ]
-  yield! loop list1 list2
-]
+let zip list1 list2 = failwith "todo"
 
 test "Write a function can zip two lists of the same length together" (fun () ->
   zip fib25 prime100 = [(0, 2); (1, 3); (1, 5); (2, 7); (3, 11); (5, 13); (8, 17); (13, 19);
@@ -248,12 +188,7 @@ test "Write a function can zip two lists of the same length together" (fun () ->
 *)
 
 // sum: int list -> int
-let sum list =
-  let rec loop acc =
-    function
-    | []      -> acc
-    | x :: xs -> (loop (x + acc) xs)
-  loop 0 list
+let sum list = failwith "todo"
 
 test "Write a function that can sum the integers in a list" (fun () ->
   sum fib25 = 121392
@@ -273,12 +208,7 @@ test "Write a function that can sum the integers in a list" (fun () ->
 *)
 
 // sum: 'a list -> 'a
-let inline sum2 list =
-  let rec loop acc =
-    function
-    | []      -> acc
-    | x :: xs -> (loop (x + acc) xs)
-  loop (LanguagePrimitives.GenericZero<'a>) list
+let inline sum2 list = failwith "todo"
 
 
 test "Write a function that can sum numeric values in a list" (fun () ->
@@ -304,12 +234,7 @@ test "Write a function that can sum numeric values in a list" (fun () ->
 *)
 
 // fold: ('state -> 'a -> 'state) -> 'state -> 'a list -> 'state
-let fold folder state list =
-  let rec loop acc =
-    function
-    | []      -> acc
-    | x :: xs -> loop (folder acc x) xs
-  loop state list
+let fold (folder:'state->'a->'state) state list = failwith "todo"
 
 
 test "Write a function to fold a list into a single value" (fun () ->
@@ -330,10 +255,10 @@ test "Write a function to fold a list into a single value" (fun () ->
 *)
 
 // sum: int list -> int
-let sum3 = fold (+) 0
+let sum3 = failwith "todo"
 
 // sum: 'a list -> 'a
-let inline sum4 list = fold (+) (LanguagePrimitives.GenericZero<'a>) list
+let inline sum4 list = failwith "todo"
 
 test "Write a function that can sum the integers in a list using fold" (fun () ->
   sum3 fib25 = 121392
@@ -370,10 +295,7 @@ test "Write a function that can sum numeric values in a list using fold" (fun ()
 *)
 
 // reduce: ('a -> 'a -> 'a) -> 'a list -> 'a
-let reduce reducer =
-  function
-  | []      -> failwith "cannot reduce an empty list"
-  | x :: xs -> fold reducer x xs
+let reduce reducer = failwith "todo"
 
  
 test "Reduce a list down to a single value using the supplied function" (fun () ->
@@ -396,7 +318,7 @@ test "Reduce a list down to a single value using the supplied function" (fun () 
     BONUS: Can you rewrite 'last' using reduce?
 *)
 
-let last2 list = reduce (fun x y -> y) list
+let last2 list = failwith "todo"
 
 test "Write a function to return the last item of list using reduce" (fun () ->
   last2 fib25 = 46368

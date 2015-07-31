@@ -49,15 +49,11 @@ let occupations = System.IO.File.ReadLines(__SOURCE_DIRECTORY__ + "/ANZSCO-occup
 // that are comments and need to be removed, as well and empty lines.
 // NOTE: as F# strings are just .NET strings you can use .StartsWith and .Length to help you.
 
-let cleaner (list: string list) =
-  list
-  |> List.filter (fun s -> not <| s.StartsWith("#") && s.Length > 0)
+let cleaner (list: string list) = failwith "todo"
 
 // How many occupations does the file contain?
 
-let number_of_occupations clean_list =
-  clean_list
-  |> List.length
+let number_of_occupations clean_list = failwith "todo"
 
 test "How many occupations does the file contain?" (fun () ->
   number_of_occupations (cleaner occupations) = 3207
@@ -84,39 +80,19 @@ type AnzscoClassification =
 // match occ with
 // | s when s.EndsWith(" (A)") -> Alternative s
 
-let anzsco_occupations (clean_list: string list) =
-  clean_list
-  |> List.map (
-      function
-      | s when s.EndsWith(" (A)") -> Alternative s
-      | s when s.EndsWith(" (N)") -> NotElsewhereClassified s
-      | s when s.EndsWith(" (P)") -> Principal s
-      | s when s.EndsWith(" (S)") -> Specialisation s
-      | _ -> failwith "unknown occupation!")
+let anzsco_occupations (clean_list: string list) = failwith "todo"
 
 // Let's see if we can get the number of occupations that fall into "not elsewhere classified" using one of the standard
 // list functions as well as a simple match expression.
 
-let nec_counts anzsco_list =
-  anzsco_list
-  |> List.fold (fun acc x ->
-      match x with
-      | NotElsewhereClassified _  -> acc + 1
-      | _                         -> acc)
+let nec_counts anzsco_list = failwith "todo"
 
 test "How many occupations are 'not elswhere classified'?" (fun () ->
   false
 )
 
 // For bonus points, see if you can return a tuple containing the counts of all classifications
-let anzsco_classification_counts anzsco_list =
-  anzsco_list
-  |> List.fold (fun (a, n, p, s) x ->
-      match x with
-      | Alternative _             -> (a+1, n, p, s)
-      | NotElsewhereClassified _  -> (a, n+1, p, s)
-      | Principal _               -> (a, n, p+1, s)
-      | Specialisation _          -> (a, n, p, s+1))
+let anzsco_classification_counts anzsco_list = failwith "todo"
 
 (*********************************************************************************************************************)
 //  References:
