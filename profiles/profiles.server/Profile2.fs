@@ -36,7 +36,3 @@ module Profile2 =
     (Success mkValidatedForm)
     |> apply validatedFirstName
     |> apply validatedLastName
-
-    mkValidatedForm
-        <$> validatedFirstName
-        <*> validatedLastName
