@@ -1,3 +1,4 @@
+
 (**********************************************************************************************************************
     In this section we'll go through implementing some of the common list functions that you would have come across
     in the previous exercises.
@@ -234,7 +235,7 @@ test "Write a function that can sum numeric values in a list" (fun () ->
 *)
 
 // fold: ('state -> 'a -> 'state) -> 'state -> 'a list -> 'state
-let fold (folder:'state->'a->'state) state list = failwith "todo"
+let fold folder state list = failwith "todo"
 
 
 test "Write a function to fold a list into a single value" (fun () ->
@@ -255,7 +256,7 @@ test "Write a function to fold a list into a single value" (fun () ->
 *)
 
 // sum: int list -> int
-let sum3 = failwith "todo"
+let sum3 list = failwith "todo"
 
 // sum: 'a list -> 'a
 let inline sum4 list = failwith "todo"
