@@ -28,6 +28,7 @@
     <Compile Include="Profile1.fs" />
     <Compile Include="Profile2.fs" />
     <Compile Include="JsonSerializer.fs" />
+    <Compile Include="WebHelpers.fs" />
     <Compile Include="Program.fs" />
     <None Include="App.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
