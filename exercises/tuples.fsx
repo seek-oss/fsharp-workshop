@@ -53,16 +53,12 @@ let x, y = vect1
 //
 // Now deconstruct the box and fileSize tuples.
 //
-let l, w, h = box // ** Answer **
-let fileName, bytes = fileSize // ** Answer **
 
 //
 // Optional Exercise: Ignoring values
 //
 // Deconstrcut the fileSize tuple to get the file name and ignore the length
 //
-let fileName', _ = fileSize // ** Answer **
-
 
 
 //
@@ -70,7 +66,6 @@ let fileName', _ = fileSize // ** Answer **
 //   Write a function to add two vectors.
 //   (hint: watch the types)
 //
-let addVect (x1, y1) (x2, y2) = (x1 + x2, y1 + y2)
 
 
 
