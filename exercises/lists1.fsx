@@ -108,6 +108,6 @@ test "Write a list comprehension that produces the square of every fourth and fi
 //
 //  Note:
 //      * The cons (::) operator in F# is actually a symbolic keyword, you can find this in section 3.6 of the spec
-          (http://fsharp.org/specs/language-spec/3.1/FSharpSpec-3.1-working.docx)
+//          (http://fsharp.org/specs/language-spec/3.1/FSharpSpec-3.1-working.docx)
 //      * Cons comes from construct, originally a concept from lisp
 (*********************************************************************************************************************)
