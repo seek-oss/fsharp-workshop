@@ -3,7 +3,9 @@ var profileApp = angular.module('profileApp', []);
 profileApp.controller('ProfileCtrl', function ($scope, $http) {
     $scope.profile = {
         firstName : "Foo",
-        lastName : "Bar"
+        lastName : "Bar",
+        description: "",
+        postcode: ""
     };
 
     $scope.saveProfile = function(profile){

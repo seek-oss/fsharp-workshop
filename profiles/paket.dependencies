@@ -8,3 +8,4 @@ nuget FSharpx.Async
 nuget xUnit < 2.0
 nuget xunit.runner.console
 nuget FsCheck.xunit
+nuget Unquote
