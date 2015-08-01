@@ -25,8 +25,10 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Types.fs" />
+    <Compile Include="DataStore.fs" />
     <Compile Include="Profile1.fs" />
     <Compile Include="Profile2.fs" />
+    <Compile Include="Profile3.fs" />
     <Compile Include="JsonSerializer.fs" />
     <Compile Include="WebHelpers.fs" />
     <Compile Include="Program.fs" />

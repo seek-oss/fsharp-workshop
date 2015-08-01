@@ -9,21 +9,19 @@ module Profile1 =
     LastName : string
   }
 
-  let requiredString name value =
-    match value with
-    | "" -> Errors [sprintf "%s is required" name]
-    | _ -> Success value
+  let requiredString name getField form errors =
+    match getField form with
+    | "" -> (sprintf "%s is required" name)::errors
+    | _ -> errors
 
-  let persistProfile (form : ProfileForm) : SaveResult<ProfileForm> =
-    let validatedFirstName = requiredString "Firstname" form.FirstName
-    let validatedLastName = requiredString "Lastname" form.LastName
+  let persistProfile (form : ProfileForm) : SaveResult<string> =
+    let errors =
+        []
+        |> requiredString "Firstname" (fun x -> x.FirstName) form
+        |> requiredString "Lastname" (fun x -> x.LastName) form
 
-    match validatedFirstName, validatedLastName with
-    | Success firstName, Success lastName ->
-        Success { FirstName = firstName; LastName = lastName }
-    | Errors errs, Success _ ->
-        Errors errs
-    | Success _, Errors errs ->
-        Errors errs
-    | Errors errs1, Errors errs2 ->
-        Errors (errs1 @ errs2)
+    match errors with
+    | [] ->
+        Success (DataStore.save form)
+    | errors ->
+        Errors (List.rev errors)
