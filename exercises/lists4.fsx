@@ -336,4 +336,5 @@ test "Write a function to return the last item of list using reduce" (fun () ->
         Triangular number       - https://en.wikipedia.org/wiki/Triangular_number
         Inline functions        - https://msdn.microsoft.com/en-us/library/Dd548047.aspx
         GenericZero declaration - https://github.com/fsharp/fsharp/blob/master/src/fsharp/FSharp.Core/prim-types.fs#L2398
+        Fibonacci sequence      - https://en.wikipedia.org/wiki/Fibonacci_number
 *)
