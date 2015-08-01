@@ -70,7 +70,4 @@ let fileName', _ = fileSize // ** Answer **
 //   Write a function to add two vectors.
 //   (hint: watch the types)
 //
-let addVect (x1, y1) (x2, y2) = (x1 + x2, y1 + y2)
-
-
-
+let addVect (x1 : float, y1 : float) (x2 : float, y2 : float) = (x1 + x2, y1 + y2) // ** Answer **
