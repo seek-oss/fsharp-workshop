@@ -7,8 +7,15 @@ module Profile1 =
   type ProfileForm = {
     Firstname : string
     Lastname : string
+    Description : string
     Postcode : string
   }
+
+  // Set stores each unique value once.
+  // https://msdn.microsoft.com/en-us/library/ee340244.aspx
+  let badWords : Set<string> =
+    ["bad"; "naughty"]
+    |> Set.ofList
 
   let requiredString name value errors =
     match value with
@@ -26,11 +33,23 @@ module Profile1 =
       else
         (sprintf "%s must be 4 digits" name)::errors
 
+  let validateNoBadWords name (value : string) errors =
+    let hasBadWords =
+        value.Split(' ')
+        |> Seq.map (fun x -> x.ToLower())
+        |> Seq.map (fun x -> x |> Seq.filter Char.IsLetter |> String.Concat)
+        |> Seq.exists (fun word -> Set.contains word badWords)
+    if hasBadWords then
+        (sprintf "%s must not contain bad words" name)::errors
+    else
+        errors
+
   let persistProfile (form : ProfileForm) : SaveResult<string> =
     let errors =
         []
         |> requiredString "Firstname" form.Firstname
         |> requiredString "Lastname" form.Lastname
+        |> validateNoBadWords "Description" form.Description
         |> validatePostcode "Postcode" form.Postcode
 
     match errors with
