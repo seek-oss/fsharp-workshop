@@ -5,7 +5,8 @@ profileApp.controller('ProfileCtrl', function ($scope, $http) {
         firstName : "Foo",
         lastName : "Bar",
         description: "",
-        postcode: ""
+        postcode: "",
+        skills: ""
     };
 
     $scope.saveProfile = function(profile){
