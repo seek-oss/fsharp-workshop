@@ -66,7 +66,6 @@ let x, y = vect1
 //   Write a function to add two vectors.
 //   (hint: watch the types)
 //
-let addVect (x1 : float, y1 : float) (x2 : float, y2 : float) = (x1 + x2, y1 + y2) // ** Answer **
 
 //
 // Exercise 4: Look at the type signature of System.Int32.TryParse.
