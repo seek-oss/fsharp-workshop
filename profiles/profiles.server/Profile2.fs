@@ -9,30 +9,21 @@ module Profile2 =
     LastName : string
   }
 
-  let apply (a : SaveResult<'a>) (f : SaveResult<'a -> 'b>) =
-     match f, a with
-      | Success f, Success a ->
-        Success (f a)
-      | Errors f, Success _ ->
-        Errors f
-      | Success _, Errors a ->
-        Errors a
-      | Errors f, Errors a ->
-        Errors (f @ a)
-
   let requiredString name value =
     match value with
     | "" -> Errors [sprintf "%s is required" name]
     | _ -> Success value
 
-  let mkValidatedForm firstName lastName : ProfileForm =
-    { FirstName = firstName
-      LastName = lastName }
-
-  let persistProfile (form : ProfileForm) =
+  let persistProfile (form : ProfileForm) : SaveResult<ProfileForm> =
     let validatedFirstName = requiredString "Firstname" form.FirstName
     let validatedLastName = requiredString "Lastname" form.LastName
 
-    (Success mkValidatedForm)
-    |> apply validatedFirstName
-    |> apply validatedLastName
+    match validatedFirstName, validatedLastName with
+    | Success firstName, Success lastName ->
+        Success { FirstName = firstName; LastName = lastName }
+    | Errors errs, Success _ ->
+        Errors errs
+    | Success _, Errors errs ->
+        Errors errs
+    | Errors errs1, Errors errs2 ->
+        Errors (errs1 @ errs2)

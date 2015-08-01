@@ -1,42 +1,38 @@
 ﻿namespace profiles.tests
 open System
 open Xunit
+open Swensen.Unquote
 open profiles.server
 open profiles.server.Profile1
-
 module Profile1Tests =
+    let validProfile = {
+        FirstName = "Foo"
+        LastName = "Bar"
+    }
+
     [<Fact>]
     let ``A valid user is saved`` () =
-      let inputProfile : ProfileForm =
-        { FirstName = "Foo"
-          LastName = "Bar"}
-      Assert.Equal(
-            persistProfile inputProfile,
-            Success inputProfile)
+      test <@ persistProfile validProfile = Success "Saved" @>
 
     [<Fact>]
     let ``An empty FirstName returns error`` () =
-        Assert.Equal(
-            persistProfile {
-                FirstName = ""
-                LastName = "Bar"
-            },
-            Errors ["Firstname is required"])
+      let profile =
+        { validProfile with FirstName = "" }
+
+      test <@ persistProfile profile = Errors ["Firstname is required"] @>
 
     [<Fact>]
     let ``An empty LastName returns error`` () =
-        Assert.Equal(
-            persistProfile {
-                FirstName = "Foo"
-                LastName = ""
-            },
-            Errors ["Lastname is required"])
+      let profile =
+        { validProfile with LastName = "" }
+
+      test <@ persistProfile profile = Errors ["Lastname is required"] @>
 
     [<Fact>]
     let ``All errors are returned`` () =
-        Assert.Equal(
-            persistProfile {
-                FirstName = ""
-                LastName = ""
-            },
-            Errors ["Firstname is required"; "Lastname is required"])
+      let profile =
+        { validProfile with
+            FirstName = ""
+            LastName = ""}
+
+      test <@ persistProfile profile = Errors ["Firstname is required"; "Lastname is required"] @>
