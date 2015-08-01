@@ -3,18 +3,25 @@
 open System
 
 module Profile1 =
+  // raw form as it comes from the
+  // web browser
   [<CLIMutable>]
   type ProfileForm = {
     Firstname : string
     Lastname : string
     Description : string
     Postcode : string
+    Skills : string
   }
 
   // Set stores each unique value once.
   // https://msdn.microsoft.com/en-us/library/ee340244.aspx
   let badWords : Set<string> =
     ["bad"; "naughty"]
+    |> Set.ofList
+
+  let skillList : Set<string> =
+    ["c#"; "f#"; "fun" ]
     |> Set.ofList
 
   let requiredString name value errors =
