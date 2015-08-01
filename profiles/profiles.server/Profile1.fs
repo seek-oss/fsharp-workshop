@@ -10,16 +10,28 @@ module Profile1 =
     Postcode : string
   }
 
-  let requiredString name getField form errors =
-    match getField form with
+  let requiredString name value errors =
+    match value with
     | "" -> (sprintf "%s is required" name)::errors
     | _ -> errors
+
+  let validatePostcode name (value : string) errors =
+      let checks = [
+        value.Length = 4 || value.Length = 0
+        Seq.forall Char.IsDigit value
+      ]
+
+      if checks |> Seq.forall id then
+        errors
+      else
+        (sprintf "%s must be 4 digits" name)::errors
 
   let persistProfile (form : ProfileForm) : SaveResult<string> =
     let errors =
         []
-        |> requiredString "Firstname" (fun x -> x.FirstName) form
-        |> requiredString "Lastname" (fun x -> x.LastName) form
+        |> requiredString "Firstname" form.Firstname
+        |> requiredString "Lastname" form.Lastname
+        |> validatePostcode "Postcode" form.Postcode
 
     match errors with
     | [] ->

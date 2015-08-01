@@ -8,6 +8,7 @@ module Profile1Tests =
     let validProfile = {
         Firstname = "Foo"
         Lastname = "Bar"
+        Postcode = "1234"
     }
 
     [<Fact>]
@@ -32,7 +33,7 @@ module Profile1Tests =
     let ``All errors are returned`` () =
       let profile =
         { validProfile with
-            FirstName = ""
+            Firstname = ""
             Lastname = ""}
 
       test <@ persistProfile profile = Errors ["Firstname is required"; "Lastname is required"] @>
@@ -40,7 +41,27 @@ module Profile1Tests =
     [<Fact>]
     let ``Postcode is optional`` () =
       let profile =
-        { validProfile with
-            Postcode = "" }
+        { validProfile with Postcode = "" }
 
       test <@ persistProfile profile = Success "Saved" @>
+
+    [<Fact>]
+    let ``ABCD is not an acceptable postcode`` () =
+      let profile =
+        { validProfile with Postcode = "ABCD" }
+
+      test <@ persistProfile profile = Errors ["Postcode must be 4 digits"] @>
+
+    [<Fact>]
+    let ``123 is not an acceptable postcode`` () =
+      let profile =
+          { validProfile with Postcode = "123" }
+
+      test <@ persistProfile profile = Errors ["Postcode must be 4 digits"] @>
+
+    [<Fact>]
+    let ``12345 is not an acceptable postcode`` () =
+      let profile =
+          { validProfile with Postcode = "123" }
+
+      test <@ persistProfile profile = Errors ["Postcode must be 4 digits"] @>
