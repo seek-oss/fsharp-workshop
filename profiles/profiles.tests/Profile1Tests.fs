@@ -8,6 +8,7 @@ module Profile1Tests =
     let validProfile = {
         Firstname = "Foo"
         Lastname = "Bar"
+        Description = ""
         Postcode = "1234"
     }
 
@@ -65,3 +66,38 @@ module Profile1Tests =
           { validProfile with Postcode = "123" }
 
       test <@ persistProfile profile = Errors ["Postcode must be 4 digits"] @>
+
+    [<Fact>]
+    let ``Good words are allowed in description`` () =
+      let profile =
+          { validProfile with Description = "good" }
+
+      test <@ persistProfile profile = Success "Saved" @>
+
+    [<Fact>]
+    let ``Bad words are not allowed in description`` () =
+      let profile =
+          { validProfile with Description = "bad" }
+
+      test <@ persistProfile profile = Errors ["Description must not contain bad words"] @>
+
+    [<Fact>]
+    let ``Punctuation is ignored when checking for bad words`` () =
+      let profile =
+          { validProfile with Description = "bad!" }
+
+      test <@ persistProfile profile = Errors ["Description must not contain bad words"] @>
+
+    [<Fact>]
+    let ``Case is ignored when checking for bad words`` () =
+      let profile =
+          { validProfile with Description = "BAD" }
+
+      test <@ persistProfile profile = Errors ["Description must not contain bad words"] @>
+
+    [<Fact>]
+    let ``Partial bad words are allowed in description`` () =
+      let profile =
+          { validProfile with Description = "badge" }
+
+      test <@ persistProfile profile = Success "Saved" @>

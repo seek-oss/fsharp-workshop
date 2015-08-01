@@ -14,6 +14,15 @@
           <label for="inputLastname">Lastname</label>
           <input type="text" class="form-control" id="inputLastname" placeholder="Lastname" ng-model="profile.lastName">
         </div>
+        <div class="form-group">
+          <label for="inputPostcode">Postcode</label>
+          <input type="text" class="form-control" id="inputPostcode" placeholder="Postcode" ng-model="profile.postcode">
+        </div>
+        <div class="form-group">
+          <label for="inputDescription">Description</label>
+          <textarea class="form-control" id="inputDescription" placeholder="Description" ng-model="profile.description">
+          </textarea>
+        </div>
         <div ng-if="result">
           {{result}}
         </div>
