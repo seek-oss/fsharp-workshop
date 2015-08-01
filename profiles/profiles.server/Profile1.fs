@@ -5,8 +5,9 @@ open System
 module Profile1 =
   [<CLIMutable>]
   type ProfileForm = {
-    FirstName : string
-    LastName : string
+    Firstname : string
+    Lastname : string
+    Postcode : string
   }
 
   let requiredString name getField form errors =

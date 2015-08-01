@@ -6,8 +6,8 @@ open profiles.server
 open profiles.server.Profile1
 module Profile1Tests =
     let validProfile = {
-        FirstName = "Foo"
-        LastName = "Bar"
+        Firstname = "Foo"
+        Lastname = "Bar"
     }
 
     [<Fact>]
@@ -15,16 +15,16 @@ module Profile1Tests =
       test <@ persistProfile validProfile = Success "Saved" @>
 
     [<Fact>]
-    let ``An empty FirstName returns error`` () =
+    let ``An empty Firstname returns error`` () =
       let profile =
-        { validProfile with FirstName = "" }
+        { validProfile with Firstname = "" }
 
       test <@ persistProfile profile = Errors ["Firstname is required"] @>
 
     [<Fact>]
-    let ``An empty LastName returns error`` () =
+    let ``An empty Lastname returns error`` () =
       let profile =
-        { validProfile with LastName = "" }
+        { validProfile with Lastname = "" }
 
       test <@ persistProfile profile = Errors ["Lastname is required"] @>
 
@@ -33,6 +33,14 @@ module Profile1Tests =
       let profile =
         { validProfile with
             FirstName = ""
-            LastName = ""}
+            Lastname = ""}
 
       test <@ persistProfile profile = Errors ["Firstname is required"; "Lastname is required"] @>
+
+    [<Fact>]
+    let ``Postcode is optional`` () =
+      let profile =
+        { validProfile with
+            Postcode = "" }
+
+      test <@ persistProfile profile = Success "Saved" @>
