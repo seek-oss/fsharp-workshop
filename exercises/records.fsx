@@ -64,7 +64,7 @@ let { x = x'; y = y' } = player'.position // *** Answer ***
 
 //
 // An important difference between Records and Classes:
-//   Records have value equality semantics 
+//   Records have structural equality semantics 
 //   whereas classes have reference equality semantics.
 
 //
