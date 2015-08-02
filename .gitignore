@@ -198,3 +198,4 @@ FakesAssemblies/
 .fake
 .paket/paket.exe
 .vagrant/
+FSI-ASSEMBLY.dll.mdb
