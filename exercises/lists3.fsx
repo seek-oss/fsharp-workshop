@@ -66,7 +66,7 @@ test "Split a list of numbers into a tuple of even numbers and odd numbers" (fun
 
 
 // Let's try something a little more challenging and see if we can write bubble sort using List.fold and a simple
-// match expression. A useful feature of match expressions you mat not have come across are 'when guards', which are
+// match expression. A useful feature of match expressions you may not have come across are 'when guards', which are
 // conditions you can attach to the matches:
 //      match something with
 //      | head :: tail when head > x  -> "head is greater than x"
@@ -83,6 +83,8 @@ test "Write a simple sort algorithm using List.fold and a match expression" (fun
 (*********************************************************************************************************************)
 // For the following exercises we're going to use some occupations taken from the Australian Bureau of Statistics.
 // We'll load this up using a familar .NET library and then convert it to an F# list for our purposes
+// Uh oh, we've thrown something else in there too - the lazy computation. This is the same as Lazy<T> you'd find
+// in C# and effectively delaying the execution of the code until a later point
 
 let occupations = lazy (System.IO.File.ReadLines(__SOURCE_DIRECTORY__ + "/ANZSCO-occupations.txt") |> Seq.toList)
 
