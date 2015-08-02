@@ -38,7 +38,7 @@ let fileSize = ("/var/log/err.log", 452264)
 //
 
 //
-// And important concept related to tuples is pattern matching 
+// An important concept related to tuples is pattern matching 
 // sometimes also know as destructuring.
 // Pattern matching is covered in much more depth later on in
 // the workshop.
