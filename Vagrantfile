@@ -29,7 +29,7 @@ Vagrant.configure(2) do |config|
       atom \
       fsharp
 
-    mdtool setup check-install MonoDevelop.FSharpBinding
+    sudo -u vagrant mdtool setup check-install MonoDevelop.FSharpBinding
 
     timedatectl set-timezone Australia/Melbourne
     SHELL
