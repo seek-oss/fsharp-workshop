@@ -11,7 +11,7 @@ Vagrant.configure(2) do |config|
     # Customize the amount of memory on the VM:
     vb.memory = "2048"
   end
- 
+
   config.vm.provision "shell", inline: <<-SHELL
     apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
     echo "deb http://download.mono-project.com/repo/debian wheezy main" | sudo tee /etc/apt/sources.list.d/mono-xamarin.list
@@ -21,11 +21,16 @@ Vagrant.configure(2) do |config|
     apt-add-repository ppa:git-core/ppa
     apt-get update -y
 
-    apt-get install git -y
-    apt-get install mono-devel -y
-    apt-get install monodevelop -y
-    apt-get install google-chrome-stable -y
-    apt-get install atom -y
+    apt-get install -y \
+      git \
+      mono-devel \
+      monodevelop \
+      google-chrome-stable \
+      atom \
+      fsharp
+
+    mdtool setup check-install MonoDevelop.FSharpBinding
+
     timedatectl set-timezone Australia/Melbourne
     SHELL
   end

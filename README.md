@@ -20,7 +20,10 @@ From the exercises folder:
 1. ADTs02.fsx
 1. ADTs03.fsx
 1. ADTs04.fsx
-1. list.fsx
+1. lists1.fsx
+1. lists2.fsx
+1. lists3.fsx
+1. lists4.fsx
 1. pattern_matching.fsx
 
 ## Game of Life project
