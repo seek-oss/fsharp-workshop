@@ -314,7 +314,7 @@ test "Reduce a list down to a single value using the supplied function" (fun () 
 // BONUS: Can you rewrite 'last' using reduce?
 //
 // last2: 'a list -> 'a
-let last2 list = reduce (fun x y -> y) list
+let last2 list = failwith "todo"
 
 test "Write a function to return the last item of list using reduce" (fun () ->
   last2 fib25 = 46368
