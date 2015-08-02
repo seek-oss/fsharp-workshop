@@ -10,7 +10,7 @@ simple functions and see how to combine them
 let a = 1
 
 // functions are first class values in F# so
-// the syntax is idential to the above except that
+// the syntax is identical to the above except that
 // it has a parameter
 let increment a = failwith "todo"
 
