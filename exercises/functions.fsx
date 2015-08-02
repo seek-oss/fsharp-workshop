@@ -90,11 +90,6 @@ Examples.test "add 40 (add 20 (incriment n))" (fun () ->
     examplePipe2 1 = 62
 )
 
-// once nice thing about functions is that they can be nested
-let outerFunction n =
-  let multiply x = n * x // this is a function only available inside outerFunction
-  multiply 10 + 3
-
 // the pipe operator has a very simple implementation
 // try implementing ||> to do the same things as pipe
 let (||>) x f = f x
@@ -104,4 +99,28 @@ Examples.test "Custom pipe" (fun () ->
     ||> (add 2)
     ||> incriment
     ||> (fun x -> x = 13)
+)
+
+// once nice thing about functions is that they can be nested
+let outerFunction n =
+  let multiply x = n * x // this is a function only available inside outerFunction
+  multiply 10 + 3
+
+// functions can be called recursively with the rec keyword
+// this is also the first time we've seen an if statement
+// note that each path returns a value
+let rec factorial n =
+    if n = 1 then
+        1
+    else
+        n * factorial (n - 1)
+
+let rec addFrom1To n =
+  if n = 0 then
+    0
+  else
+    addFrom1To (n - 1) + n
+
+Examples.test "addFrom1To 10 equals 55" (fun () ->
+    addFrom1To 10 = 55
 )
