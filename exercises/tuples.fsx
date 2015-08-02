@@ -51,7 +51,7 @@ let fileSize = ("/var/log/err.log", 452264)
 let x, y = vect1
 
 //
-// Now deconstruct the box and fileSize tuples.
+// Now write a let expression to deconstruct the box and fileSize tuples.
 //
 
 //
