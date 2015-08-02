@@ -57,7 +57,7 @@ let vect2 = { vect1 with x = 0.0 }
 
 //
 // An important difference between Records and Classes:
-//   Records have value equality semantics 
+//   Records have structural equality semantics 
 //   whereas classes have reference equality semantics.
 
 //
