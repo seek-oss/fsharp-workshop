@@ -12,13 +12,13 @@ let a = 1
 // functions are first class values in F# so
 // the syntax is idential to the above except that
 // it has a parameter
-let incriment a = failwith "todo"
+let increment a = failwith "todo"
 
 // notice that there no brackets when calling
-// the incriment function. calling a function
+// the increment function. calling a function
 // is so important that it requires no extra syntax
-Examples.test "incriment 10 equals 11" (fun () ->
-  incriment 10 = 11
+Examples.test "increment 10 equals 11" (fun () ->
+  increment 10 = 11
 )
 
 // types are mostly optional in F#, the compiler
@@ -28,17 +28,17 @@ Examples.test "incriment 10 equals 11" (fun () ->
 // NOTE: there is nothing special about the ' it's just
 // a common convention for defining something that is related
 // or similar to a previous definition
-let incriment' (a : int) : int = a + 1
+let increment' (a : int) : int = a + 1
 
 // F# also allows functions to be defined inline
 // using the fun keyword. This is similar to the lambda
 // syntax in C# (a => a + 1)
-let incriment'' = fun a -> a + 1
+let increment'' = fun a -> a + 1
 
 // F# uses -> to indicate function types
 // the type of int -> int says that the function
 // takes a single integer and returns an integer
-let incriment''' : int -> int = fun a -> a + 1
+let increment''' : int -> int = fun a -> a + 1
 
 // add is a function of two parameters
 let add a b = failwith "todo"
@@ -56,7 +56,7 @@ let add' : int -> int -> int = add
 // ie a function of two parameters is really a function
 // that takes one parameter and returns a function that
 // takes on parameter
-let incriment'''' : int -> int = add 1
+let increment'''' : int -> int = add 1
 
 // passing functions as arguments to other functions
 // is a really powerful technique. This is a silly example.
@@ -68,22 +68,22 @@ Examples.test "Multiply by two then add two" (fun () ->
 )
 
 // the pipe operator (|>) allows us to chain operations together
-// for example if we wanted to implement add (incriment (n + 10)) 20
+// for example if we wanted to implement add (increment (n + 10)) 20
 // we could do it like:
 let examplePipe n =
     n
     |> add 10
-    |> incriment
+    |> increment
     |> add 20
 
 // the previous value is passed as the last argument to the next
 // function.
 // implement this example using the pipe operator
-// add 40 (add 20 (incriment n))
+// add 40 (add 20 (increment n))
 let examplePipe2 n =
     failwith "todo"
 
-Examples.test "add 40 (add 20 (incriment n))" (fun () ->
+Examples.test "add 40 (add 20 (increment n))" (fun () ->
     examplePipe2 1 = 62
 )
 
@@ -94,7 +94,7 @@ let (||>) x f = f x
 Examples.test "Custom pipe" (fun () -> 
     10
     ||> (add 2)
-    ||> incriment
+    ||> increment
     ||> (fun x -> x = 13)
 )
 
