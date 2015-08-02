@@ -89,7 +89,7 @@ Examples.test "add 40 (add 20 (increment n))" (fun () ->
 
 // the pipe operator has a very simple implementation
 // try implementing ||> to do the same things as pipe
-let (||>) x f = f x
+let (||>) x f = failwith "todo"
 
 Examples.test "Custom pipe" (fun () -> 
     10
