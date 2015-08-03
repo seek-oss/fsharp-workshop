@@ -98,7 +98,7 @@ Examples.test "Custom pipe" (fun () ->
     ||> (fun x -> x = 13)
 )
 
-// once nice thing about functions is that they can be nested
+// one nice thing about functions is that they can be nested
 let outerFunction n =
   let multiply x = n * x // this is a function only available inside outerFunction
   multiply 10 + 3
