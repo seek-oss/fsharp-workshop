@@ -9,22 +9,23 @@ One of the following should be enough for you to run the exercises:
 * [MonoDevelop](http://www.monodevelop.com/download/) (Linux, OS/X or Windows)
 * [Vagrant](https://www.vagrantup.com/downloads.html) and [VirtualBox](https://www.virtualbox.org/wiki/Downloads) simply by running ``vagrant up`` in the root of the repository
 
-## Exercise Order
+## Workshop Timing
 
-From the exercises folder:
+Here are some guidelines as to how the workshop will be broken down:
 
-1. functions.fsx
-1. tuples.fsx
-1. records.fsx
-1. ADTs01.fsx
-1. ADTs02.fsx
-1. ADTs03.fsx
-1. ADTs04.fsx
-1. lists1.fsx
-1. lists2.fsx
-1. lists3.fsx
-1. lists4.fsx
-1. pattern_matching.fsx
+| Start time | Exercise | Files |
+| --- | --- | --- |
+| 09:00 | Introductions, setup your REPL | |
+| 09:30 | Functions, the core of the language! | [`functions.fsx`](exercises/functions.fsx) |
+| 10.30 | Tuples | [`tuples.fsx`](exercises/tuples.fsx) |
+| 11.00 | Coffee break | |
+| 11.15 | Records | [`records.fsx`](exercises/records.fsx) |
+| 11.45 | Discriminated unions & pattern matching (part 1) | [`ADTs01.fsx`](exercises/ADTs01.fsx) [`ADTs02.fsx`](exercises/ADTs02.fsx) [`ADTs03.fsx`](exercises/ADTs03.fsx) [`ADTs04.fsx`](exercises/ADTs04.fsx) |
+| 12.15 | Lunch | |
+| 13.00 | Recap of concepts covered so far, opportunity to ask questions | |
+| 13.30 | Discriminated unions & pattern matching (part 2) | [`ADTs01.fsx`](exercises/ADTs01.fsx) [`ADTs02.fsx`](exercises/ADTs02.fsx) [`ADTs03.fsx`](exercises/ADTs03.fsx) [`ADTs04.fsx`](exercises/ADTs04.fsx) |
+| 14.15 | Working with lists | [`lists1.fsx`](exercises/lists1.fsx) [`lists2.fsx`](exercises/lists2.fsx) [`lists3.fsx`](exercises/lists3.fsx) [`lists4.fsx`](exercises/lists4.fsx) |
+| 15.15 | Real world example: form validation for a web application | [`profiles`](profiles) |
 
 ## Game of Life project
 The project in the life folder is a suave based game of life web application with some critical elements removed.
