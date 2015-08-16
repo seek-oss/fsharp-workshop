@@ -1,125 +1,6 @@
 #load "./examples.fs"
 open Examples
 
-// We've already used some basic pattern matching in the ADT exercises.
-// Now we're going to explore more techniques we can use with match
-// expressions.
-
-//////////////// Guard clauses /////////////////////
-
-// Let's write a function that tells us if an integer is positive, zero
-// or negative.
-
-let partition n =
-  if n < 0
-  then "negative"
-  elif n > 0
-  then "positive"
-  else "zero"
-
-
-test "partitioning numbers 1" (fun _ ->
-  partition 1 = "positive"
-)
-
-// So it works, but it's pretty nasty! If expressions like that are
-// difficult to read, and easy to overlook missing cases.
-// Let's clean that up with some matching. We're going to need
-// some guard clauses here.
-
-let partition' n =
-  match n with
-  | x when x < 0 -> "negative"
-  | x when x > 0 -> "positive"
-  | _            -> "zero"
-
-// I hope you agree that's a whole lot more readable. The last line with
-// the underscore is a wildcard match, it will match anything and discard
-// the result. You may sometimes hear this referred to as a "catch all".
-
-test "partitioning numbers 1" (fun _ ->
-  partition' 3 = "positive"
-)
-
-test "partitioning numbers 2" (fun _ ->
-  partition' 0 = "zero"
-)
-
-test "partitioning numbers 3" (fun _ ->
-  partition' -5 = "negative"
-)
-
-// For a full description of the syntax for match expressions you can read
-// the MSDN docs here https://msdn.microsoft.com/en-us/library/dd547125.aspx
-
-// We can match deep inside data types and look for just the parts we
-// care about. Here are a few examples:
-
-//////////////////// Matching tuples ////////////////////
-
-let thirdElementIsEven n =
-  match n with
-  | _,_,x when x % 2 = 0 -> true
-  | _                    -> false
-
-test "pattern matching into tuples 1" (fun _ ->
-  thirdElementIsEven ("a", 14.3, 2)
-)
-
-// We can actually use pattern matching when declaring the arguments to
-// a function, and in this case it actually removes quite a lot of clutter
-
-let thirdElementIsEven' (_,_,n) = n % 2 = 0
-
-test "pattern matching into tuples 2" (fun _ ->
-  thirdElementIsEven' ("a", 14.3, 2)
-)
-
-//////////////////// Matching records ////////////////////
-
-// Let's imagine a simple postal system, where all items must not exceed 30cm
-// in any dimension nor 2kg in mass. Postage for items within these limits is
-// calculated at $0.01/g
-
-type PostageSatchel = { DimensionsInMetres : decimal * decimal * decimal; MassInGrams : decimal }
-
-type PostagePrice =
-  | Dollars of decimal
-  | TooBig
-  | TooHeavy
-
-// Feel free to remove any of the partial implementation below when completing your
-// calculatePostage function, but you may find these pieces useful.
-
-let calculatePostage satchel =
-  let costPerGram = 0.01M
-  let maximumSizeInMetres = 0.3M
-  let maximumMassInGrams = 2000M
-
-  let tooBig (x,y,z) = [x;y;z] |> List.forall (fun n -> n < maximumSizeInMetres) |> not
-  let tooHeavy m     = m > maximumMassInGrams
-
-  match satchel with
-  | { DimensionsInMetres = d } when d |> tooBig   -> TooBig
-  | { MassInGrams = m }        when m |> tooHeavy -> TooHeavy
-  | { MassInGrams = m }                           -> Dollars <| m * costPerGram
-
-test "Calculating postage 1" (fun _ ->
-  { DimensionsInMetres = 0.12M, 0.1M, 0.1M; MassInGrams = 700M }
-  |> calculatePostage = Dollars 7M
-)
-
-test "Calculating postage 2" (fun _ ->
-  { DimensionsInMetres = 0.2M, 0.2M, 0.02M; MassInGrams = 1200M }
-  |> calculatePostage = Dollars 12M
-)
-
-test "Calculating postage 3" (fun _ ->
-  { DimensionsInMetres = 1M, 0.2M, 0.02M; MassInGrams = 200M }
-  |> calculatePostage = TooBig
-)
-
-
 //////////////////// Fizz Buzz! ////////////////////
 
 // In case you're not familiar with FizzBuzz, see
@@ -179,9 +60,10 @@ let fizzbuzz' n =
   | DivisibleBy 5                 -> "Buzz"
   | x                             -> string x
 
-// So as you can see, active patterns can take parameters and they can be combined with & and |
-// They can be a very handy technique to use when you don't control the definition of a data type
-// but you still want to build up a declarative set of terms to express your rules in.
+// So as you can see, active patterns can take parameters and they can be
+// combined with & and | They can be a very handy technique to use when you
+// don't control the definition of a data type but you still want to build up a
+// declarative set of terms to express your rules in.
 
 test "We can fizz buzz 2" (fun _ ->
   let result = [1 .. 15] |> List.map fizzbuzz'
