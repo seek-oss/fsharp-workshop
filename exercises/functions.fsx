@@ -104,7 +104,7 @@ let outerFunction n =
   multiply 10 + 3
 
 // functions can be called recursively with the rec keyword
-// this is also the first time we've seen an if statement
+// this is also the first time we've seen an if expression
 // note that each path returns a value
 let rec factorial n =
     if n = 1 then
