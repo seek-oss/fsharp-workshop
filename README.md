@@ -30,6 +30,25 @@ The validation should be implemented in `profiles.server/Profile1.fs`. The sampl
 
 Tests for all validations are provided in `profiles.tests/Profile1Tests.fs`. You should keep adding validations until all the tests pass.
 
+To run the tests:
+* Unix: `./build.sh RunTests`
+* Windows: `./build.cmd RunTests`
+
+To run the web app:
+* Unix: `./build.sh Run`
+* Windows: `./build.cmd Run`
+
+The site should be available on `http://localhost:3000`.
+
+Some useful functions:
+
+* `Char.IsDigit : char -> bool`
+* `Char.IsLetter : char -> bool`
+* `String.Concat : seq<'t> -> string`
+
+Also remember that string is a sequence of characters. For example the following expression results in the string "1":
+`"profile1" |> Seq.filter Char.IsDigit |> String.Concat`
+
 ## Game of Life project
 The project in the life folder is a suave based game of life web application with some critical elements removed.
 
