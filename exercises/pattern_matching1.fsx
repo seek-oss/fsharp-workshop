@@ -8,17 +8,21 @@ open Examples
 ///////////////////// Guard clauses /////////////////////
 
 // Let's write a function that tells us if an integer is positive, zero
-// or negative.
+// or negative, using if, elif and else.
 
 let partition n =
-  if n < 0
-  then "negative"
-  elif n > 0
-  then "positive"
-  else "zero"
+  "todo"
 
 test "partitioning numbers 1" (fun _ ->
   partition 1 = "positive"
+)
+
+test "partitioning numbers 2" (fun _ ->
+  partition 0 = "zero"
+)
+
+test "partitioning numbers 3" (fun _ ->
+  partition -5 = "negative"
 )
 
 // So it works, but it's pretty nasty! If expressions like that are
@@ -29,22 +33,22 @@ test "partitioning numbers 1" (fun _ ->
 let partition' n =
   match n with
   | x when x < 0 -> "negative"
-  | x when x > 0 -> "positive"
-  | _            -> "zero"
+  // TODO
+  | _            -> "todo"
 
 // I hope you agree that's a whole lot more readable. The last line with
 // the underscore is a wildcard match, it will match anything and discard
 // the result. You may sometimes hear this referred to as a "catch all".
 
-test "partitioning numbers 1" (fun _ ->
+test "partitioning numbers 4" (fun _ ->
   partition' 3 = "positive"
 )
 
-test "partitioning numbers 2" (fun _ ->
+test "partitioning numbers 5" (fun _ ->
   partition' 0 = "zero"
 )
 
-test "partitioning numbers 3" (fun _ ->
+test "partitioning numbers 6" (fun _ ->
   partition' -5 = "negative"
 )
 
@@ -57,21 +61,14 @@ test "partitioning numbers 3" (fun _ ->
 //////////////////// Matching tuples ////////////////////
 
 let thirdElementIsEven n =
-  match n with
-  | _,_,x when x % 2 = 0 -> true
-  | _                    -> false
+  false
 
 test "pattern matching into tuples 1" (fun _ ->
   thirdElementIsEven ("a", 14.3, 2)
 )
 
-// We can actually use pattern matching when declaring the arguments to
-// a function, and in this case it actually removes quite a lot of clutter
-
-let thirdElementIsEven' (_,_,n) = n % 2 = 0
-
 test "pattern matching into tuples 2" (fun _ ->
-  thirdElementIsEven' ("a", 14.3, 2)
+  not <| thirdElementIsEven ("a", 14.3, 9)
 )
 
 //////////////////// Matching records ////////////////////
@@ -97,14 +94,8 @@ let calculatePostage satchel =
   let maximumSizeInMetres = 0.9M
   let maximumMassInGrams = 2000M
 
-  let tooBig { Height = y; Base = x,z } = [x;y;z] |> List.forall (fun n -> n < maximumSizeInMetres) |> not
-  let tooHeavy m     = m > maximumMassInGrams
-
   match satchel with
-  | { Dimensions = d }  when d |> tooBig                           -> TooBig   |> Choice2Of2
-  | { MassInGrams = m } when m |> tooHeavy                         -> TooHeavy |> Choice2Of2
-  | { MassInGrams = m; Dimensions = { Height = y } } when y > 0.5M -> (m * costPerGram) + 5M |> Dollars |> Choice1Of2
-  | { MassInGrams = m }                                            -> m * costPerGram |> Dollars |> Choice1Of2
+  | { MassInGrams = m } -> m |> Dollars |> Choice1Of2
 
 test "Calculating postage 1" (fun _ ->
   { Dimensions = { Height = 0.12M; Base = 0.1M, 0.1M }; MassInGrams = 700M }
