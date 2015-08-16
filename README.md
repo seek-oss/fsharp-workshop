@@ -20,10 +20,10 @@ Here are some guidelines as to how the workshop will be broken down:
 | 10.30 | Tuples | [`tuples.fsx`](exercises/tuples.fsx) |
 | 11.00 | Coffee break | |
 | 11.15 | Records | [`records.fsx`](exercises/records.fsx) |
-| 11.45 | Discriminated unions & pattern matching (part 1) | [`ADTs01.fsx`](exercises/ADTs01.fsx) [`ADTs02.fsx`](exercises/ADTs02.fsx) [`ADTs03.fsx`](exercises/ADTs03.fsx) [`ADTs04.fsx`](exercises/ADTs04.fsx) |
+| 11.45 | Discriminated unions & pattern matching (part 1) | [`ADT1.fsx`](exercises/ADT1.fsx) [`ADT2.fsx`](exercises/ADT2.fsx) [`ADT3.fsx`](exercises/ADT3.fsx) [`ADT4.fsx`](exercises/ADT4.fsx) |
 | 12.15 | Lunch | |
 | 13.00 | Recap of concepts covered so far, opportunity to ask questions | |
-| 13.30 | Discriminated unions & pattern matching (part 2) | [`ADTs01.fsx`](exercises/ADTs01.fsx) [`ADTs02.fsx`](exercises/ADTs02.fsx) [`ADTs03.fsx`](exercises/ADTs03.fsx) [`ADTs04.fsx`](exercises/ADTs04.fsx) |
+| 13.30 | Discriminated unions & pattern matching (part 2) | [`pattern_matching1.fsx`](exercises/pattern_matching1.fsx) [`pattern_matching2.fsx`](exercises/pattern_matching2.fsx)|
 | 14.15 | Working with lists | [`lists1.fsx`](exercises/lists1.fsx) [`lists2.fsx`](exercises/lists2.fsx) [`lists3.fsx`](exercises/lists3.fsx) [`lists4.fsx`](exercises/lists4.fsx) |
 | 15.15 | Real world example: form validation for a web application | [`profiles`](profiles) |
 
