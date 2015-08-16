@@ -61,8 +61,11 @@ test "Numbers divisible by three and five as a comma separated list" (fun () ->
 )
 
 
+(*********************************************************************************************************************)
+
 // Now let's see if we can write a function that can take a list of numbers and split them into a tuple of two
-// lists of even numbers and odd numbers
+// lists of even numbers and odd numbers (this is essentially what List.partition does - but you get to implement it
+// this time!)
 let evenOdds numbers =
   numbers
   |> List.fold (fun (evens, odds) x ->
@@ -89,7 +92,7 @@ let rec sorter (numbers: int list): int list =
   numbers
   |> List.fold (fun acc x ->
         match acc with
-        | h :: t when x > h -> h :: sorter (x :: t)
+        | head :: tail when x > head -> head :: sorter (x :: tail)
         | _ ->  x :: acc) []
 
 
