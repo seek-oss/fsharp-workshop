@@ -101,7 +101,7 @@ let calculatePostage satchel =
 
   match satchel with
   | { DimensionsInMetres = x,y,z; MassInGrams = _ } when [x;y;z] |> anyExceedSize
-      -> TooBig 
+      -> TooBig
   | { DimensionsInMetres = _;     MassInGrams = m } when m > maximumMassInGrams
       -> TooHeavy
   | { DimensionsInMetres = _;     MassInGrams = m } -> m * costPerGram |> Dollars
@@ -163,7 +163,7 @@ test "We can fizz buzz 1" (fun _ ->
 // There's another technique we can use to express the FizzBuzz logic
 // in a more robust way. It involves a language feature called Active Patterns.
 // See the following for further information on Active Patterns
-// The MSDN page for Active Patterns https://msdn.microsoft.com/en-us/library/dd233248.aspx 
+// The MSDN page for Active Patterns https://msdn.microsoft.com/en-us/library/dd233248.aspx
 // An interesting blog series on Active Patterns http://www.devjoy.com/series/active-patterns/
 
 let (|DivisibleBy|_|) m n = if n % m = 0 then Some DivisibleBy else None
@@ -196,7 +196,7 @@ test "We can fizz buzz 2" (fun _ ->
 
 let (|Informational|Success|Redirection|ClientError|ServerError|Invalid|) = function
   | x when x < 100 -> Invalid
-  | x when x < 200 -> Informational           
+  | x when x < 200 -> Informational
   | x when x < 300 -> Success
   | x when x < 400 -> Redirection
   | x when x < 500 -> ClientError
@@ -252,11 +252,10 @@ test "Categorising HTTP responses by status code 1" (fun _ ->
 )
 
 test "Categorising HTTP responses by status code 2" (fun _ ->
-  categorise [] = { Success = 0; Error = 0 } 
+  categorise [] = { Success = 0; Error = 0 }
 )
 
 test "Categorising HTTP responses by status code 3" (fun _ ->
   let input = [100; 200; 401; 404; 302; 500; 500; 200; 200; 200]
-  categorise input = { Success = 4; Error = 4 } 
+  categorise input = { Success = 4; Error = 4 }
 )
-
