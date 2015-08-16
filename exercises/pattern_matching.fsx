@@ -96,26 +96,27 @@ let calculatePostage satchel =
   let maximumSizeInMetres = 0.3M
   let maximumMassInGrams = 2000M
 
-  let anyExceedSize (dimensions : decimal list) =
-    not <| List.forall (fun n -> n < maximumSizeInMetres) dimensions
+  let tooBig (x,y,z) = [x;y;z] |> List.forall (fun n -> n < maximumSizeInMetres) |> not
+  let tooHeavy m     = m > maximumMassInGrams
 
   match satchel with
-  | { DimensionsInMetres = x,y,z; MassInGrams = _ } when [x;y;z] |> anyExceedSize
-      -> TooBig
-  | { DimensionsInMetres = _;     MassInGrams = m } when m > maximumMassInGrams
-      -> TooHeavy
-  | { DimensionsInMetres = _;     MassInGrams = m } -> m * costPerGram |> Dollars
+  | { DimensionsInMetres = d } when d |> tooBig   -> TooBig
+  | { MassInGrams = m }        when m |> tooHeavy -> TooHeavy
+  | { MassInGrams = m }                           -> Dollars <| m * costPerGram
 
 test "Calculating postage 1" (fun _ ->
-  calculatePostage { DimensionsInMetres = 0.12M, 0.1M, 0.1M; MassInGrams = 700M } = Dollars 7M
+  { DimensionsInMetres = 0.12M, 0.1M, 0.1M; MassInGrams = 700M }
+  |> calculatePostage = Dollars 7M
 )
 
 test "Calculating postage 2" (fun _ ->
-  calculatePostage { DimensionsInMetres = 0.2M, 0.2M, 0.02M; MassInGrams = 1200M } = Dollars 12M
+  { DimensionsInMetres = 0.2M, 0.2M, 0.02M; MassInGrams = 1200M }
+  |> calculatePostage = Dollars 12M
 )
 
 test "Calculating postage 3" (fun _ ->
-  calculatePostage { DimensionsInMetres = 1M, 0.2M, 0.02M; MassInGrams = 200M } = TooBig
+  { DimensionsInMetres = 1M, 0.2M, 0.02M; MassInGrams = 200M }
+  |> calculatePostage = TooBig
 )
 
 
