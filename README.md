@@ -27,6 +27,32 @@ Here are some guidelines as to how the workshop will be broken down:
 | 14.15 | Working with lists | [`lists1.fsx`](exercises/lists1.fsx) [`lists2.fsx`](exercises/lists2.fsx) [`lists3.fsx`](exercises/lists3.fsx) [`lists4.fsx`](exercises/lists4.fsx) |
 | 15.15 | Real world example: form validation for a web application | [`profiles`](profiles) |
 
+## Profiles project
+The project in the profiles folder is a simple web project that implements simple API validation using the suave web framework.
+
+The validation should be implemented in `profiles.server/Profile1.fs`. The sample provided shows validating that the firstname is a required field.
+
+Tests for all validations are provided in `profiles.tests/Profile1Tests.fs`. You should keep adding validations until all the tests pass.
+
+To run the tests:
+* Unix: `./build.sh RunTests`
+* Windows: `./build.cmd RunTests`
+
+To run the web app:
+* Unix: `./build.sh Run`
+* Windows: `./build.cmd Run`
+
+The site should be available on `http://localhost:3000`.
+
+Some useful functions:
+
+* `Char.IsDigit : char -> bool`
+* `Char.IsLetter : char -> bool`
+* `String.Concat : seq<'t> -> string`
+
+Also remember that string is a sequence of characters. For example the following expression results in the string "1":
+`"profile1" |> Seq.filter Char.IsDigit |> String.Concat`
+
 ## Game of Life project
 The project in the life folder is a suave based game of life web application with some critical elements removed.
 
