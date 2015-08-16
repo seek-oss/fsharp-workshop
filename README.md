@@ -23,6 +23,13 @@ From the exercises folder:
 1. list.fsx
 1. pattern_matching.fsx
 
+## Profiles project
+The project in the profiles folder is a simple web project that implements simple API validation using the suave web framework.
+
+The validation should be implemented in `profiles.server/Profile1.fs`. The sample provided shows validating that the firstname is a required field.
+
+Tests for all validations are provided in `profiles.tests/Profile1Tests.fs`. You should keep adding validations until all the tests pass.
+
 ## Game of Life project
 The project in the life folder is a suave based game of life web application with some critical elements removed.
 
