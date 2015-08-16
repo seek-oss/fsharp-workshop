@@ -54,8 +54,11 @@ test "Numbers divisible by three and five as a comma separated list" (fun () ->
 )
 
 
+(*********************************************************************************************************************)
+
 // Now let's see if we can write a function that can take a list of numbers and split them into a tuple of two
-// lists of even numbers and odd numbers
+// lists of even numbers and odd numbers (this is essentially what List.partition does - but you get to implement it
+// this time!)
 let evenOdds numbers = failwith "todo"
 
 test "Split a list of numbers into a tuple of even numbers and odd numbers" (fun () ->
