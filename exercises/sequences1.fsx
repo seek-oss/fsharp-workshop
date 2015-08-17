@@ -56,7 +56,7 @@ let fibs = Seq.unfold (fun (a, b) -> Some(a + b, (b, a + b))) (0, 1)
 // So, using the above as inspiration, try creating a sequence of triangular numbers - take a look through lists4.fsx
 // if you need a refresher on triangular numbers, but the short of it is you take the previous number in the sequence
 // and add the current iteration to it.
-let triangles = Seq.unfold (fun (a, b) -> Some(a + b, (a+1, a + b))) (1, 0)
+let triangles = seq { failwith "todo"; yield 1 }
 
 test "Return a sequence of tiangular numbers" (fun () ->
   triangles |> Seq.take 20 |> Seq.toList = [1; 3; 6; 10; 15; 21; 28; 36; 45; 55; 66; 78; 91; 105; 120; 136; 153; 171;
