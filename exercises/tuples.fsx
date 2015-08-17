@@ -57,7 +57,7 @@ let x, y = vect1
 //
 // Optional Exercise: Ignoring values
 //
-// Deconstrcut the fileSize tuple to get the file name and ignore the length
+// Deconstruct the fileSize tuple to get the file name and ignore the length
 //
 
 
