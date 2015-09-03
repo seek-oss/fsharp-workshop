@@ -3,19 +3,20 @@
  Each tuple can be considered as a set of all values of the types defined in the tuple.
  *)
 #load "./examples.fs"
+open Examples
 
 
 // Examples:
 
 //
-// Using a tuple to express some 2D coordinates or vectors.
+// Using a tuple to express some 2D coordinates or vectors of (x, y).
 //
 let vect1 = (5.0, 14.5)
 let vect2 = (20.7, 6.3)
 
 //
 // Tuples are not just restricted to two values.
-// We could also express a 3D coordinate.
+// We could also express a 3D coordinate of (x, y, z).
 //
 let box = (5, 14, 10) 
 
@@ -68,9 +69,13 @@ let fileName', _ = fileSize // ** Answer **
 //
 // Exercise 3:
 //   Write a function to add two vectors.
-//   (hint: watch the types)
+//   Hint: watch the types, and feel free to modify the arguments v1 & v2
 //
 let addVect (x1 : float, y1 : float) (x2 : float, y2 : float) = (x1 + x2, y1 + y2) // ** Answer **
+
+test "Add two vectors" (fun _ ->
+  addVect vect1 vect2 = (25.7, 20.8)
+)
 
 //
 // Exercise 4: Look at the type signature of System.Int32.TryParse.
