@@ -4,6 +4,7 @@
 *)
 
 #load "./examples.fs"
+open Examples
 
 // Examples:
 
@@ -71,13 +72,21 @@ end
 let vect3 = new Coord2dClass(3.5, 5.6)
 let vect4 = new Coord2dClass(3.5, 5.6)
 
-vect3 = vect4
+test "Test reference equality" (fun _ ->
+    let areEqual = vect3 = vect4
+    areEqual = failwith "todo"
+    )
 
 
 //
-// Exercise 4: Test vector equality
-//   Define a new vector with the same x, y coordinates as vect1.
+// Exercise 4: Test structural equality
+//   Define a new vector, vect1', with the same x, y coordinates as vect1.
 //   Now test the equality of the two values.
 //
+let vect1' = { x = 3.5; y = 5.6; }
 
+test "Test reference equality" (fun _ ->
+    let areEqual = vect1 = vect1'
+    areEqual = failwith "todo"
+    )
  
