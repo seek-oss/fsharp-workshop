@@ -25,7 +25,8 @@ Here are some guidelines as to how the workshop will be broken down:
 | 13.00 | Recap of concepts covered so far, opportunity to ask questions | |
 | 13.30 | Discriminated unions & pattern matching (part 2) | [`pattern_matching1.fsx`](exercises/pattern_matching1.fsx) [`pattern_matching2.fsx`](exercises/pattern_matching2.fsx)|
 | 14.15 | Working with lists | [`lists1.fsx`](exercises/lists1.fsx) [`lists2.fsx`](exercises/lists2.fsx) [`lists3.fsx`](exercises/lists3.fsx) [`lists4.fsx`](exercises/lists4.fsx) |
-| 15.15 | Real world example: form validation for a web application | [`profiles`](profiles) |
+| 15.15 | Break | |
+| 15.30 | Real world example: form validation for a web application | [`profiles`](profiles) |
 
 ## Profiles project
 The project in the profiles folder is a simple web project that implements simple API validation using the suave web framework.
